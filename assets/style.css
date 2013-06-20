@@ -20,7 +20,8 @@ body {
   max-width: 500%;
 }
 #sidebar {
-  background: #f3eaff;
+  /*background: #f3eaff;*/
+  background: #E8ECEF;
   position: fixed;
   top: 0; left: 0; bottom: 0;
   width: 200px;
@@ -59,9 +60,35 @@ ul.toc_section {
 .toc_section li {
   margin: 0 0 3px 0;
 }
+/*主菜单*/
+.toc_section li.index:before {
+	content: "▹ ";
+	color: #b01df9;
+}
+/*静态方法*/
 .toc_section li:before { 
-  content: "▹ ";
-  color: #b01df9;
+	content:"▸ ";
+	color: #b01df9;
+}
+/*静态对象*/
+.toc_section li.blue:before {
+	content:"▸ ";
+	color: blue;
+}
+/*成员方法*/
+.toc_section li.member:before {
+	content: "▹ ";
+	color: green;
+}
+/*继承方法*/
+.toc_section li.gray:before {
+	content: "▹ ";
+	color: black;
+}
+/*实例事件*/
+.toc_section li.event:before {
+	content: "▹ ";
+	color: tomato;
 }
 .toc_section li a {
   text-decoration: underline;
@@ -122,9 +149,10 @@ code, pre, tt {
   font: normal 12px/18px Monaco, Consolas, "Lucida Console", monospace; 
 }
 pre {
-  background: #f8f8ff;
-  border: 2px solid #eee;
-  padding: 10px;
+  /*background: #f8f8ff;*/
+  /*border: 2px solid #eee;*/
+  /*padding: 10px;*/
+  padding: 7px;
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
   border-radius: 5px;
