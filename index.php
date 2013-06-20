@@ -6,7 +6,7 @@
   <!--[if lt IE 9]>
     <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
   <![endif]-->
-  <title>KISSY: 模块化、接口一致、全终端适配的</title>
+  <title>KISSY: 模块化、接口一致、全终端适配的JS类库</title>
   
   <meta name=description content="The aerogel-weight jQuery-compatible JavaScript library
 ">
@@ -31,7 +31,7 @@
 <h3>Introduction</h3>
 
   <a class="toc_title" href="#">
-    seed.js <span class="version">(1.3.0)</span>
+    seed.js <span class="version">(1.4.0)</span>
   </a>
   <ul class=toc_section>
     <li class="index"><a href="#download">源代码</a></li>
@@ -56,13 +56,13 @@
 
 <h3>Seed</h3>
 
-  <a class=toc_title href="#core">loader</a>
+  <a class=toc_title href="#loader">loader</a>
   
 	<ul class=toc_section>
-		<li><a href="#">config()</a></li>
-		<li><a href="#">getScript()</a></li>
-		<li><a href="#">add()</a></li>
-		<li><a href="#">use()</a></li>
+		<li><a href="#loader_config">config()</a></li>
+		<li><a href="#getScript">getScript()</a></li>
+		<li><a href="#add">add()</a></li>
+		<li><a href="#use">use()</a></li>
 	</ul>
 
   <a class=toc_title href="#core">ua</a>
@@ -88,49 +88,6 @@
 		<li><a href="#">android</a></li>
 	</ul>
 
-  <a class=toc_title href="#core">uri</a>
-
-	<ul class=toc_section>
-		<li class="blue"><a href="#">S.Uri</a></li>
-		<li class="member"><a href="#">every()</a></li>
-		<li class="member"><a href="#">some()</a></li>
-		<li class="member"><a href="#">stamp()</a></li>
-		<li class="member"><a href="#">clone()</a></li>
-		<li class="member"><a href="#">resolve()</a></li>
-		<li class="member"><a href="#">getScheme()</a></li>
-		<li class="member"><a href="#">setScheme()</a></li>
-		<li class="member"><a href="#">getHostname()</a></li>
-		<li class="member"><a href="#">setHostname()</a></li>
-		<li class="member"><a href="#">getUserInfo()</a></li>
-		<li class="member"><a href="#">setUserInfo()</a></li>
-		<li class="member"><a href="#">setPort()</a></li>
-		<li class="member"><a href="#">getPort()</a></li>
-		<li class="member"><a href="#">setPath()</a></li>
-		<li class="member"><a href="#">getPath()</a></li>
-		<li class="member"><a href="#">setQuery()</a></li>
-		<li class="member"><a href="#">getQuery()</a></li>
-		<li class="member"><a href="#">getFragment()</a></li>
-		<li class="member"><a href="#">setFragment()</a></li>
-		<li class="member"><a href="#">isSameOriginAs()</a></li>
-		<li class="member"><a href="#">toString()</a></li>
-	</ul>
-
-  <a class=toc_title href="#core">promise</a>
-	<ul class=toc_section>
-		<li class="blue"><a href="#">S.Promise</a><font color=blue>(内部调用)</font></li>
-		<li class="blue"><a href="#">S.Defer</a><font color=blue>(内部调用)</font></li>
-	</ul>
-
-  <a class=toc_title href="#core">path ?</a> 
-	<ul class=toc_section>
-		<li><a href="">basename()</a></li>
-		<li><a href="">dirname()</a></li>
-		<li><a href="">extname()</a></li>
-		<li><a href="">join()</a></li>
-		<li><a href="">normalize()</a></li>
-		<li><a href="">relative()</a></li>
-		<li><a href="">resolve()</a></li>
-	</ul>
 
   <a class=toc_title href="#core">lang</a>
   
@@ -187,6 +144,15 @@
 		<li><a href="unparam.html">unparam()</a></li>
 		<li><a href="version.html">version()</a></li>
 	</ul>
+
+  <a class=toc_title href="#core">features</a>
+	<ul class=toc_section>
+		<li><a href="#">isDeviceMotionSupported()</a></li>
+		<li><a href="#">isHashChangeSupported()</a></li>
+		<li><a href="#">isNativeJSONSupported()</a></li>
+		<li><a href="#">isTouchSupported()</a></li>
+	</ul>
+
 
   <hr>
 
@@ -385,6 +351,49 @@
 		<li class="gray"><a href="">继承自dom/event的方法</a></li>
 	</ul>
 
+  <a class=toc_title href="#core">uri</a>
+
+	<ul class=toc_section>
+		<li class="blue"><a href="#">S.Uri</a></li>
+		<li class="member"><a href="#">every()</a></li>
+		<li class="member"><a href="#">some()</a></li>
+		<li class="member"><a href="#">stamp()</a></li>
+		<li class="member"><a href="#">clone()</a></li>
+		<li class="member"><a href="#">resolve()</a></li>
+		<li class="member"><a href="#">getScheme()</a></li>
+		<li class="member"><a href="#">setScheme()</a></li>
+		<li class="member"><a href="#">getHostname()</a></li>
+		<li class="member"><a href="#">setHostname()</a></li>
+		<li class="member"><a href="#">getUserInfo()</a></li>
+		<li class="member"><a href="#">setUserInfo()</a></li>
+		<li class="member"><a href="#">setPort()</a></li>
+		<li class="member"><a href="#">getPort()</a></li>
+		<li class="member"><a href="#">setPath()</a></li>
+		<li class="member"><a href="#">getPath()</a></li>
+		<li class="member"><a href="#">setQuery()</a></li>
+		<li class="member"><a href="#">getQuery()</a></li>
+		<li class="member"><a href="#">getFragment()</a></li>
+		<li class="member"><a href="#">setFragment()</a></li>
+		<li class="member"><a href="#">isSameOriginAs()</a></li>
+		<li class="member"><a href="#">toString()</a></li>
+	</ul>
+
+  <a class=toc_title href="#core">promise</a>
+	<ul class=toc_section>
+		<li class="blue"><a href="#">S.Promise</a><font color=blue>(内部调用)</font></li>
+		<li class="blue"><a href="#">S.Defer</a><font color=blue>(内部调用)</font></li>
+	</ul>
+
+  <a class=toc_title href="#core">path</a> 
+	<ul class=toc_section>
+		<li><a href="">basename()</a></li>
+		<li><a href="">dirname()</a></li>
+		<li><a href="">extname()</a></li>
+		<li><a href="">join()</a></li>
+		<li><a href="">normalize()</a></li>
+		<li><a href="">relative()</a></li>
+		<li><a href="">resolve()</a></li>
+	</ul>
 
 <hr />
 
@@ -398,13 +407,6 @@
   <a class=toc_title href="#core">UA 探测</a>
 	<ul class=toc_section>
 		<li class="index"><a href="#">Mobile UA</a></li>
-	</ul>
-  <a class=toc_title href="#core">Features</a>
-	<ul class=toc_section>
-		<li><a href="#">isDeviceMotionSupported()</a></li>
-		<li><a href="#">isHashChangeSupported()</a></li>
-		<li><a href="#">isNativeJSONSupported()</a></li>
-		<li><a href="#">isTouchSupported()</a></li>
 	</ul>
 
 </aside>
