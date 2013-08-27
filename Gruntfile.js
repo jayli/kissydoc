@@ -1,7 +1,4 @@
-var path = require('path'),
-	fs = require('fs-extra'),
-	os = require('os'),
-	exec = require('child_process').exec;
+var path = require('path');
 
 module.exports = function (grunt) {
 
@@ -71,7 +68,7 @@ module.exports = function (grunt) {
 				}
 
 			}
-		}
+		},
 
 		// 合并文件
 		/*
