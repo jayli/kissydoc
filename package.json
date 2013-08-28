@@ -16,8 +16,7 @@
   "devDependencies": {
     "grunt": "~0.4.1",
     "grunt-contrib-copy": "",
-	"grunt-contrib-clean": "~0.4.0",
-	"grunt-replace":"",
+    "grunt-contrib-clean": "~0.4.0",
     "grunt-markdown": "~0.4.0"
   },
   "dependencies": {}
