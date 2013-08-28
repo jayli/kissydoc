@@ -4,12 +4,20 @@
 ## 二级标题
 
 <div class="jumbotron">
-	<div>
+	<div class="text-center">
+		<img src="http://dummyimage.com/560x225/000/fff" alt="" />
 		<h1>Hello, world!</h1>
 		<p>...</p>
 		<p><a class="btn btn-primary btn-lg">Learn more</a></p>
 	</div>
 </div>
+
+<ul class="list-group">
+	<li class="list-group-item">
+		<span class="badge">14</span>
+		Cras justo odio
+	</li>
+</ul>
 
 
 ### KISSY 半月报 2013-08-27
