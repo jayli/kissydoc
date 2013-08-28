@@ -289,6 +289,10 @@ ul {
     margin: 1em 0;
 }
 
+article ul,article ol{
+	margin: 5px 0 !important;
+}
+
 dd {
     margin: 0 0 0 40px;
 }
