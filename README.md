@@ -1,4 +1,10 @@
-kissydoc
+KISSY 文档源码
+
 ========
 
-kissy new doc
+	git clone git@github.com:jayli/kissydoc.git
+	cd kissydoc
+	npm install
+
+
+

@@ -137,21 +137,25 @@ h2 {
 h3 {
     font-size: 1.17em;
     margin: 1em 0;
+	font-weight:bold;
 }
 
 h4 {
     font-size: 1em;
     margin: 1.33em 0;
+	font-weight:bold;
 }
 
 h5 {
     font-size: 0.83em;
     margin: 1.67em 0;
+	font-weight:bold;
 }
 
 h6 {
     font-size: 0.75em;
     margin: 2.33em 0;
+	font-weight:bold;
 }
 
 /*
