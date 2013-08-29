@@ -13,13 +13,14 @@ $( document ).ready( function() {
 
 var setMenuBackgroundHeight = function() {
 
-  var d = $( document ).height();
+  var d = $( '#content').height();
   var w = $( window ).width();
 
   if( w > 760 ) {
-    $( 'nav' ).css( { "min-height": (d) } );
+	  console.log(d);
+    $( '#sidebar' ).css( { "min-height": (d) } );
   } else {
-    $( 'nav' ).css( { "min-height": (100) } );
+    $( '#sidebar' ).css( { "min-height": (100) } );
   }
 
 };

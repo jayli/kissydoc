@@ -6,6 +6,10 @@
 
 <p></p>
 
+# What is KISSY?
+
+KISSY 是一款跨终端、模块化、使用简单的 JavaScript 框架。除了完备的工具集合诸如 DOM、Event、Ajax、Anim 等，KISSY 还面向团队协作做了独特设计，提供了经典的面向对象、动态加载、性能优化解决方案。作为一款全终端支持的 JavaScript 框架，KISSY 为移动终端做了大量适配和优化，让你的程序在全终端均能流畅运行。
+
 # Keep It Simple & Stupid! Yeah!
 
 <div class="row-fluid">
@@ -33,32 +37,77 @@
 
 # Hello Kissy!
 
-HTML中引用种子文件
+> 学习 KISSY，从这里开始 
+> 
+> <a class="btn btn-primary btn-lg">Start Up!</a>
 
-	<script src="http://g.tbcdn.cn/kissy/k/1.4.0/seed-min.js" 
-			data-config="{combine:true}">
-	</script>
+首先，我们来运行一些最简单的例子帮你了解 KISSY<span class="badge">Examples</span>：
 
-启动你的程序
+**种子**：获取最新的 KISSY 1.4.0 种子文件地址
 
-<script>
+<div class="alert alert-info">
+	<div style="font-size:20px;">http://g.tbcdn.cn/kissy/k/1.4.0/seed-min.js</div>
+</div>
+
+**启动**：Hello World!
+
 	KISSY.ready(function(S){
-		S.log('Hello KISSY!');
+		alert('Hello World!');
 	});
-</script>
+
+**DOM操作**：获取一个className叫`continue`的`button`，并将它的内容改为"Hello Kissy"。
+
+	KISSY.use('node',function(S){
+		S.one('button.continue').html('Hello Kissy!');
+	});
+
+**事件处理**：点击一个id为`click-me`的`button`，显示`#banner-msg`的内容。
+
+	KISSY.use('node',function(S){
+		S.one('#click-me').on('click',function(e){
+			S.one('#banner-msg').show();
+		});
+	});
+
+**Ajax**：请求一个`api/getWeather`的接口，带入参数`zipcode`，将结果显示在`#weather-con`中。
+
+	KISSY.use('io,node',function(S){
+		S.io({
+			url:'/api/getWeather',
+			data:{
+				zipcode:10010
+			},
+			success:function(data){
+				S.one('#weather-con').html('<em>' + data + '</em> 摄氏度');
+			}
+		});
+	});
 
 # 哪些网站在使用 KISSY
 
+<style>
+.img-rounded{
+box-shadow:0 0 8px -3px black;
+}
+</style>
 <div class="row-fluid">
 	<div class="col-md-4">
-		<img src="http://gtms04.alicdn.com/tps/i4/T1KAquFf4fXXbp3u3i-633-515.png" alt="..." class="img-rounded img-responsive">
+		<img src="http://gtms02.alicdn.com/tps/i2/T1oemzFapcXXaG4.rS-300-300.png" alt="..." class="img-rounded img-responsive">
+		<div class="caption text-center">
+			<h2><a href="http://www.taobao.com">淘宝网</a></h2>
+		</div>
 	</div>
 	<div class="col-md-4">
-		<img src="http://gtms04.alicdn.com/tps/i4/T1KAquFf4fXXbp3u3i-633-515.png" alt="..." class="img-rounded img-responsive">
-	
+		<img src="http://gtms03.alicdn.com/tps/i3/T1SQ9lFeJgXXaG4.rS-300-300.png" alt="..." class="img-rounded img-responsive">
+		<div class="caption text-center">
+			<h2><a href="http://www.tmall.com">天猫</a></h2>
+		</div>
 	</div>
 	<div class="col-md-4">
-		<img src="http://gtms04.alicdn.com/tps/i4/T1KAquFf4fXXbp3u3i-633-515.png" alt="..." class="img-rounded img-responsive">
-	
+		<img src="http://gtms04.alicdn.com/tps/i4/T1wVSxFkFfXXaG4.rS-300-300.png" alt="..." class="img-rounded img-responsive">
+		<div class="caption text-center">
+			<h2><a href="http://caipiao.m.taobao.com/lottery/h5/app.html?mode=web#viewpath=index%2Fa.html">淘宝彩票(移动版)</a></h2>
+		</div>
 	</div>
 </div>
+

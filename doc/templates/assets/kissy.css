@@ -230,6 +230,8 @@ article blockquote p {
 
 article blockquote {
 	margin-left:0px;
+	background-color: #F0F7FD;
+	border-color: #D0E3F0;
 }
 
 #content-subnav {
