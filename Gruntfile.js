@@ -69,6 +69,12 @@ module.exports = function (grunt) {
 
 			}
 		},
+        watch: {
+            'all': {
+                files: [ 'src/**/*.md' ,'src/**/*.js','src/**/*.css'],
+                tasks: [ 'clean:doc', 'copy','markdown' ]
+            }
+        }
 
 		// 合并文件
 		/*
@@ -88,6 +94,11 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-clean');
 	grunt.loadNpmTasks('grunt-contrib-copy');
 	grunt.loadNpmTasks('grunt-markdown');
+    grunt.loadNpmTasks('grunt-contrib-watch');
+
+	grunt.registerTask('listen', 'clam watch ...', function() {
+		task.run('watch');
+	});
 
 	grunt.registerTask('default', ['clean:doc', 'copy', 'markdown']);
 

@@ -39,7 +39,8 @@ KISSY 是一款跨终端、模块化、使用简单的 JavaScript 框架。除�
 
 > 学习 KISSY，从这里开始 
 > 
-> <a class="btn btn-primary btn-lg">Start Up!</a>
+> <a class="btn btn-primary btn-lg">Start Up!</a> &nbsp;
+> <a class="btn btn-info btn-lg">API Doc</a>
 
 首先，我们来运行一些最简单的例子帮你了解 KISSY<span class="badge">Examples</span>：
 
@@ -85,26 +86,28 @@ KISSY 是一款跨终端、模块化、使用简单的 JavaScript 框架。除�
 
 # 哪些网站在使用 KISSY
 
+所有的淘系对外产品已经在大量使用 KISSY，包括 PC 和 移动端产品。这里是一些典型案例：
+
 <style>
 .img-rounded{
-box-shadow:0 0 8px -3px black;
+	box-shadow:0 0 8px -3px black;
 }
 </style>
 <div class="row-fluid">
 	<div class="col-md-4">
-		<img src="http://gtms02.alicdn.com/tps/i2/T1oemzFapcXXaG4.rS-300-300.png" alt="..." class="img-rounded img-responsive">
+		<img src="http://gtms02.alicdn.com/tps/i2/T1tHOyFdxeXXX_yTTS-300-185.png" alt="..." class="img-rounded img-responsive">
 		<div class="caption text-center">
 			<h2><a href="http://www.taobao.com">淘宝网</a></h2>
 		</div>
 	</div>
 	<div class="col-md-4">
-		<img src="http://gtms03.alicdn.com/tps/i3/T1SQ9lFeJgXXaG4.rS-300-300.png" alt="..." class="img-rounded img-responsive">
+		<img src="http://gtms03.alicdn.com/tps/i3/T1.huyFdhfXXX_yTTS-300-185.png" alt="..." class="img-rounded img-responsive">
 		<div class="caption text-center">
 			<h2><a href="http://www.tmall.com">天猫</a></h2>
 		</div>
 	</div>
 	<div class="col-md-4">
-		<img src="http://gtms04.alicdn.com/tps/i4/T1wVSxFkFfXXaG4.rS-300-300.png" alt="..." class="img-rounded img-responsive">
+		<img src="http://gtms04.alicdn.com/tps/i4/T1gD9xFedfXXcKO_TS-300-186.png" alt="..." class="img-rounded img-responsive">
 		<div class="caption text-center">
 			<h2><a href="http://caipiao.m.taobao.com/lottery/h5/app.html?mode=web#viewpath=index%2Fa.html">淘宝彩票(移动版)</a></h2>
 		</div>

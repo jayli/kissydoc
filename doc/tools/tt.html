@@ -8,24 +8,16 @@
 <head>
 	<meta charset="UTF-8">
 	<title></title>
-	<script src="http://g.tbcdn.cn/trip/kissy/1.4.0/seed-min.js" type="text/javascript"></script>
+	<script src="http://g.tbcdn.cn/trip/kissy/1.4.0/seed-min.js"></script>
 </head>
 <body>
 	<button class="continue"></button>
 	
 	<script>
-	KISSY.use('io,node',function(S){
-		S.io({
-			url:'/api/getWeather',
-			data:{
-				zipcode:10010
-			},
-			success:function(data){
-				alert(data);
-				S.one('#weather-con').html('<em>' + data + '</em> 摄氏度');
-			}
-		});
-	});
+		KISSY.config('combine',true);
+		KISSY.use('node');
 	</script>
 </body>
 </html>
+
+
