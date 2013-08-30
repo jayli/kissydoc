@@ -26,7 +26,7 @@
       <li class="nav-divider"><a href="why-kissy.html"><img src="templates/assets/img/icon-why.png">Why KISSY?</a></li>
       <li><a href="get-started.html"><img src="templates/assets/img/icon-getting-started.png">Getting Started (1.4.0)</a></li>
       <li class="nav-sub"><a href="core-modules.html">核心模块列表</a></li>
-      <li class="nav-sub"><a href="deployment.html">KISSY 模块规范 (KMD)</a></li>
+      <li class="nav-sub"><a href="kmd.html">KISSY 模块规范 (KMD)</a></li>
       <li class="nav-sub"><a href="support.html">浏览器兼容基准(GBS)</a></li>
       <li class="nav-sub"><a href="/support.html">历史版本</a></li>
       <li class="nav-sub"><a href="">jQuery KISSY 对比手册</a></li>
@@ -67,7 +67,7 @@ KISSY.use(&#39;node&#39;,function(S,Node){
 <p>创建 KISSY 沙箱时你需要指定要载入的模块，这个例子中载入了 node 模块，在沙箱中可以通过回调参数来使用 node 的 API。特别的，node 模块中最常用的 API 被挂载在 KISSY 对象上，作为快捷调用方式。比如<code>S.all</code>和<code>S.one</code>。</p>
 <p>KISSY 会自动计算模块依赖和模块去重，将所需模块的最小子集载入到页面中。一旦 node 模块加载完成，就会执行沙箱的回调逻辑。<strong>注意</strong>：沙箱回调为异步执行，不管是否已经预先载入了 node。所以两个并列的沙箱的执行时机是不确定的。开发者不应当去关心沙箱的先后顺序。</p>
 <blockquote>
-<p>这种使用方法是<strong>错误的</strong>：<code>var Node = KISSY.use(&#39;node&#39;);</code></p>
+<p>注意，这种使用方法是<strong>错误的</strong>：<code>var Node = KISSY.use(&#39;node&#39;);</code></p>
 </blockquote>
 <h2>3，DOM 操作</h2>
 <p>node 模块对 DOM 节点底层 API 做了封装和扩展，你可以方便查找、创建、删除、修改元素。</p>

@@ -51,7 +51,6 @@ h2 {
   font-family: 'Ubuntu Mono','Verdana','微软雅黑', serif;
   font-weight: normal;
   margin: 10px 0 20px 0;
-  text-transform: uppercase;
 }
 
 h1 {
@@ -59,6 +58,7 @@ h1 {
   font-size: 24px;
   letter-spacing: 2px;
   line-height: 24px;
+  text-transform: uppercase;
 }
 
 h2 {

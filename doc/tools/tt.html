@@ -8,17 +8,37 @@
 <head>
 	<meta charset="UTF-8">
 	<title></title>
-	<script src="http://g.tbcdn.cn/trip/kissy/1.4.0/seed-min.js" data-config="{combine:true}"></script>
+	<script src="http://g.tbcdn.cn/trip/kissy/1.4.0/seed-min.js"></script>
 </head>
 <body>
 	<button class="continue">iii</button>
 	
 	<script>
+		var S = KISSY;
 
-		KISSY.use("node,io,cookie,anim,json",function(S){
-			var a = S.one('button');
-
+		KISSY.config({
+			packages:{
+				x:{
+					base:'./',
+					debug:true,
+					ignorePackageNameInUri:true
+				}
+			},
+			modules:{
+				'x/a':{
+					alias:['x/b','x/c']
+				}
+			},
+			combine:false
 		});
+
+		S.use('x/a',function(S,A){
+			debugger;
+			
+		});
+
+
+
 
 	</script>
 </body>
