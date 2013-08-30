@@ -82,7 +82,7 @@
 <pre><code>add(name?,factory?,deps)</code></pre>
 <p>其中字符串<code>name</code>表示模块的注册名称，<code>factory</code>表示模块的主内容/逻辑，<code>deps</code>是一个对象，表示模块依赖</p>
 <h3>add(name,factory)</h3>
-<p><code>add</code>函数接收一个参数时<code>factory</code>，<code>factory</code>可以是函数，也可以是对象或字符串。</p>
+<p><code>add</code>函数第一个参数是<code>name</code>，表示要注册模块的名字，<code>factory</code>可以是函数，也可以是对象或字符串。</p>
 <p><code>factory</code>为函数时，表示模块的实现逻辑，回调函数回传第一个参数总是<code>KISSY</code>全局对象，约定写为<code>S</code>，该函数的返回值即为模块的返回值，该返回值将会传入调用这个模块的沙箱中：</p>
 <pre><code>add(&#39;module-name&#39;,function(S){
     // 模块代码
@@ -151,7 +151,7 @@ require(&#39;a&#39;); // =&gt; {&#39;foo&#39;:&#39;bar&#39;}</code></pre>
 <pre><code>use(&#39;mod-a, mod-b&#39;,function(S,ModA,ModB){
     // 沙箱逻辑
 });</code></pre>
-<p>其中，<code>name</code>字段中的每个单元，可以用模块名称表示，也可以用模块文件对应的路径表示，比如：</p>
+<p>其中，<code>name</code>字段中的每个单元，可以用模块名称表示，也可以用模块文件对应的路径表示，这时，模块定义时的名称也应当和这里的路径保持一致，比如：</p>
 <pre><code>use(&#39;path/to/mod-a, path/to/mod-b&#39;,function(S,ModA,ModB){
     // 沙箱逻辑    
 });</code></pre>
