@@ -24,17 +24,14 @@
     <ul>
       <li class="nav-divider"><a href="index.html"><img src="templates/assets/img/icon-home.png">首页</a></li>
       <li class="nav-divider"><a href="why-kissy.html"><img src="templates/assets/img/icon-why.png">Why KISSY?</a></li>
-      <li><a href=""><img src="templates/assets/img/icon-getting-started.png">Getting Started (1.4.0)</a></li>
-      <li class="nav-sub"><a href="core-modules.html">理解 KISSY 的文件结构</a></li>
-      <li class="nav-sub"><a href="roadmap.html">Hello World</a></li>
+      <li><a href="get-started.html"><img src="templates/assets/img/icon-getting-started.png">Getting Started (1.4.0)</a></li>
+      <li class="nav-sub"><a href="core-modules.html">核心模块列表</a></li>
       <li class="nav-sub"><a href="deployment.html">KISSY 模块规范 (KMD)</a></li>
       <li class="nav-sub"><a href="support.html">浏览器兼容基准(GBS)</a></li>
-      <li class="nav-sub nav-divider"><a href="/support.html">历史版本</a></li>
-      <li><a href="">进阶指南</a></li>
+      <li class="nav-sub"><a href="/support.html">历史版本</a></li>
       <li class="nav-sub"><a href="">jQuery KISSY 对比手册</a></li>
       <li class="nav-sub nav-divider"><a href="">KISSY 组件开发规范</a></li>
       <li><a href="">API Doc</a></li>
-      <li><a href="">核心模块列表</a></li>
       <li><a href="">Demos</a></li>
       <li class="nav-divider"><a href="">KISSY Gallery</a></li>
       <li><a href="">KISSY 项目构建工具</a></li>
@@ -112,6 +109,12 @@
 		padding-top:20px;
 		clear:both;
 	}
+	/* iPhone 及以下 */
+	@media only screen and (max-width: 767px) {
+		.github-link {
+			display:none;
+		}
+	}
   </style>
   <footer>
 	<div class="text-center">
@@ -122,6 +125,7 @@
   </footer>
     </article>
   </div>
+  <a target="_blank" href="https://github.com/kissyteam/kissy" class="github-link"><img alt="Fork me on GitHub" src="http://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" style="position: absolute; top: 0; right: 0; border: 0; z-index: 50"></a>
   <script>
 	var S = KISSY;
 	(function(){

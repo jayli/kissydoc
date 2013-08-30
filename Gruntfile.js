@@ -71,7 +71,7 @@ module.exports = function (grunt) {
 		},
         watch: {
             'all': {
-                files: [ 'src/**/*.md' ,'src/**/*.js','src/**/*.css'],
+                files: [ 'src/**/*.md' ,'src/**/*.js','src/**/*.css','src/**/*.jst'],
                 tasks: [ 'clean:doc', 'copy','markdown' ]
             }
         }

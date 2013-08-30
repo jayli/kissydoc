@@ -3,7 +3,7 @@
 - 首页
 - Why KISSY?
 - 入门教程(简版指南，包含Dom Node Event Anim Ajax)
-	- 关于KISSY（源码/下载）
+	- 关于KISSY（源码/下载/开源协议）
 	- Hello World!
 	- KISSY 模块规范(KISSY Module Defination)
 	- 浏览器兼容标准(GBS)

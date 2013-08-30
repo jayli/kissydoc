@@ -8,14 +8,18 @@
 <head>
 	<meta charset="UTF-8">
 	<title></title>
-	<script src="http://g.tbcdn.cn/trip/kissy/1.4.0/seed-min.js"></script>
+	<script src="http://g.tbcdn.cn/trip/kissy/1.4.0/seed-min.js" data-config="{combine:true}"></script>
 </head>
 <body>
-	<button class="continue"></button>
+	<button class="continue">iii</button>
 	
 	<script>
-		KISSY.config('combine',true);
-		KISSY.use('node');
+
+		KISSY.use("node,io,cookie,anim,json",function(S){
+			var a = S.one('button');
+
+		});
+
 	</script>
 </body>
 </html>
