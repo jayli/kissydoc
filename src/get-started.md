@@ -117,7 +117,7 @@ KISSY 提供 anim 模块，完成 DOM 元素的动画，模块将自动探测硬
 - CDN 动态合并（Combo）
 - 静态编译，本地合并
 
-这里只介绍动态合并，前提是你的 CDN 支持 Combo 功能，比如`KISSY.use('node')`会带来13个请求：
+这里只介绍动态合并，前提是你的 CDN 支持 Combo 功能，比如`KISSY.use('overlay')`会带来13个请求：
 
 ![](http://gtms02.alicdn.com/tps/i2/T1IuezFfBdXXaC5N70-657-280.png)
 

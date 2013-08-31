@@ -27,9 +27,9 @@
       <li><a href="get-started.html"><img src="templates/assets/img/icon-getting-started.png">Getting Started (1.4.0)</a></li>
       <li class="nav-sub"><a href="core-modules.html">核心模块列表</a></li>
       <li class="nav-sub"><a href="kmd.html">KISSY 模块规范 (KMD)</a></li>
-      <li class="nav-sub"><a href="support.html">浏览器兼容基准(GBS)</a></li>
-      <li class="nav-sub"><a href="/support.html">历史版本</a></li>
-      <li class="nav-sub"><a href="">jQuery KISSY 对比手册</a></li>
+      <li class="nav-sub"><a href="gbs.html">浏览器兼容基准(GBS)</a></li>
+      <li class="nav-sub"><a href="history.html">历史版本</a></li>
+      <li class="nav-sub"><a href="http://cyj.me/jquery-kissy-rosetta/">jQuery KISSY 对比手册</a></li>
       <li class="nav-sub nav-divider"><a href="">KISSY 组件开发规范</a></li>
       <li><a href="">API Doc</a></li>
       <li><a href="">Demos</a></li>
@@ -151,7 +151,7 @@ KISSY.use(&#39;node&#39;,function(S,Node){
 <li>CDN 动态合并（Combo）</li>
 <li>静态编译，本地合并</li>
 </ul>
-<p>这里只介绍动态合并，前提是你的 CDN 支持 Combo 功能，比如<code>KISSY.use(&#39;node&#39;)</code>会带来13个请求：</p>
+<p>这里只介绍动态合并，前提是你的 CDN 支持 Combo 功能，比如<code>KISSY.use(&#39;overlay&#39;)</code>会带来13个请求：</p>
 <p><img src="http://gtms02.alicdn.com/tps/i2/T1IuezFfBdXXaC5N70-657-280.png" alt=""></p>
 <p>要想开启动态Combo，在全局配置中增加一项<code>开启动态合并</code>：</p>
 <pre><code>KISSY.config(&#39;combine&#39;,true);</code></pre>
