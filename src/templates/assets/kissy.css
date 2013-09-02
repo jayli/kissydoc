@@ -26,6 +26,10 @@ a:hover {
   text-decoration:underline;
 }
 
+.btn a,.btn a:hover,.btn a:visited {
+	color:white;
+}
+
 p, pre {
   margin: 0;
 }

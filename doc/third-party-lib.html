@@ -57,26 +57,18 @@
     <article>
       
 
-	<h1>KISSY 浏览器测试基准</h1>
-<p>KISSY 被设计为运行于绝大多数浏览器、设备环境。这些硬件环境包括：</p>
-<p><img src="http://gtms01.alicdn.com/tps/i1/T1vNSDFmhXXXbBMKPF-610-248.png" alt=""></p>
-<h3>说明</h3>
-<ul>
-<li>匕首标识（†）是指当前最新正式版（非Beta版）</li>
-<li>测试基准无优先级，为统一标准</li>
-<li>NodeJS 版本实现和 PC 端在 DOM 部分有偏差。</li>
-</ul>
-<hr>
-<h2>如何定义“通过测试“?</h2>
-<p>KISSY 源码均提供测试用例，测试用例在这些环境中跑通即为通过测试，但测试用例是否反映真实场景和所有情形？应当辩证来对待。毕竟，测试用例只关注核心功能，且遵循等价类和边界值的原则进行用例抽取。但考虑到具体终端硬件配置、带宽、网速以及浏览器插件、杀毒软件等，这些都会影响 KISSY 代码的运行，这些因素，我们不考虑在测试因素之内。</p>
-<h2>浏览器分级支持</h2>
-<p>有必要对“浏览器支持”作一个完整的定义，这个定义应当包括视觉设计、开发和测试。而且要清楚的知道在什么条件下会有用户体验上的损失，这就是浏览器分级支持，大家在早先几年在 <a href="http://yuilibrary.com/yui/docs/tutorials/gbs/">YUI GBS</a> 上看到过这种分级，这种分级更多面向具体的项目、业务和工程，但对于底层 JS 库来说是不必分级，所有流行的浏览器都应当同时支持。</p>
-<h2>浏览器外壳和内核</h2>
-<p>这里是淘宝全网的浏览器使用情况，可以看到内核和外壳的占有情况，内环为内核，外环为外壳，这也是接下来要提到的浏览器同类项的数据基础： </p>
-<p><img src="http://gtms04.alicdn.com/tps/i4/T1ugCBFltdXXbsk2DF-577-351.png" alt=""></p>
-<p>不同的浏览器可能会采用相同的内核（渲染引擎），而外壳实现的差异性会影响整个网站功能。这也是为什么内核无法完全代表所有浏览器的原因。</p>
-<p>另一方面，某些浏览器具有相同的血统，是可以归为同一类的，同一类中，如果测试通过其中一个，那么其他与之同类的浏览器也“基本上”可以通过测试。我们根据相同的内核或对W3C标准有类似的支持程度将浏览器进行归类。之所以这样做，是因为测试基准除了要基本反映浏览器的市场占有率，还要考虑到开发测试成本。因此，测试基准中的浏览器应当具有“代表性”。</p>
-<p>浏览器的不同版本的内核也不一样，因此通常要针对不同版本的浏览器作测试，开发者要了解内核对标准的支持，比如IE的渲染引擎Trident的不同版本差别较大，因此IE需要测试6-10，然而由于Firefox和Chrome升级覆盖面广，因此基准中只保留他们的最新版本。 </p>
+	<h1>KISSY 面向业务的 DPL</h1>
+<p>KISSY 是为具体业务具体产品服务的，经过这几年发展，各条业务也渐渐生长起了不少业务逻辑强相关的 DPL 和代码库。这些内容是 KISSY 最具价值的宝藏。其中最具代表性的就是 <a href="http://work.tmall.net/muidoc/build/">MUI</a> 和 <a href="http://www.builive.com/demo/index.php">BUI</a>。我们也期待越来越多的业务库的涌现。</p>
+<style>
+article p img {
+    box-shadow:0 0 8px -3px black;
+}
+</style>
+
+<h2><a href="http://work.tmall.net/muidoc/build/">MUI</a></h2>
+<p><img src="http://gtms03.alicdn.com/tps/i3/T1jmqDFehbXXXzLhjo-600-238.png" alt=""></p>
+<h2><a href="http://www.builive.com/demo/index.php">BUI</a></h2>
+<p><img src="http://gtms02.alicdn.com/tps/i2/T17tuEFXpcXXa0ohHo-600-269.png" alt=""></p>
 
 
       

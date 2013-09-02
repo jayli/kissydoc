@@ -1,7 +1,7 @@
 
 
-<div class="text-center">
-	<img src="templates/assets/img/show-off.png" alt="" />
+<div class="text-center" id="show-off">
+<!--首焦图片-->
 </div>
 
 <p></p>

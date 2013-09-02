@@ -1,7 +1,15 @@
 // Agency code.
 
+
+//4
+//0,1,2,3
+var getRandom = function(a){
+	return Math.floor(parseInt((Math.random() * 10) % 10) * a / 10);
+};
+
 (function() {
 $( document ).ready( function() {
+	$('#show-off').html('<img src="templates/assets/img/show-off-'+getRandom(4)+'.png" />');
 
   //
   $( window ).bind( 'load resize', setMenuBackgroundHeight );
@@ -25,4 +33,6 @@ var setMenuBackgroundHeight = function() {
 };
 
 })();
+
+
 
