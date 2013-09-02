@@ -1,7 +1,7 @@
 
 
 <div class="text-center">
-	<img src="http://dummyimage.com/560x225/000/fff" alt="" />
+	<img src="templates/assets/img/show-off.png" alt="" />
 </div>
 
 <p></p>
