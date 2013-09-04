@@ -1,5 +1,7 @@
 # 快速开始
 
+> <a href="http://demo.kissyui.com/tutorial/demo.html" class="btn btn-primary btn-lg">Try This Demo!</a> &nbsp;
+
 ## 1，复制 & 粘贴
 
 	<script src="http://g.tbcdn.cn/kissy/k/1.4.0/seed-min.js"></script>
@@ -16,7 +18,7 @@
 
 页面生命周期内始终存在全局对象`KISSY`。KISSY 采用弱沙箱的设计，多个沙箱共享同一份 KISSY 对象，即沙箱A对KISSY的修改会影响到沙箱B，因此，不通过API就对KISSY作任何修改将会非常危险。回调函数传入的第一个参数永远是`KISSY`全局对象，紧跟着的参数将会传回模块对象。形如`use('a,b,c',function(S,A,B,C){})`。被依赖的模块实现会返回一个对象（或类），都可以通过这种方式带入当前沙箱中，KISSY 的沙箱之间通过这种方法相互传递信息，避免全局对象的污染。沙箱内定义的变量亦不会污染全局命名空间。
 
-创建 KISSY 沙箱时你需要指定要载入的模块，这个例子中载入了 node 模块，在沙箱中可以通过回调参数来使用 node 的 API。特别的，node 模块中最常用的 API 被挂载在 KISSY 对象上，作为快捷调用方式。比如`S.all`和`S.one`。
+创建 KISSY 沙箱时你需要指定要载入的模块，KISSY 的功能是模块化的，包括`node`，`event`，`ajax`等。这个例子中载入了`node`模块，在沙箱中可以通过回调参数来使用`node`的 API。**特别的**，`node`模块中最常用的 API 被挂载在 KISSY 对象上，作为快捷调用方式。比如`S.all`和`S.one`。
 
 KISSY 会自动计算模块依赖和模块去重，将所需模块的最小子集载入到页面中。一旦 node 模块加载完成，就会执行沙箱的回调逻辑。**注意**：沙箱回调为异步执行，不管是否已经预先载入了 node。所以两个并列的沙箱的执行时机是不确定的。开发者不应当去关心沙箱的先后顺序。
 
@@ -37,7 +39,7 @@ node 模块对 DOM 节点底层 API 做了封装和扩展，你可以方便查�
 			listNode    = S.Node('<ul>'),
 			footerNode  = S.Node('<footer>');
 
-		// 操作节点
+		// 操作节点，支持链式调用
 		contentNode.html('Hello Kissy!')
 					.append('<p>touch me</p>')
 					.addClass('highlight')
@@ -111,20 +113,82 @@ KISSY 提供 anim 模块，完成 DOM 元素的动画，模块将自动探测硬
 		*/
 	});
 
-> <a href="http://demo.kissyui.com/tutorial/demo.html" class="btn btn-primary btn-lg">Try This Demo!</a> &nbsp;
+## 7，自定义模块
 
-------------------------------------
+> <a href="http://demo.kissyui.com/tutorial/demo1.html" class="btn btn-primary btn-lg">Try This Demo!</a> &nbsp;
 
-# Lest's learn more
+这个Demo和上一个的不同之处在于，我们将它改造成了一个独立的模块。
 
-## 7，模块的合并载入
+创建一个新模块：
+
+	KISSY.add(function(S, N, E, A, IO){
+		var $ = S.all;
+		var opLotto = {
+			init: function(){
+				...
+			},
+			...
+		}
+		return opLotto;
+	}, {requires: ['node', 'event', 'anim', 'ajax']});
+
+模块其实就是一个对象，模块名可以忽略，我们会返回这个对象以便在使用模块时方便调用，最后是依赖配置。Demo中我们把这个模块保存为 `opLotto.js`。同时，我们需要指定这个模块所属的包：
+
+	KISSY.config({
+		packages: [
+			{
+				name: "module",
+				tag: "20130618",
+				path: "./", 
+				charset: "gbk"
+			}
+		]
+	});
+
+这样来调用模块逻辑：
+
+	KISSY.use('module/opLotto, node, event', function(S, OP, N, E){
+		S.ready(function(S){
+			var $ = S.all;
+			OP.init();
+			...
+		});
+	})
+
+> 包配置相关信息请移步[KISSY模块规范](kmd.html)
+
+## 8，调用官方组件
+
+KISSY 内置了很多有用的组件比如 button，calendar，datalazyload等，这些组件的用法非常简单，比如要用到 button 组件，只需要：
+
+	KISSY.use("button", function(S, Button) {
+		var btn = new Button({
+			content: "我是按钮1",
+			render: "#button_container",
+			tooltip: "hover时显示"
+		});
+		btn.render();
+	})
+
+## 9，调用 Gallery 中的组件
+
+gallery 是社区贡献的组件集合，汇集了各种各样的功能，比如 kcharts，imgcrop，waterfallx，slide，uploader。
+
+gallery 鼓励分享，任何人都可以为 gallery 提交自己的组件。在 KISSY 1.4.x 中内置了 gallery package，使用 gallery 组件非常方便：
+
+	KISSY.use('gallery/offline/1.0/index', function (S, Offline) {
+		var offline = new Offline();
+		...
+	});
+
+## 10，开启模块的Combo
 
 由于 KISSY 的模块非常颗粒化，会不会页面中载入的 JavaScript 文件过多，导致 HTTP 请求数太多呢？有两种方法来减少请求数：
 
 - CDN 动态合并（Combo）
-- 静态编译，本地合并
+- 静态编译，本地合并，使用工具 [KISSY Module Compiler](kmc.html)
 
-这里只介绍动态合并，前提是你的 CDN 支持 Combo 功能，比如`KISSY.use('overlay')`会带来13个请求：
+动态合并，比如`KISSY.use('overlay')`会带来13个请求：
 
 ![](http://gtms02.alicdn.com/tps/i2/T1IuezFfBdXXaC5N70-657-280.png)
 
@@ -144,34 +208,5 @@ Combo 后的链接为：
 
 	http://g.tbcdn.cn/kissy/k/1.4.0/??node-min.js,dom/base-min.js,event/dom/base-min.js,event/base-min.js,event/dom/shake-min.js,event/dom/focusin-min.js,anim-min.js,anim/base-min.js,event/custom-min.js,anim/timer-min.js,event-min.js,anim/transition-min.js
 
-## 8，调用 Gallery 中的组件
 
-KISSY 的模块设计依赖于命名空间，**核心模块只需通过名称来引用**即可，非核心模块使用`包名+模块名`来引用，比如
-
-	// 引用 Gallery 中的组件
-	KISSY.use('gallery/slide/1.1/index',function(S,Slide){
-		// Your Code...	
-	});
-
-其中，`gallery`是一个包配置，在引用包+模块时，对应关系如下，蓝色部分为包路径，黄色部分为模块的相对路径：
-
-![](http://gtms01.alicdn.com/tps/i1/T1iJmAFfdbXXcIu7D9-488-187.png)
-
-`gallery`包配置已经定义在了Seed中，如果要创建自己的包，需要首先这样定义**包**：
-
-	// 定义包配置
-	KISSY.config({
-		packages:[
-			{
-				name:"my-package",
-				path:'http://root-path/my-package/'
-				ignorePackageNameInUri:true
-			}
-		]
-	});
-
-	// 载入 http://root-path/my-package/module-name.js
-	KISSY.use('my-package/module-name',function(S,ModuleName){
-		// Your Code...
-	});
 

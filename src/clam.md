@@ -1,12 +1,10 @@
 # KISSY 项目构建工具，Generator-clam
 
-<script async class="speakerdeck-embed" data-id="a688a530ec4a0130128752852468ff6c" data-ratio="1.33333333333333" src="//speakerdeck.com/assets/embed.js"></script>
-
 <p></p>
 
 ![](http://img04.taobaocdn.com/tps/i4/T1C5hpXwXeXXbkQf6j-210-45.jpg)
 
-环境依赖：Node、Npm，视频演示：[http://ascii.io/a/4384](http://ascii.io/a/4384)。
+环境依赖：Node、Npm，[工具原理介绍PPT](https://speakerdeck.com/lijing00333/generator-clam)。视频演示：[http://ascii.io/a/4384](http://ascii.io/a/4384)。
 
 ## 安装 & 基本命令
 

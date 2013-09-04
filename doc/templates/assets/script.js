@@ -20,12 +20,11 @@ $( document ).ready( function() {
 
 
 var setMenuBackgroundHeight = function() {
-
   var d = $( '#content').height();
   var w = $( window ).width();
 
   if( w > 760 ) {
-    $( '#sidebar' ).css( { "min-height": (d) } );
+    $( '#sidebar' ).css( { "min-height": (d - 40) } );
   } else {
     $( '#sidebar' ).css( { "min-height": (100) } );
   }
