@@ -118,6 +118,6 @@ module.exports = function (grunt) {
 		task.run('watch');
 	});
 
-	grunt.registerTask('default', ['clean:doc', 'copy', 'markdown','replace']);
+	grunt.registerTask('default', ['clean:doc', 'copy', 'markdown']);
 
 };
