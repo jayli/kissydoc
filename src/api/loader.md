@@ -2,9 +2,16 @@
 
 > loader 是脚本加载器的实现， 弥补了 javascript 语言机制的不足, 提供类似其他语言原生的模块化机制。KISSY loader 实现了 [KISSY 模块规范](../kmd.html)。
 
-### S.add()
+### add()
 
 `add(name,fn[,config]) ⇒ void`
+
+#### parameters
+
+- name (string) – 模块名。可选。
+- fn (function) – 模块定义函数
+- config (object) – 模块的一些格外属性, 是JSON对象，包含属性：
+	- requires (Array<String>) – 模块的一些依赖项, 如果需要载入 css 则, 数组项为 `.css` 结尾名字
 
 KISSY 添加模块/逻辑片段的函数，config为配置对象，包括`config.requries`，给出当前模块的依赖模块。模块返回一个对象，通过引用它的时候来调用到。
 
@@ -52,11 +59,13 @@ KISSY 添加模块/逻辑片段的函数，config为配置对象，包括`config
 
 > *Changed in version 1.3+*: KISSY.add 表示模块定义, fn 并不会执行, 只有在 use 时才执行, 懒加载原则.
 
-### S.config()
+### config()
 
 * `config(config) ⇒ void`
 * `config(name,value) ⇒ void`，name：参数名，value：参数值
 * `config(name) ⇒ data`，返回参数名的值
+
+#### parameters
 
 全局配置函数，用以读写全局配置项，包括注册包、预注册模块名称，模块文件的引用规则等等。其中配置项包括这些字段，`modules`和`packages`是JSON对象：
 
@@ -164,3 +173,66 @@ packages 范例: 包配置
 	});
 
 > 模块名也可以省略, 不过部署阶段需要使用 [KISSY Module Compiler](https://github.com/daxingplay/ModuleCompiler) 静态打包。
+
+### getScript()
+
+- `getScript(url,config) ⇒ HTMLElement`
+- `getScript(url,success,charset) ⇒ HTMLElement`，简写写法
+
+动态加载目标地址的资源文件，config 为JSON对象，返回值为HTMLElement，为创建的link或者script节点，参数如下：
+
+#### parameters
+
+- url（string），js/css 资源地址
+- config，JSON 对象，包含属性有：
+	- charset（string），资源文件的字符编码
+	- success（function），资源加载成功后回调函数.
+	- error（function），超时或发生错误时回调函数. 当资源文件为 css 文件时不支持
+	- timeout（Number），单位为秒, 默认无限大. 超时后触发 error 回调. 当资源文件为 css 文件是不支持
+
+#### return
+
+`HTMLElement` 返回创建的link或者script节点
+
+#### Example
+
+简写写法`getScript(url,success,charset)`中，`success`为回调函数，`charset`为编码类型。相当于：
+
+	 KISSY.getScript(url , { 
+		 success : success , 
+		 charset : charset 
+	});
+
+### use()
+
+`use (modNames[,callback]) ⇒  void`
+
+载入并运行模块,和`add`一起使用，详细用法参照[KISSY 模块规范](../kmd.html)，`callback`类型可以是function也可以是object。参数说明：
+
+#### parameters
+
+- modNames (String|String[]) – 以逗号（`,`）分割的模块名称,例如 `KISSY.use("custommod,custommod2")`
+- callback (function|Object) – 当 `modNames` 中所有模块载入并执行完毕后执行的函数或者对象描述，当callback类型为Object时，可传入两个属性：
+	- success (function) – 当 `modNames` 中所有模块加载完毕后执行的函数
+	- error (function) – 当前 use 失败时调用的函数，参数为失败的模块对象
+
+#### Example
+
+callback为函数时
+
+	KISSY.use("depMod1,depMod2",function(S,DepMod1,DepMod2){
+		// Your code...
+	});
+
+callback为对象时
+
+	KISSY.use("depMod1,depMod2",{
+		success:function(S,DepMod1,DepMod2){
+			// Your code
+		},
+		error:function(){
+			var errorMods = KISSY.makeArray(arguments);
+		}
+	});
+
+> 如果使用经过配置的包内的模块, 则这些包内模块不需要事先注册, 直接 use 即可, 如果模块名以 `/` 结尾, 则自动加后缀 `index` , 例如 `use("mods/m1/")` 相当于 `use("mods/m1/index")` , 即自动加载 `m1` 目录下的 `index.js`

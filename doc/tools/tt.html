@@ -16,25 +16,7 @@
 	<script>
 		var S = KISSY;
 
-		S.use('overlay');
-
-		KISSY.config({
-			packages:{
-				x:{
-					base:'./',
-					debug:true,
-					ignorePackageNameInUri:true
-				}
-			},
-			modules:{
-				'x/a':{
-					alias:['x/b','x/c']
-				}
-			},
-			combine:false
-		});
-
-		S.use('x/a',function(S,A){
+		S.use('',function(S,A){
 			//debugger;
 			
 		});

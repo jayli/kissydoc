@@ -29,6 +29,23 @@ module.exports = function (grunt) {
 				]
 			}
 		},
+		replace: {
+			dist: {
+				options: {
+					variables: {
+						'': '&#8658;'
+					},
+					prefix:'='
+				},
+				files: [
+					{
+						expand: true, 
+                        cwd: 'doc/',
+						src: ['**/*.html']
+					}
+				]
+			}
+		},
 		markdown: {
 			api: {
 				files: [
@@ -95,11 +112,12 @@ module.exports = function (grunt) {
 	grunt.loadNpmTasks('grunt-contrib-copy');
 	grunt.loadNpmTasks('grunt-markdown');
     grunt.loadNpmTasks('grunt-contrib-watch');
+	grunt.loadNpmTasks('grunt-replace');
 
 	grunt.registerTask('listen', 'clam watch ...', function() {
 		task.run('watch');
 	});
 
-	grunt.registerTask('default', ['clean:doc', 'copy', 'markdown']);
+	grunt.registerTask('default', ['clean:doc', 'copy', 'markdown','replace']);
 
 };

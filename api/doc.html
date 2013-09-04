@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset&#8658;"utf-8">
+  <meta name&#8658;viewport content&#8658;"initial-scale&#8658;1.0, maximum-scale&#8658;1.0, user-scalable&#8658;no">
+  <!--[if lt IE 9]>
+    <script src&#8658;"http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+  <title>KISSY: 模块化、接口一致、全终端适配的JS类库</title>
+  
+  <meta name&#8658;description content&#8658;"The aerogel-weight jQuery-compatible JavaScript library
+">
+  
+  <link rel&#8658;stylesheet href&#8658;assets/style.css />
+  <link rel&#8658;stylesheet href&#8658;assets/tomorrow-night-bright.css />
+
+  <meta name&#8658;apple-mobile-web-app-capable content&#8658;yes>
+  <meta name&#8658;apple-mobile-web-app-status-bar-style content&#8658;white>
+  <meta name&#8658;format-detection content&#8658;"telephone&#8658;no">
+	<script src&#8658;"http://a.tbcdn.cn/s/kissy/1.3.0/seed-min.js"></script>
+	<script src&#8658;"assets/highlight.pack.js"></script>
+
+	<link rel&#8658;"shortcut icon" href&#8658;"http://a.tbcdn.cn/s/kissy/favicon.ico" type&#8658;"image/x-icon" />
+</head>
+<body>
+
+  <div id&#8658;"menu_icon">≣</div>
+
+<aside id&#8658;"sidebar" class&#8658;"interface">
+
+<h3>Introduction</h3>
+
+  <a class&#8658;"toc_title" href&#8658;"#">
+    seed.js <span class&#8658;"version">(1.4.0)</span>
+  </a>
+  <ul class&#8658;toc_section>
+    <li><a href&#8658;"#download">源代码</a></li>
+    <li><a href&#8658;"#guide">Hello World</a></li>
+    <li><a href&#8658;"#blue">模块化机制</a></li>
+    <li><a href&#8658;"#platforms">平台兼容</a></li>
+    <li><a href&#8658;"#changelog">历史版本</a></li>
+    <li><a href&#8658;"#1.4.0">V1.4.0 新特性</a></li>
+    <li><a href&#8658;"#thanks">致谢</a></li>
+  </ul>
+
+  <a class&#8658;"toc_title" href&#8658;"#">图例</a>
+  <ul class&#8658;toc_section>
+    <li><a href&#8658;"#download">静态方法/属性</a></li>
+    <li><a href&#8658;"#blue">模块对象</a></li>
+    <li><a href&#8658;"#guide">实例方法</a></li>
+    <li><a href&#8658;"#changelog">继承方法</a></li>
+    <li><a href&#8658;"#changelog">实例事件</a></li>
+  </ul>
+
+  <hr>
+
+<h3>Seed</h3>
+
+  <a class&#8658;toc_title href&#8658;"#loader">loader</a>
+  
+	<ul class&#8658;toc_section>
+		<li><a href&#8658;"#loader_config">config()</a></li>
+		<li><a href&#8658;"#getScript">getScript()</a></li>
+		<li><a href&#8658;"#add">add()</a></li>
+		<li><a href&#8658;"#use">use()</a></li>
+	</ul>
+
+  <a class&#8658;toc_title href&#8658;"#core">ua</a>
+  
+	<ul class&#8658;toc_section>
+		<li><a href&#8658;"#">trident</a></li>
+		<li><a href&#8658;"#">webkit</a></li>
+		<li><a href&#8658;"#">gecko</a></li>
+		<li><a href&#8658;"#">presto</a></li>
+		<li><a href&#8658;"#">chrome</a></li>
+		<li><a href&#8658;"#">safari</a></li>
+		<li><a href&#8658;"#">firefox</a></li>
+		<li><a href&#8658;"#">ie</a></li>
+		<li><a href&#8658;"#">opera</a></li>
+		<li><a href&#8658;"#">mobile</a></li>
+		<li><a href&#8658;"#">core</a></li>
+		<li><a href&#8658;"#">shell</a></li>
+		<li><a href&#8658;"#">os</a></li>
+		<li><a href&#8658;"#">ipad</a></li>
+		<li><a href&#8658;"#">iphone</a></li>
+		<li><a href&#8658;"#">ipod</a></li>
+		<li><a href&#8658;"#">ios</a></li>
+		<li><a href&#8658;"#">android</a></li>
+	</ul>
+
+
+  <a class&#8658;toc_title href&#8658;"#core">lang</a>
+  
+	<ul class&#8658;toc_section>
+		<li><a href&#8658;"augment.html">augment()</a></li>
+		<li><a href&#8658;"available.html">available()</a></li>
+		<li><a href&#8658;"bind.html">bind()</a></li>
+		<li><a href&#8658;"buffer.html">buffer()</a></li>
+		<li><a href&#8658;"clone.html">clone()</a></li>
+		<li><a href&#8658;"each.html">each()</a></li>
+		<li><a href&#8658;"endsWith.html">endsWith()</a></li>
+		<li><a href&#8658;"error.html">error()</a></li>
+		<li><a href&#8658;"escapeHTML.html">escapeHTML()</a></li>
+		<li><a href&#8658;"extend.html">extend()</a></li>
+		<li><a href&#8658;"filter.html">filter()</a></li>
+		<li><a href&#8658;"fromUnicode.html">fromUnicode()</a></li>
+		<li><a href&#8658;"globalEval.html">globalEval()</a></li>
+		<li><a href&#8658;"guid.html">guid()</a></li>
+		<li><a href&#8658;"inArray.html">inArray()</a></li>
+		<li><a href&#8658;"indexOf.html">indexOf()</a></li>
+		<li><a href&#8658;"isArray.html">isArray()</a></li>
+		<li><a href&#8658;"isBoolean.html">isBoolean()</a></li>
+		<li><a href&#8658;"isDate.html">isDate()</a></li>
+		<li><a href&#8658;"isEmptyObject.html">isEmptyObject()</a></li>
+		<li><a href&#8658;"isFunction.html">isFunction()</a></li>
+		<li><a href&#8658;"isNull.html">isNull()</a></li>
+		<li><a href&#8658;"isNumber.html">isNumber()</a></li>
+		<li><a href&#8658;"isObject.html">isObject()</a></li>
+		<li><a href&#8658;"isPlainObject.html">isPlainObject()</a></li>
+		<li><a href&#8658;"isRegExp.html">isRegExp()</a></li>
+		<li><a href&#8658;"isString.html">isString()</a></li>
+		<li><a href&#8658;"isUndefined.html">isUndefined()</a></li>
+		<li><a href&#8658;"isWindow.html">isWindow()</a></li>
+		<li><a href&#8658;"keys.html">keys()</a></li>
+		<li><a href&#8658;"lastIndexOf.html">lastIndexOf()</a></li>
+		<li><a href&#8658;"later.html">later()</a></li>
+		<li><a href&#8658;"log.html">log()</a></li>
+		<li><a href&#8658;"makeArray.html">makeArray()</a></li>
+		<li><a href&#8658;"map.html">map()</a></li>
+		<li><a href&#8658;"merge.html">merge()</a></li>
+		<li><a href&#8658;"mix.html">mix()</a></li>
+		<li><a href&#8658;"namespace.html">namespace()</a></li>
+		<li><a href&#8658;"now.html">now()</a></li>
+		<li><a href&#8658;"param.html">param()</a></li>
+		<li><a href&#8658;"parseXML.html">parseXML()</a></li>
+		<li><a href&#8658;"ready.html">ready()</a></li>
+		<li><a href&#8658;"reduce.html">reduce()</a></li>
+		<li><a href&#8658;"startsWith.html">startsWith()</a></li>
+		<li><a href&#8658;"substitute.html">substitute()</a></li>
+		<li><a href&#8658;"throttle.html">throttle()</a></li>
+		<li><a href&#8658;"trim.html">trim()</a></li>
+		<li><a href&#8658;"unEscapeHTML.html">unEscapeHTML()</a></li>
+		<li><a href&#8658;"unique.html">unique()</a></li>
+		<li><a href&#8658;"unparam.html">unparam()</a></li>
+		<li><a href&#8658;"version.html">version()</a></li>
+	</ul>
+
+  <a class&#8658;toc_title href&#8658;"#core">features</a>
+	<ul class&#8658;toc_section>
+		<li><a href&#8658;"#">isDeviceMotionSupported()</a></li>
+		<li><a href&#8658;"#">isHashChangeSupported()</a></li>
+		<li><a href&#8658;"#">isNativeJSONSupported()</a></li>
+		<li><a href&#8658;"#">isTouchSupported()</a></li>
+	</ul>
+
+
+  <hr>
+
+<h3>Core</h3>
+
+  <a class&#8658;toc_title href&#8658;"#core">ajax</a>
+  
+	<ul class&#8658;toc_section>
+		<li><a href&#8658;"#">S.Ajax</a></li>
+		<li><a href&#8658;"#">S.IO</a></li>
+		<li><a href&#8658;"#">setupConfig()</a></li>
+		<li><a href&#8658;"#">get()</a></li>
+		<li><a href&#8658;"#">post()</a></li>
+		<li><a href&#8658;"#">getJSON()</a></li>
+		<li><a href&#8658;"#">jsonp()</a></li>
+		<li><a href&#8658;"#">upload()</a></li>
+		<li><a href&#8658;"#">serialize()</a></li>
+		<li><a href&#8658;"#">xdrReady()</a></li>
+		<li><a href&#8658;"#">xdrResponse()</a></li>
+		<li><a href&#8658;"#">abort()</a></li>
+		<li><a href&#8658;"#">getResponseHeader()</a></li>
+		<li><a href&#8658;"#">fail()</a></li>
+		<li><a href&#8658;"#">getNativeXhr()</a></li>
+		<li><a href&#8658;"#">isRejected()</a></li>
+		<li><a href&#8658;"#">isResolved()</a></li>
+		<li><a href&#8658;"#">then()</a></li>
+		<li<a href&#8658;"#">start</a></li>
+		<li<a href&#8658;"#">send</a></li>
+		<li<a href&#8658;"#">progress</a></li>
+	</ul>
+
+  <a class&#8658;toc_title href&#8658;"#core">anim</a>
+  
+	<ul class&#8658;toc_section>
+		<li><a href&#8658;"#">S.Anim</a></li>
+		<li><a href&#8658;"#">run()</a></li>
+		<li><a href&#8658;"#">stop()</a></li>
+		<li><a href&#8658;"#">pause()</a></li>
+		<li><a href&#8658;"#">resume()</a></li>
+		<li><a href&#8658;"#">isRunning()</a></li>
+		<li><a href&#8658;"#">isPaused()</a></li>
+		<li><a href&#8658;"#">beforeStart</a></li>
+		<li><a href&#8658;"#">complete</a></li>
+		<li><a href&#8658;"#">step</a></li>
+	</ul>
+
+  <a class&#8658;toc_title href&#8658;"#core">base</a>
+  
+	<ul class&#8658;toc_section>
+		<li><a href&#8658;"#">S.Base</a><font color&#8658;"blue">(Base参元类)</font></li>
+	</ul>
+
+  <a class&#8658;toc_title href&#8658;"#core">cookie</a>
+  
+	<ul class&#8658;toc_section>
+		<li><a href&#8658;"#">get()</a></li>
+		<li><a href&#8658;"#">set()</a></li>
+		<li><a href&#8658;"#">remove()</a></li>
+	</ul>
+
+  <a class&#8658;toc_title href&#8658;"#core">dom</a>
+  
+	<ul class&#8658;toc_section>
+		<li><a href&#8658;"selector.html">selector()</a></li>
+		<li><a href&#8658;"query.html">query()</a></li>
+		<li><a href&#8658;"get.html">get()</a></li>
+		<li><a href&#8658;"filter.html">filter()</a></li>
+		<li><a href&#8658;"test.html">test()</a></li>
+		<li><a href&#8658;"clone.html">clone()</a></li>
+		<li><a href&#8658;"hasClass.html">hasClass()</a></li>
+		<li><a href&#8658;"addClass.html">addClass()</a></li>
+		<li><a href&#8658;"removeClass.html">removeClass()</a></li>
+		<li><a href&#8658;"replaceClass.html">replaceClass()</a></li>
+		<li><a href&#8658;"toggleClass.html">toggleClass()</a></li>
+		<li><a href&#8658;"removeAttr.html">removeAttr()</a></li>
+		<li><a href&#8658;"attr.html">attr()</a></li>
+		<li><a href&#8658;"hasAttr.html">hasAttr()</a></li>
+		<li><a href&#8658;"prop.html">prop()</a></li>
+		<li><a href&#8658;"hasProp.html">hasProp()</a></li>
+		<li><a href&#8658;"val.html">val()</a></li>
+		<li><a href&#8658;"text.html">text()</a></li>
+		<li><a href&#8658;"css.html">css()</a></li>
+		<li><a href&#8658;"style.html">style()</a></li>
+		<li><a href&#8658;"width.html">width()</a></li>
+		<li><a href&#8658;"height.html">height()</a></li>
+		<li><a href&#8658;"innerWidth.html">innerWidth()</a></li>
+		<li><a href&#8658;"innerHeight.html">innerHeight()</a></li>
+		<li><a href&#8658;"outerWidth.html">outerWidth()</a></li>
+		<li><a href&#8658;"outerHeight.html">outerHeight()</a></li>
+		<li><a href&#8658;"addStyleSheet.html">addStyleSheet()</a></li>
+		<li><a href&#8658;"show.html">show()</a></li>
+		<li><a href&#8658;"hide.html">hide()</a></li>
+		<li><a href&#8658;"toggle.html">toggle()</a></li>
+		<li><a href&#8658;"offset.html">offset()</a></li>
+		<li><a href&#8658;"scrollTop.html">scrollTop()</a></li>
+		<li><a href&#8658;"scrollLeft.html">scrollLeft()</a></li>
+		<li><a href&#8658;"docHeight.html">docHeight()</a></li>
+		<li><a href&#8658;"docWidth.html">docWidth()</a></li>
+		<li><a href&#8658;"viewportHeight.html">viewportHeight()</a></li>
+		<li><a href&#8658;"viewportWidth.html">viewportWidth()</a></li>
+		<li><a href&#8658;"scrollIntoView.html">scrollIntoView()</a></li>
+		<li><a href&#8658;"dom-index.html">index()</a></li>
+		<li><a href&#8658;"parent.html">parent()</a></li>
+		<li><a href&#8658;"next.html">next()</a></li>
+		<li><a href&#8658;"prev.html">prev()</a></li>
+		<li><a href&#8658;"first.html">first()</a></li>
+		<li><a href&#8658;"last.html">last()</a></li>
+		<li><a href&#8658;"siblings.html">siblings()</a></li>
+		<li><a href&#8658;"children.html">children()</a></li>
+		<li><a href&#8658;"contains.html">contains()</a></li>
+		<li><a href&#8658;"create.html">create()</a></li>
+		<li><a href&#8658;"html.html">html()</a></li>
+		<li><a href&#8658;"remove.html">remove()</a></li>
+		<li><a href&#8658;"empty.html">empty()</a></li>
+		<li><a href&#8658;"insertBefore.html">insertBefore()</a></li>
+		<li><a href&#8658;"insertAfter.html">insertAfter()</a></li>
+		<li><a href&#8658;"append.html">append()</a></li>
+		<li><a href&#8658;"prepend.html">prepend()</a></li>
+		<li><a href&#8658;"replaceWith.html">replaceWith()</a></li>
+		<li><a href&#8658;"data.html">data()</a></li>
+		<li><a href&#8658;"removeData.html">removeData()</a></li>
+		<li><a href&#8658;"hasData.html">hasData()</a></li>
+		<li><a href&#8658;"unselectable.html">unselectable()</a></li>
+		<li><a href&#8658;"contents.html">contents()</a></li>
+		<li><a href&#8658;"wrap.html">wrap()</a></li>
+		<li><a href&#8658;"wrapAll.html">wrapAll()</a></li>
+		<li><a href&#8658;"unwrap.html">unwrap()</a></li>
+		<li><a href&#8658;"wrapInner.html">wrapInner()</a></li>
+		<li><a href&#8658;"nodeName.html">nodeName()</a></li>
+		<li><a href&#8658;"outerHTML.html">outerHTML()</a></li>
+
+	</ul>
+
+
+  <a class&#8658;toc_title href&#8658;"#core">event</a>
+  
+	<ul class&#8658;toc_section>
+		<li><a href&#8658;"#"><b>EventTarget</b></a><font color&#8658;"blue">(事件参元类)</font></li>
+		<li><a href&#8658;"#"><b>EventObject</b></a><font color&#8658;"blue">(事件门面对象)</font></li>
+		<li><a href&#8658;"#">on()</a></li>
+		<li><a href&#8658;"#">delegate()</a></li>
+		<li><a href&#8658;"#">detach()</a></li>
+		<li><a href&#8658;"#">undelegate()</a></li>
+		<li><a href&#8658;"#">fire()</a></li>
+		<li><a href&#8658;"#">fireHandler()</a></li>
+	</ul>
+
+
+  <a class&#8658;toc_title href&#8658;"#core">json</a>
+  
+	<ul class&#8658;toc_section>
+		<li><a href&#8658;"#">parse()</a></li>
+		<li><a href&#8658;"#">stringify()</a></li>
+	</ul>
+
+  <a class&#8658;toc_title href&#8658;"#core">node</a>
+  
+	<ul class&#8658;toc_section>
+		<li><a href&#8658;"instance_all.html">all()</a></li>
+		<li><a href&#8658;"instance_one.html">one()</a></li>
+		<li><a href&#8658;"getDOMNodes.html">getDOMNodes()</a></li>
+		<li><a href&#8658;"getDOMNode.html">getDOMNode()</a></li>
+		<li><a href&#8658;"end.html">end()</a></li>
+		<li><a href&#8658;"equals.html">equals()</a></li>
+		<li><a href&#8658;"add.html">add()</a></li>
+		<li><a href&#8658;"item.html">item()</a></li>
+		<li><a href&#8658;"slice.html">slice()</a></li>
+		<li><a href&#8658;"scrollTop.html">scrollTop()</a></li>
+		<li><a href&#8658;"scrollLeft.html">scrollLeft()</a></li>
+		<li><a href&#8658;"height.html">height()</a></li>
+		<li><a href&#8658;"width.html">width()</a></li>
+		<li><a href&#8658;"addStyleSheet.html">addStyleSheet()</a></li>
+		<li><a href&#8658;"append.html">append()</a></li>
+		<li><a href&#8658;"appendTo.html">appendTo()</a></li>
+		<li><a href&#8658;"prepend.html">prepend()</a></li>
+		<li><a href&#8658;"prependTo.html">prependTo()</a></li>
+		<li><a href&#8658;"insertBefore.html">insertBefore()</a></li>
+		<li><a href&#8658;"before.html">before()</a></li>
+		<li><a href&#8658;"after.html">after()</a></li>
+		<li><a href&#8658;"insertAfter.html">insertAfter()</a></li>
+		<li><a href&#8658;"animate.html">animate()</a></li>
+		<li><a href&#8658;"stop.html">stop()</a></li>
+		<li><a href&#8658;"pause.html">pause()</a></li>
+		<li><a href&#8658;"resume.html">resume()</a></li>
+		<li><a href&#8658;"isRunning.html">isRunning()</a></li>
+		<li><a href&#8658;"isPaused.html">isPaused()</a></li>
+		<li><a href&#8658;"show.html">show()</a></li>
+		<li><a href&#8658;"hide.html">hide()</a></li>
+		<li><a href&#8658;"toggle.html">toggle()</a></li>
+		<li><a href&#8658;"fadeIn.html">fadeIn()</a></li>
+		<li><a href&#8658;"fadeOut.html">fadeOut()</a></li>
+		<li><a href&#8658;"fadeToggle.html">fadeToggle()</a></li>
+		<li><a href&#8658;"slideDown.html">slideDown()</a></li>
+		<li><a href&#8658;"slideUp.html">slideUp()</a></li>
+		<li><a href&#8658;"slideToggle.html">slideToggle()</a></li>
+		<li><a href&#8658;"">继承自dom/event的方法</a></li>
+	</ul>
+
+  <a class&#8658;toc_title href&#8658;"#core">uri</a>
+
+	<ul class&#8658;toc_section>
+		<li><a href&#8658;"#">S.Uri</a></li>
+		<li><a href&#8658;"#">every()</a></li>
+		<li><a href&#8658;"#">some()</a></li>
+		<li><a href&#8658;"#">stamp()</a></li>
+		<li><a href&#8658;"#">clone()</a></li>
+		<li><a href&#8658;"#">resolve()</a></li>
+		<li><a href&#8658;"#">getScheme()</a></li>
+		<li><a href&#8658;"#">setScheme()</a></li>
+		<li><a href&#8658;"#">getHostname()</a></li>
+		<li><a href&#8658;"#">setHostname()</a></li>
+		<li><a href&#8658;"#">getUserInfo()</a></li>
+		<li><a href&#8658;"#">setUserInfo()</a></li>
+		<li><a href&#8658;"#">setPort()</a></li>
+		<li><a href&#8658;"#">getPort()</a></li>
+		<li><a href&#8658;"#">setPath()</a></li>
+		<li><a href&#8658;"#">getPath()</a></li>
+		<li><a href&#8658;"#">setQuery()</a></li>
+		<li><a href&#8658;"#">getQuery()</a></li>
+		<li><a href&#8658;"#">getFragment()</a></li>
+		<li><a href&#8658;"#">setFragment()</a></li>
+		<li><a href&#8658;"#">isSameOriginAs()</a></li>
+		<li><a href&#8658;"#">toString()</a></li>
+	</ul>
+
+  <a class&#8658;toc_title href&#8658;"#core">promise</a>
+	<ul class&#8658;toc_section>
+		<li><a href&#8658;"#">S.Promise</a><font color&#8658;blue>(内部调用)</font></li>
+		<li><a href&#8658;"#">S.Defer</a><font color&#8658;blue>(内部调用)</font></li>
+	</ul>
+
+  <a class&#8658;toc_title href&#8658;"#core">path</a> 
+	<ul class&#8658;toc_section>
+		<li><a href&#8658;"">basename()</a></li>
+		<li><a href&#8658;"">dirname()</a></li>
+		<li><a href&#8658;"">extname()</a></li>
+		<li><a href&#8658;"">join()</a></li>
+		<li><a href&#8658;"">normalize()</a></li>
+		<li><a href&#8658;"">relative()</a></li>
+		<li><a href&#8658;"">resolve()</a></li>
+	</ul>
+
+<hr />
+
+<h3>Mobile 支持</h3>
+
+  <a class&#8658;toc_title href&#8658;"#core">Mobile Events</a>
+	<ul class&#8658;toc_section>
+		<li><a href&#8658;"#">Touch Events</a></li>
+	</ul>
+
+  <a class&#8658;toc_title href&#8658;"#core">UA 探测</a>
+	<ul class&#8658;toc_section>
+		<li><a href&#8658;"#">Mobile UA</a></li>
+	</ul>
+
+</aside>
+
+<div class&#8658;"container">
+	<h3>S.add()</h3>
+<p><code>add(name,fn[,config]) ⇒ void</code></p>
+<p>KISSY 添加模块/逻辑片段的函数，config为配置对象，包括<code>config.requries</code>，给出当前模块的依赖模块。模块返回一个对象，通过引用它的时候来调用到。</p>
+<p>当模块名称 name 为<a href&#8658;"#loader_config">包内模块</a>时, 则requires的模块名称可使用相对路径来引用包内其他模块，比如<code>package/a</code>来引用<code>package/a.js</code>，也可以用<code>./a</code>来引用<code>package/a.js</code></p>
+<pre><code>// package/a.js
+KISSY.add(&#39;package/a&#39;,function(S){
+    return ObjA;
+},{
+    // 当前逻辑依赖一个包内的文件b，一个全局模块node，一个同目录下的css文件
+    requries:[&#39;package/b&#39;,&#39;node&#39;,&#39;./mod.css&#39;]    
+});</code></pre>
+<p>使用该模块</p>
+<pre><code>KISSY.use(&#39;package/a&#39;,function(S,ObjA){
+    // 可引用ObjA
+});</code></pre>
+<p>本地开发时，模块名称可留空，不过在部署阶段需要使用<a href&#8658;"https://github.com/daxingplay/ModuleCompiler">Kissy Mobule Compiler</a>生成模块依赖关系表，或者直接生成合并后的文件。</p>
+<pre><code>// package/a.js
+KISSY.add(function(S){
+    return ObjA;
+},{
+    requries:[&#39;./b&#39;,&#39;./mod.css&#39;]    
+});</code></pre>
+<p><code>add()</code>中的函数回调可以调用它依赖的模块所返回的对象</p>
+<pre><code>// package/a.js
+KISSY.add(function(S,Node,ObjB){
+    // 使用 Node 和 ObjB
+},{
+    requries:[&#39;node&#39;,&#39;./b&#39;]    
+});</code></pre>
+<blockquote>
+<p><em>Changed in version 1.3+</em>: KISSY.add 表示模块定义, fn 并不会执行, 只有在 use 时才执行, 懒加载原则.</p>
+</blockquote>
+
+</div>
+
+  <script>
+	var S &#8658; KISSY;
+	(function(){
+		S.use('node',function(S){
+			S.all('code').each(function(node){
+				var className &#8658; node.attr('class');
+				if(/^lang-/.test(className)){
+					var tc &#8658; className.replace(/^lang-/,'');
+					node.replaceClass(className,tc);
+				}
+			});
+			hljs.tabReplace &#8658; '    ';
+			hljs.initHighlighting();
+		});
+	})();
+  </script>
+
+</body>
+</html>
+

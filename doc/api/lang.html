@@ -412,215 +412,197 @@
 </aside>
 
 <div class="container">
-	<h1>loader</h1>
+	<h1>lang</h1>
 <blockquote>
-<p>loader 是脚本加载器的实现， 弥补了 javascript 语言机制的不足, 提供类似其他语言原生的模块化机制。KISSY loader 实现了 <a href="../kmd.html">KISSY 模块规范</a>。</p>
+<p>lang 是一套<code>underscore</code>风格的工具集，提供一些常用的工具函数，<code>lang</code> 模块内嵌在 <code>seed.js</code> 内，无需额外引入，这些函数直接挂载在 KISSY 全局对象上。</p>
 </blockquote>
-<h3>add()</h3>
-<p><code>add(name,fn[,config]) ⇒ void</code></p>
+<h3>augment()</h3>
+<p><code>augment(r, s1 [, s2 , ...], ov = true, wl) =&gt; Function</code></p>
+<p>将 s1,s2.... 的 <code>prototype</code> 属性的成员复制到 <code>r.prototype</code> 上。这时被复制的成员来自于一个Fucntion对象，这个对象一般被称为掺元类（mixin class）。比如 KISSY 里的 CustemEvent 就是一个掺元类。掺元类只是被扩充用的。参数说明：</p>
 <h4>parameters</h4>
 <ul>
-<li>name (string) – 模块名。可选。</li>
-<li>fn (function) – 模块定义函数</li>
-<li>config (object) – 模块的一些格外属性, 是JSON对象，包含属性：<ul>
-<li>requires (Array<String>) – 模块的一些依赖项, 如果需要载入 css 则, 数组项为 <code>.css</code> 结尾名字</li>
+<li>r (function) – 将要扩充的函数</li>
+<li><code>...s1</code> (function|object) – 扩充来源函数或对象. 非函数对象时复制的就是 s 的成员.</li>
+<li>ov (boolean) – 是否覆盖 r.prototype 同名属性.</li>
+<li>whitelist (Array<string>) – 属性来源对象的属性白名单, 仅在名单中的属性进行复制.</li>
 </ul>
-</li>
-</ul>
-<p>KISSY 添加模块/逻辑片段的函数，config为配置对象，包括<code>config.requries</code>，给出当前模块的依赖模块。模块返回一个对象，通过引用它的时候来调用到。</p>
-<p>当模块名称 name 为<a href="#loader_config">包内模块</a>时, 则requires的模块名称可使用相对路径来引用包内其他模块，比如<code>package/a</code>来引用<code>package/a.js</code>，也可以用<code>./a</code>来引用<code>package/a.js</code></p>
-<pre><code>// package/a.js
-KISSY.add(&#39;package/a&#39;,function(S){
-    return ObjA;
-},{
-    // 当前逻辑依赖一个包内的文件b，一个全局模块node，一个同目录下的css文件
-    requries:[&#39;package/b&#39;,&#39;node&#39;,&#39;./mod.css&#39;]    
-});</code></pre>
-<p>使用该模块</p>
-<pre><code>KISSY.use(&#39;package/a&#39;,function(S,ObjA){
-    // 可引用ObjA
-});</code></pre>
-<p>本地开发时，模块名称可留空，不过在部署阶段需要使用<a href="https://github.com/daxingplay/ModuleCompiler">Kissy Mobule Compiler</a>生成模块依赖关系表，或者直接生成合并后的文件。</p>
-<pre><code>// package/a.js
-KISSY.add(function(S){
-    return ObjA;
-},{
-    requries:[&#39;./b&#39;,&#39;./mod.css&#39;]    
-});</code></pre>
-<p><code>add()</code>中的函数回调可以调用它依赖的模块所返回的对象</p>
-<pre><code>// package/a.js
-KISSY.add(function(S,Node,ObjB){
-    // 使用 Node 和 ObjB
-},{
-    requries:[&#39;node&#39;,&#39;./b&#39;]    
-});</code></pre>
-<p>当模块名称 name 为包内模块&lt; 参见 下文包配置 &gt;时, 则requires的模块名称可使用相对路径 refer 包内其他模块</p>
-<pre><code>// tc/mods/mod1 依赖于 tc/mods/mod2
-KISSY.add(&quot;tc/mods/mod1&quot;,function(){
-    // Your code...
-},{requires:[&#39;./mod2&#39;]});</code></pre>
-<blockquote>
-<p><em>Changed in version 1.3+</em>: KISSY.add 表示模块定义, fn 并不会执行, 只有在 use 时才执行, 懒加载原则.</p>
-</blockquote>
-<h3>config()</h3>
+<h4>return</h4>
 <ul>
-<li><code>config(config) ⇒ void</code></li>
-<li><code>config(name,value) ⇒ void</code>，name：参数名，value：参数值</li>
-<li><code>config(name) ⇒ data</code>，返回参数名的值</li>
-</ul>
-<h4>parameters</h4>
-<p>全局配置函数，用以读写全局配置项，包括注册包、预注册模块名称，模块文件的引用规则等等。其中配置项包括这些字段，<code>modules</code>和<code>packages</code>是JSON对象：</p>
-<ul>
-<li><strong>modules</strong>，JSON 对象，预注册的模块关系依赖</li>
-<li><strong>packages</strong>，JSON 对象，包配置</li>
-<li>combine，Boolean值，是否开启动态合并</li>
-<li>comboMaxFileNum，数字类型，最动态合并文件最大个数</li>
-<li>tag，字符串，异步加载文件时所带的时间戳</li>
-<li>debug，Boolean值，是否开启debug模式，不开启，将默认加载&#39;-min&#39;文件</li>
-<li>charset，字符串，指示所有模块文件编码格式，默认为utf-8</li>
-<li>base，字符串，类库所在的URL</li>
-<li>comboMaxUrlLength，Number，Combo url 的最长长度，默认 1024</li>
-<li>comboPrefix，String，Combo 前缀，默认 ”??”</li>
-<li>comboSep，String， Combo 分隔符，默认 ”,”</li>
-</ul>
-<p><strong>modules</strong>：</p>
-<p>以单个模块为键，单个模块配置对象为值的键值对对象。单个模块配置对象包括：</p>
-<ul>
-<li>requries，字符串组成的数组<code>String[]</code>，该模块的依赖模块名数组。当设置 combine 为 true 时需要配置，否则不建议配置.</li>
-<li>tag，类型 String，单个模块的时间戳。仅在 combine 为 false 时生效。 combine:true 时取对应包的 tag.</li>
-</ul>
-<p><strong>packages</strong>：</p>
-<p>以单个包名为键，单个包配置对象为值的键值对对象。单个包配置对象包括：</p>
-<ul>
-<li>name，字符串, 表示包名</li>
-<li>group，字符串, 表示包所属的组名。</li>
-<li>debug， Boolean, 包内的脚本请求是是否加 -min 后缀，默认和 <code>KISSY.config(“debug”)</code> 相同.</li>
-<li>tag，字符串, 最好为时间戳, 用于刷新客户端本包的模块文件缓存</li>
-<li>combine，Boolean, 如果总和 combine 设置为 true，但是单个包 combine 设置为 false，则该包内文件不进行自动 combo</li>
-<li>ignorePackageNameInUri，Boolean, 默认 false. 是否在请求的模块路径中省去包名. 例如 <code>use(&#39;xx/a&#39;)</code> 配置 <code>xx</code> package 的 base 为 <code>http://test.com/</code> 则设置 <code>ignorePackageNameInUri</code> 后请求地址为： <code>http://test.com/a.js</code>。</li>
-<li>base，字符串, 表示包所在的 url 路径, 相对路径表示相对于当前页面路径, 如果需要相对于当前执行脚本路径, 则需要自己处理：<br /><code>var scripts=document.getElementsByTagName(&quot;script&quot;);</code><br /><code>alert(scripts[scripts.length-1].src);</code></li>
-<li>charset，字符串, 表示宝贝所有模块定义文件的编码格式, 默认 utf-8</li>
+<li><code>r</code>（function），即将要扩充的函数</li>
 </ul>
 <h4>Example</h4>
-<p>配置项可以在脚本引用时带入，比如：</p>
-<pre><code>&lt;script src=&#39;seed.js&#39; data-config=&#39;{combine:true}&#39;&gt;&lt;/script&gt;</code></pre>
-<p>完整的配置样例：</p>
-<pre><code>KISSY.config({
-    // 开启自动 combo 模式
-    combine:true,
-    // kissy 库内置模块的时间戳
-    tag:&#39;2012&#39;,
-    // kissy 的基准路径
-    base:&#39;http://x.com/a&#39;,
-    packages:{
-        x:{
-            // x 包的基准路径
-            base:&#39;http://x.com/biz/&#39;,
-            // x 包的时间戳
-            tag:&#39;x&#39;,
-            // 开启 x 包 debug 模式
-            debug:true
-        },
-        y:{
-           // y 包的基准路径
-           base:&#39;http://x.com/biz/&#39;,
-           // y 包不开启自动 combo
-           combine:false
-           // 不配置 tag，则取 kissy 内置模块的时间戳
-        }
-    },
-    modules:{
-        &quot;x/b1&quot;:{
-            // &quot;x/b1&quot; 模块的依赖信息
-            requires:[&quot;x/b2&quot;,&quot;x/b3&quot;]
-        },
-        &quot;y/b2&quot;:{
-            // y/b2 模块单独的时间戳
-            tag:&#39;234&#39;
-        }
-    }
-});</code></pre>
-<p>packages 范例: 包配置</p>
-<pre><code>KISSY.config({
-    packages:[
-        {
-            name:&quot;tc&quot;, // 包名
-            tag:&quot;20110323&quot;, // 动态加载包内的模块js文件时,
-                            // 自动加上 ?t=20110323, 用于文件更新
-            path:&quot;../&quot;, // 包对应路径, 相对路径指相对于当前页面路径
-            charset:&quot;gbk&quot; // 包里模块文件编码格式
-        }
-    ]
-});</code></pre>
-<p>当要在包内添加模块时, 必须遵守一些约定：</p>
-<ul>
-<li>一个模块的文件必须放在以包名命名的目录中</li>
-<li>一个包下的所有目录的代码都应属于这个包，即包之间不能有重合目录。例如下面这样的包配置是错误的（在 ie 下会有包名不确定问题）：<ul>
-<li>tc 的 <code>path</code> 为 <code>http://x.com/y/</code></li>
-<li>tm 的 <code>path</code> 为 <code>http://x.com/</code></li>
-</ul>
-</li>
-<li>模块的名字必须取名从包目录开始到当前模块文件的文件路径名称, 例如 <code>mod1.js</code> 位于 <code>tc/mods</code> 下, 则 <code>mod1.js</code> 的模块取名：</li>
-</ul>
-<pre><code>KISSY.add(&quot;tc/mods/mod1&quot;,function(){
-    // 模块代码
-});</code></pre>
-<blockquote>
-<p>模块名也可以省略, 不过部署阶段需要使用 <a href="https://github.com/daxingplay/ModuleCompiler">KISSY Module Compiler</a> 静态打包。</p>
-</blockquote>
-<h3>getScript()</h3>
-<ul>
-<li><code>getScript(url,config) ⇒ HTMLElement</code></li>
-<li><code>getScript(url,success,charset) ⇒ HTMLElement</code>，简写写法</li>
-</ul>
-<p>动态加载目标地址的资源文件，config 为JSON对象，返回值为HTMLElement，为创建的link或者script节点，参数如下：</p>
+<pre><code>var S = KISSY,
+Shoutable = {
+    shout: function() { alert(&#39;I am &#39; + this.name + &#39;.&#39;); }
+};
+
+function Dog(name) { this.name = &#39;Dog &#39; + name; }
+function Pig(name) { this.name = &#39;Pig &#39; + name; }
+
+S.augment(Dog, Shoutable);
+S.augment(Pig, Shoutable);
+
+new Dog(&#39;Jack&#39;).shout(); // =&gt; I am Dog Jack.
+new Pig(&#39;Mary&#39;).shout(); // =&gt; I am Pig Mary.</code></pre>
+<p>augment 方法在 KISSY 里非常基础非常重要. 传统 OO 语言里, 可以通过继承或接口来实现共性方法. 在 JavaScript 里, 通过 mixin 特性, 一切变得更简单. augment 是动态语言 mixin 特性的体现, 灵活运用, 能让代码非常优雅简洁.</p>
+<h3>available()</h3>
+<p><code>available (id,fn) =&gt; void</code></p>
+<p>监听某个节点是否处于可用状态，如果可用，执行回调，此函数一般在要监听的DOM节点执行之前绑定到节点。</p>
 <h4>parameters</h4>
 <ul>
-<li>url（string），js/css 资源地址</li>
-<li>config，JSON 对象，包含属性有：<ul>
-<li>charset（string），资源文件的字符编码</li>
-<li>success（function），资源加载成功后回调函数.</li>
-<li>error（function），超时或发生错误时回调函数. 当资源文件为 css 文件时不支持</li>
-<li>timeout（Number），单位为秒, 默认无限大. 超时后触发 error 回调. 当资源文件为 css 文件是不支持</li>
+<li>id (string) – 页面元素 id</li>
+<li>fn (function) – 回调函数, 在 id 元素可用时立刻执行.</li>
+</ul>
+<h3>bind()</h3>
+<p><code>bind (fn , context[, arg1[, arg2[, ...]]]) =&gt; Function</code></p>
+<p>创建一个新函数，该函数可以在固定的上下文以及传递部分固定参数放在用户参数前面给原函数并执行</p>
+<h4>parameters</h4>
+<ul>
+<li>fn (function) – 需要固定上下文以及固定部分参数的函数</li>
+<li>context (object) – 执行 fn 时的 this 值. 如果新函数用于构造器则该参数无用.</li>
+</ul>
+<h4>return</h4>
+<ul>
+<li>Function，符合需求的新函数</li>
+</ul>
+<h4>Example 1，改变运行上下文</h4>
+<p>bind 最简单的用法是生成一个新的函数，无论它如何调用，都运行在一个固定的 this 值中，入门者常犯的错误时从一个对象获得一个方法引用， 然后在后面的调用中期望这个方法的this就是原来的对象(eg.g 把这个方法用在某个回调中). 如果没有特例，那么这个原始对象就丢失了. 但是如果从原方法中得到一个绑定原始对象的函数，这个问题就解决了！</p>
+<pre><code>var x = 9;
+var module = {
+    x: 81,
+    getX: function() { return this.x; }
+};
+
+module.getX(); // 81
+
+var getX = module.getX;
+getX(); // 9, 这里，this 指向全局Global对象
+
+// 创建一个新函数，函数的上下文this绑定至module
+var boundGetX = KISSY.bind(getX,module);
+boundGetX(); // 81</code></pre>
+<h4>Example 2，Currying</h4>
+<p>bind 的下一个简单用法是产生一个具备默认参数的函数. 这些参数跟在 context 后面，无论何时调用绑定函数， 当绑定函数调用目标函数时会把它们放在参数列表开头，然后才是传递给绑定函数的用户参数.</p>
+<pre><code>function list() {
+    return Array.prototype.slice.call(arguments);
+}
+
+var list1 = list(1, 2, 3); // [1, 2, 3]
+
+// 使用当前参数创建一个新函数
+var leadingZeroList = KISSY.bind(list,undefined, 37);
+
+var list2 = leadingZeroList(); // [37]
+var list3 = leadingZeroList(1, 2, 3); // [37, 1, 2, 3]</code></pre>
+<h3>buffer()</h3>
+<p><code>buffer (fn, ms, context)</code></p>
+<p>将 fn 缓存一段时间后, 再被调用执行</p>
+<h4>parameters</h4>
+<ul>
+<li>fn (Function) – 要缓存的函数;</li>
+<li>ms (Number) – 要缓存多长时间后执行, 默认是 150 ms;</li>
+<li>context (Object) – 函数 fn 要执行时的上下文环境, 默认是 this;</li>
+</ul>
+<h4>return</h4>
+<ul>
+<li>Function，返回缓存后的函数对象</li>
+</ul>
+<blockquote>
+<p>此方法为了避免在 ms 段时间内, 执行 fn 多次. 常用于 resize , scroll , mousemove 等连续性事件中；当 ms 设置为 -1, 表示立即执行 fn, 即和直接调用 fn 一样;</p>
+</blockquote>
+<h4>Example</h4>
+<pre><code>self.__onResize = S.buffer(doResize, 100, this);
+$(window).on(&quot;resize&quot;, self.__onResize);</code></pre>
+<h3>clone()</h3>
+<p><code>clone (o[,filter]) =&gt; Object</code></p>
+<p>创建一个 普通对象 或数组的深拷贝, 并且返回.</p>
+<h4>parameters</h4>
+<ul>
+<li>o (object|Array) – 待深拷贝的对象或数组.</li>
+<li>filter – 过滤函数, 返回 false 不拷贝该元素. 传入参数为:<ul>
+<li>待克隆值为数组, 参数同 KISSY.filter() , 上下文对象为全局 window</li>
+<li>待克隆值为普通对象, 参数为对象的每个键, 每个键对应的值, 当前对象, 上下文对象为当前对象.</li>
 </ul>
 </li>
 </ul>
 <h4>return</h4>
-<p><code>HTMLElement</code> 返回创建的link或者script节点</p>
-<h4>Example</h4>
-<p>简写写法<code>getScript(url,success,charset)</code>中，<code>success</code>为回调函数，<code>charset</code>为编码类型。相当于：</p>
-<pre><code> KISSY.getScript(url , { 
-     success : success , 
-     charset : charset 
-});</code></pre>
-<h3>use()</h3>
-<p><code>use (modNames[,callback]) ⇒  void</code></p>
-<p>载入并运行模块,和<code>add</code>一起使用，详细用法参照<a href="../kmd.html">KISSY 模块规范</a>，<code>callback</code>类型可以是function也可以是object。参数说明：</p>
-<h4>parameters</h4>
 <ul>
-<li>modNames (String|String[]) – 以逗号（<code>,</code>）分割的模块名称,例如 <code>KISSY.use(&quot;custommod,custommod2&quot;)</code></li>
-<li>callback (function|Object) – 当 <code>modNames</code> 中所有模块载入并执行完毕后执行的函数或者对象描述，当callback类型为Object时，可传入两个属性：<ul>
-<li>success (function) – 当 <code>modNames</code> 中所有模块加载完毕后执行的函数</li>
-<li>error (function) – 当前 use 失败时调用的函数，参数为失败的模块对象</li>
+<li>Object，拷贝后的新对象</li>
+</ul>
+<blockquote>
+<p>DOM 节点的克隆请用 dom.clone()</p>
+</blockquote>
+<h4>example</h4>
+<pre><code>var S = KISSY;
+var a={x:{y:{z:1}}}
+var b=S.clone(a); // =&gt; b={x:y:{z:1}} , b!==a
+var c=S.clone(a,function(v,k){if(k==&quot;z&quot;) return false;}) // =&gt; c={x:{y:{}}}</code></pre>
+<h3>each()</h3>
+<p><code>each ( o, fn[, context] )</code></p>
+<p>遍历数组中的每一项, 执行指定方法.</p>
+<h3>parameters</h3>
+<ul>
+<li>o (Array|object) – 需要遍历的数组或对象</li>
+<li>fn (function) – 执行时, 接收 3 个参数：<ul>
+<li>当 o 为数组时, 参数为当前数组单项值, 当前 index, 数组 o</li>
+<li>当 o 为对象时, 参数为当前值 (value), 当前键 (key), 对象 o</li>
 </ul>
 </li>
+<li>context (object) – fn 的上下文对象, 不指定为全局 window</li>
 </ul>
-<h4>Example</h4>
-<p>callback为函数时</p>
-<pre><code>KISSY.use(&quot;depMod1,depMod2&quot;,function(S,DepMod1,DepMod2){
-    // Your code...
+<pre><code>var S = KISSY,
+arr = [1, 2, 3, 4, 5],
+obj = {
+    &#39;hi&#39;: &#39;kissy&#39;,
+    &#39;bye&#39;: &#39;world&#39;
+},
+sum = 0;
+
+S.each(arr, function(item) {
+    sum += item;
+});
+S.log(sum); // =&gt; 15
+
+
+S.each(obj, function(v,k) {
+    S.log([v,k]);
 });</code></pre>
-<p>callback为对象时</p>
-<pre><code>KISSY.use(&quot;depMod1,depMod2&quot;,{
-    success:function(S,DepMod1,DepMod2){
-        // Your code
-    },
-    error:function(){
-        var errorMods = KISSY.makeArray(arguments);
-    }
-});</code></pre>
+<h3>endsWith()</h3>
+<p><code>endsWith (str,suffix) =&gt; Boolean</code></p>
+<p>判断 str 是否以 suffix 结尾</p>
+<h4>parameters</h4>
+<ul>
+<li>str (string) – 查找字符串</li>
+<li>suffix (string) – 后缀字符串</li>
+</ul>
+<h4>return</h4>
+<ul>
+<li>Boolean，str 是否以 suffix 结尾</li>
+</ul>
+<h3>error()</h3>
+<p><code>error (msg) =&gt; void</code></p>
+<h4>parameters</h4>
+<ul>
+<li>msg(string) - 一场信息</li>
+</ul>
 <blockquote>
-<p>如果使用经过配置的包内的模块, 则这些包内模块不需要事先注册, 直接 use 即可, 如果模块名以 <code>/</code> 结尾, 则自动加后缀 <code>index</code> , 例如 <code>use(&quot;mods/m1/&quot;)</code> 相当于 <code>use(&quot;mods/m1/index&quot;)</code> , 即自动加载 <code>m1</code> 目录下的 <code>index.js</code></p>
+<p>只有在 debug 模式下, 才会抛出异常. debug 模式的说明请参考 Config</p>
+</blockquote>
+<h3>escapeHTML()</h3>
+<p><code>escapeHTML (str) =&gt; String</code></p>
+<p>将字符串经过 html 转义得到适合在页面中显示的内容, 例如替换 <code>&lt;</code> 为 <code>&amp;lt;</code></p>
+<h4>parameters</h4>
+<ul>
+<li>str (string) – 要显示在页面中的真实内容</li>
+</ul>
+<h4>return</h4>
+<ul>
+<li>string，经过 html 转义后的字符串</li>
+</ul>
+<h4>example</h4>
+<pre><code>KISSY.escapeHTML(&quot;&lt;a&gt;x&lt;/a&gt;&quot;); // =&gt;  &quot;&amp;lt;a&amp;gt;x&amp;lt;/a&amp;gt;&quot;</code></pre>
+<blockquote>
+<p>此函数只会对以下符号进行 escape：<code>&amp; &gt; &lt; / &quot; &#39;</code>&prime; 等</p>
 </blockquote>
 
 </div>
