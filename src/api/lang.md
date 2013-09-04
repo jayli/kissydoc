@@ -2,7 +2,7 @@
 
 > lang 是一套`underscore`风格的工具集，提供一些常用的工具函数，`lang` 模块内嵌在 `seed.js` 内，无需额外引入，这些函数直接挂载在 KISSY 全局对象上。
 
-### augment()
+### augment()  `<static>`
 
 `augment(r, s1 [, s2 , ...], ov = true, wl) => Function`
 
@@ -38,7 +38,7 @@
 
 augment 方法在 KISSY 里非常基础非常重要. 传统 OO 语言里, 可以通过继承或接口来实现共性方法. 在 JavaScript 里, 通过 mixin 特性, 一切变得更简单. augment 是动态语言 mixin 特性的体现, 灵活运用, 能让代码非常优雅简洁.
 
-### available()
+### available()  `<static>`
 
 `available (id,fn) => void`
 
@@ -49,7 +49,7 @@ augment 方法在 KISSY 里非常基础非常重要. 传统 OO 语言里, 可以
 - id (string) – 页面元素 id
 - fn (function) – 回调函数, 在 id 元素可用时立刻执行.
 
-### bind()
+### bind()  `<static>`
 
 `bind (fn , context[, arg1[, arg2[, ...]]]) => Function`
 
@@ -99,7 +99,7 @@ bind 的下一个简单用法是产生一个具备默认参数的函数. 这些�
 	var list2 = leadingZeroList(); // [37]
 	var list3 = leadingZeroList(1, 2, 3); // [37, 1, 2, 3]
 
-### buffer()
+### buffer()  `<static>`
 
 `buffer (fn, ms, context)`
 
@@ -122,7 +122,7 @@ bind 的下一个简单用法是产生一个具备默认参数的函数. 这些�
 	self.__onResize = S.buffer(doResize, 100, this);
 	$(window).on("resize", self.__onResize);
 
-### clone()
+### clone()  `<static>`
 
 `clone (o[,filter]) => Object`
 
@@ -148,13 +148,13 @@ bind 的下一个简单用法是产生一个具备默认参数的函数. 这些�
 	var b=S.clone(a); // => b={x:y:{z:1}} , b!==a
 	var c=S.clone(a,function(v,k){if(k=="z") return false;}) // => c={x:{y:{}}}
 
-### each()
+### each()  `<static>`
 
 `each ( o, fn[, context] )`
 
 遍历数组中的每一项, 执行指定方法.
 
-### parameters
+#### parameters
 
 - o (Array|object) – 需要遍历的数组或对象
 - fn (function) – 执行时, 接收 3 个参数：
@@ -181,7 +181,7 @@ bind 的下一个简单用法是产生一个具备默认参数的函数. 这些�
 		S.log([v,k]);
 	});
 
-### endsWith()
+### endsWith()  `<static>`
 
 `endsWith (str,suffix) => Boolean`
 
@@ -196,7 +196,7 @@ bind 的下一个简单用法是产生一个具备默认参数的函数. 这些�
 
 - Boolean，str 是否以 suffix 结尾
 
-### error()
+### error()   `<static>`
 
 `error (msg) => void`
 
@@ -206,7 +206,7 @@ bind 的下一个简单用法是产生一个具备默认参数的函数. 这些�
 
 > 只有在 debug 模式下, 才会抛出异常. debug 模式的说明请参考 Config
 
-### escapeHTML()
+### escapeHTML()  `<static>`
 
 `escapeHTML (str) => String`
 
@@ -226,7 +226,7 @@ bind 的下一个简单用法是产生一个具备默认参数的函数. 这些�
 
 > 此函数只会对以下符号进行 escape：`& > < / " '`&prime; 等
 
-### extend()
+### extend()  `<static>`
 
 `extend (r,s[,px,sx]) => Function`
 
@@ -266,7 +266,7 @@ extend 方法是 KISSY 里类继承的实现方式. 书写 JavaScript 代码时,
 
 > 子类方法中可通过 superclass 来访问父类函数的原型, 进而调用父类方法.
 
-### filter()
+### filter()  `<static>`
 
 `filter (arr,fn[,context]) => Array`
 
@@ -292,7 +292,7 @@ extend 方法是 KISSY 里类继承的实现方式. 书写 JavaScript 代码时,
 	});
 	S.log(ret); // => [2, 4]
 
-### fromUnicode()
+### fromUnicode()  `<static>`
 
 `fromUnicode (str) => String`
 
@@ -310,7 +310,7 @@ unicode 转义后的字符串
 
 	KISSY.fromUnicode("\\u627F\\u7389") // => "承玉"
 
-### globalEval()
+### globalEval()  `<static>`
 
 `globalEval(code) => void`
 
@@ -320,7 +320,7 @@ unicode 转义后的字符串
 
 code (string) – 代码字符串
 
-### guid()
+### guid()  `<static>`
 
 `guid(prefix) => String`
 
@@ -341,7 +341,7 @@ prefix (string) – 唯一 id 前缀
 		// 例如可能的结果：pre10,pre11,pre12,pre13,pre14					  
 	}
 
-### inArray()
+### inArray()  `<static>`
 
 `inArray (elem,arr) => Boolean`
 
@@ -352,7 +352,7 @@ prefix (string) – 唯一 id 前缀
 - elem – 任意对象
 - arr – 数组
 
-### indexOf()
+### indexOf()  `<static>`
 
 `indexof (elem,arr)`
 
@@ -376,25 +376,25 @@ elem 在数组 arr 中的序号，类型为Number
 		return(s);  // => 4
 	}
 
-### isArray()
+### isArray()  `<static>`
 
 `isArray (o) => Boolean`
 
 判断o是否为数组
 
-### isBoolean()
+### isBoolean()  `<static>`
 
 `isBoolean (o) => Boolean`
 
 判断o是否为布尔值
 
-### isDate()
+### isDate()  `<static>`
 
 `isDate(o) => Boolean`
 
 判断o是否为Date
 
-### isEmptyObject()
+### isEmptyObject()  `<static>`
 
 `isEmptyObject(o) => Boolean`
 
@@ -408,19 +408,19 @@ elem 在数组 arr 中的序号，类型为Number
 	S.isEmptyObject([]); // => true
 	S.isEmptyObject({ a: 'a' }); // => false
 
-### isFunction()
+### isFunction()  `<static>`
 
 `isFunction(o) => Boolean`
 
 判断o是否为Function
 
-### isNull()
+### isNull()  `<static>`
 
 `isNull(o) => Boolean`
 
 判断o是否为null
 
-### isNumber()
+### isNumber()  `<static>`
 
 `isNumber(o) => Boolean`
 
@@ -428,13 +428,13 @@ elem 在数组 arr 中的序号，类型为Number
 
 > NaN 和 Infinity 也返回 true
 
-### isObject()
+### isObject()  `<static>`
 
 `isObject(o) => Boolean`
 
 判断o是否为Object
 
-### isPlainObject()
+### isPlainObject()  `<static>`
 
 `isPlainObject(o) => Boolean`
 
@@ -448,25 +448,25 @@ elem 在数组 arr 中的序号，类型为Number
 	S.isPlainObject(new Date()); // => false
 	S.isPlainObject(document.body); // => false
 
-### isRegExp()
+### isRegExp()  `<static>`
 
 `isRegExp(o) => Boolean`
 
 判断o是否为正则表达式
 
-### isString()
+### isString()  `<static>`
 
 `isString(o) => Boolean`
 
 判断o是否为String
 
-### isUndefined()
+### isUndefined()  `<static>`
 
 `isUndefined(o) => Boolean`
 
 判断o是否为undefined
 
-### Window()
+### Window()  `<static>`
 
 `Window(o) => Boolean`
 
@@ -483,7 +483,7 @@ elem 在数组 arr 中的序号，类型为Number
 
 有更好的实现, 欢迎提出.
 
-### keys()
+### keys()  `<static>`
 
 `keys(o) => Object`
 
@@ -503,7 +503,7 @@ o ({object}) – 需要遍历的对象
 	var o= { x:1, y:2 };
 	S.keys(o) => ["x","y"]
 
-### lastIndexOf()
+### lastIndexOf()  `<static>`
 
 `lastIndexOf (elem,arr) => Number`
 
@@ -518,7 +518,7 @@ o ({object}) – 需要遍历的对象
 
 elem 在数组 arr 中最后出现的序号.
 
-### later()
+### later()  `<static>`
 
 `later ( fn[, when, periodic, o, data] ) => Object`
 
@@ -547,7 +547,7 @@ timer 对象，类型为Object. 包含下面这些属性:
 		S.log(data);
 	}, 0, false, null, 'I am later data.');
 
-### log()
+### log()  `<static>`
 
 `log (msg[,cat=’log’,src]) => void`
 
@@ -561,7 +561,7 @@ timer 对象，类型为Object. 包含下面这些属性:
 
 只有在 debug 模式下, 才会输出调试信息. 
 
-### makeArray()
+### makeArray()  `<static>`
 
 `makeArray (o) => Array`
 
@@ -583,7 +583,7 @@ o – arguments, NodeList 等 array-like 对象或单个对象
 	S.makeArray(S.query('.div')); // => 由所有 div 元素组成的数组
 	S.makeArray(null); // => []
 
-### map()
+### map()  `<static>`
 
 `map (arr,fn[,context])	 => Array`
 
@@ -615,7 +615,7 @@ o – arguments, NodeList 等 array-like 对象或单个对象
 	}); // => [72, 101, 108, 108, 111, 32, 87, 111, 114, 108, 100]
 
 
-### merge()
+### merge()  `<static>`
 
 `merge (s1,s2[,...]) => Object`
 
@@ -644,7 +644,7 @@ o – arguments, NodeList 等 array-like 对象或单个对象
 
 简单情况下 merge 方法常用来合并配置信息. 推荐使用 Base 处理属性配置.
 
-### mix()
+### mix()  `<static>`
 
 `mix (receiver , supplier [ , overwrite = true , whitelist , deep ]) => Object`
 
@@ -721,7 +721,7 @@ supplier undefined 的属性值不会被复制，不过对象从原型继承下�
 该方法在 KISSY 里具有非常重要的地位. JavaScript 是一门动态语言, 利用 mixin 特性, 可以很方便的实现特性的静态复制和动态修改.
 
 
-### namespace()
+### namespace()  `<static>`
 
 `namespace (n1[,....,global=false]) =>	Object`
 
@@ -746,13 +746,13 @@ supplier undefined 的属性值不会被复制，不过对象从原型继承下�
 
 namespace 方法提供了最基本的命名空间管理. 但对于模块的命名空间推荐采用 kissy 1.4的 loader 机制，详情参阅[KISSY模块规范](../kmd.html).
 
-### now()
+### now()  `<static>`
 
 `now () => Date`
 
 返回`new Date().getTime()`
 
-### param()
+### param()  `<static>`
 
 `param (o[ ,sep=’&’,eq=’=’,arr=true ]) => String`
 
@@ -781,7 +781,7 @@ namespace 方法提供了最基本的命名空间管理. 但对于模块的命�
 
 > 实现同[Jquery.param](http://api.jquery.com/jQuery.param/)
 
-### parseXML()
+### parseXML()  `<static>`
 
 `parseXML (str) => String`
 
@@ -801,7 +801,7 @@ xml 文档
 	var xmlDoc=KISSY.all(KISSY.parseXML(xml));
 	alert(xmlDoc.one("title").text()); // => RSS Title
 
-### ready()
+### ready()  `<static>`
 
 `ready (fn) => void`
 
@@ -821,7 +821,7 @@ fn (function) – 回调函数, 在 DOM 加载完毕时执行.
 
 > 在 DOM 加载完毕后, 依旧可以通过 ready 添加函数, 此时会立刻执行.
 
-### reduce()
+### reduce()  `<static>`
 
 `reduce (arr,fn[,initialValue]) => Array`
 
@@ -909,7 +909,7 @@ reduce 对数组中的每个元素执行 fn 函数，该 fn 接受四个参数�
 
 
 
-### startsWith()
+### startsWith()  `<static>`
 
 `startsWith (str,prefix) => Boolean`
 
@@ -921,7 +921,7 @@ reduce 对数组中的每个元素执行 fn 函数，该 fn 接受四个参数�
 - prefix (string) – 前缀字符串
 
 
-### substitute()
+### substitute()  `<static>`
 
 `substitute (str,o) => String`
 
@@ -945,7 +945,7 @@ reduce 对数组中的每个元素执行 fn 函数，该 fn 接受四个参数�
 	S.substitute(str, obj); // => 'Jack Bauer is our lord and savior.'
 
 
-### throttle()
+### throttle()  `<static>`
 
 `throttle (fn, ms, context) => Function `
 
@@ -978,19 +978,19 @@ ms 时间内只执行 fn 一次, 即使这段时间内 fn 被调用多次.
 
 
 
-### trim()
+### trim()  `<static>`
 
 `trim (str) => String`
 
 去除字符串两端的空白字符.
 
-### type()
+### type()  `<static>`
 
 `type(o) => String`
 
 返回o的数据类型
 
-### unEscapeHTML()
+### unEscapeHTML()  `<static>`
 
 `unEscapeHTML (str) => String`
 
@@ -1004,7 +1004,7 @@ ms 时间内只执行 fn 一次, 即使这段时间内 fn 被调用多次.
 	
 	&amp; &lt; &gt; &#x60; &#x2F; &quot; &#x27; &#\d{1,5}
 
-### unique()
+### unique()  `<static>`
 
 `unique (arr[,keepLast=false]) => Array`
 
@@ -1024,7 +1024,7 @@ ms 时间内只执行 fn 一次, 即使这段时间内 fn 被调用多次.
 	KISSY.unique(['a', 'b', 'a'],true) => ['b', 'a']
 	KISSY.unique(['a', 'b', 'a']) => ['a', 'b']
 
-### unparam()
+### unparam()  `<static>`
 
 `unparam (str[ ,sep=’&’,eq=’=’ ]) => Object`
 
@@ -1051,7 +1051,7 @@ ms 时间内只执行 fn 一次, 即使这段时间内 fn 被调用多次.
 	S.unparam('foo=1&bar=2&bar=3'); // => { foo: 1, bar: [2, 3] }
 	S.unparam('foo=1&bar%5B%5D=2&bar%5B%5D=3'); // => { foo: 1, bar: [2, 3] }
 
-### version()
+### version()  `<static>`
 
 `version() => String`
 

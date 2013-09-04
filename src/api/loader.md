@@ -2,7 +2,7 @@
 
 > loader 是脚本加载器的实现， 弥补了 javascript 语言机制的不足, 提供类似其他语言原生的模块化机制。KISSY loader 实现了 [KISSY 模块规范](../kmd.html)。
 
-### add()
+### add()  `<static>`
 
 `add(name,fn[,config]) ⇒ void`
 
@@ -15,7 +15,7 @@
 
 KISSY 添加模块/逻辑片段的函数，config为配置对象，包括`config.requries`，给出当前模块的依赖模块。模块返回一个对象，通过引用它的时候来调用到。
 
-当模块名称 name 为[包内模块](#loader_config)时, 则requires的模块名称可使用相对路径来引用包内其他模块，比如`package/a`来引用`package/a.js`，也可以用`./a`来引用`package/a.js`
+当模块名称 name 为[包内模块](#config)时, 则requires的模块名称可使用相对路径来引用包内其他模块，比如`package/a`来引用`package/a.js`，也可以用`./a`来引用`package/a.js`
 
 	// package/a.js
 	KISSY.add('package/a',function(S){
@@ -31,7 +31,7 @@ KISSY 添加模块/逻辑片段的函数，config为配置对象，包括`config
 		// 可引用ObjA
 	});
 
-本地开发时，模块名称可留空，不过在部署阶段需要使用[Kissy Mobule Compiler](https://github.com/daxingplay/ModuleCompiler)生成模块依赖关系表，或者直接生成合并后的文件。
+本地开发时，模块名称可留空，不过在部署阶段需要使用[Kissy Mobule Compiler](https://github.com/daxingplay/ModuleCompiler) 生成模块依赖关系表，或者直接生成合并后的文件。
 
 	// package/a.js
 	KISSY.add(function(S){
@@ -59,7 +59,7 @@ KISSY 添加模块/逻辑片段的函数，config为配置对象，包括`config
 
 > *Changed in version 1.3+*: KISSY.add 表示模块定义, fn 并不会执行, 只有在 use 时才执行, 懒加载原则.
 
-### config()
+### config()  `<static>`
 
 * `config(config) ⇒ void`
 * `config(name,value) ⇒ void`，name：参数名，value：参数值
@@ -174,7 +174,7 @@ packages 范例: 包配置
 
 > 模块名也可以省略, 不过部署阶段需要使用 [KISSY Module Compiler](https://github.com/daxingplay/ModuleCompiler) 静态打包。
 
-### getScript()
+### getScript()  `<static>`
 
 - `getScript(url,config) ⇒ HTMLElement`
 - `getScript(url,success,charset) ⇒ HTMLElement`，简写写法
@@ -203,7 +203,7 @@ packages 范例: 包配置
 		 charset : charset 
 	});
 
-### use()
+### use()  `<static>`
 
 `use (modNames[,callback]) ⇒  void`
 
@@ -236,3 +236,13 @@ callback为对象时
 	});
 
 > 如果使用经过配置的包内的模块, 则这些包内模块不需要事先注册, 直接 use 即可, 如果模块名以 `/` 结尾, 则自动加后缀 `index` , 例如 `use("mods/m1/")` 相当于 `use("mods/m1/index")` , 即自动加载 `m1` 目录下的 `index.js`
+
+### importStyle()  `<static>`
+
+`importStyle (modNames) => void`
+
+阻塞加载 css 模块或 js 模块依赖的 css 模块, 和 KISSY.add 中的 require 配置一起使用.
+
+#### parameter
+
+modNames (String|String[]) – 以` , `分割的 js 模块或 css 模块名称集合字符串,例如 `KISSY.use("mod1,mod2/xx.css")`;
