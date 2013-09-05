@@ -57,53 +57,43 @@
     <article>
       
 
-	<h1>KISSY 教程大纲</h1>
+	<h1>Hello World!</h1>
 <hr>
-<ul>
-<li>快速上手<ul>
-<li><a href="why-kissy.html">Why KISSY?</a></li>
-<li><a href="simple-useage.html">Hello World!</a></li>
-<li><a href="startup.html">快速开始</a></li>
-<li><a href="kmd.html">KISSY 模块定义规范</a></li>
-</ul>
-</li>
-<li>KISSY 进阶指南<ul>
-<li><a href="module-map.html">KISSY 核心模块依赖关系图谱</a></li>
-<li><a href="module-scheme.html">KISSY 模块化机制</a></li>
-<li><a href="oo.html">KISSY 中的面向对象</a></li>
-<li>Seed<ul>
-<li><a href="uri.html">Uri</a></li>
-<li><a href="features.html">Features</a></li>
-<li><a href="promise.html">Promise</a></li>
-<li><a href="path.html">Path</a></li>
-<li><a href="lang.html">Lang</a></li>
-<li><a href="loader.html">Loader</a></li>
-<li><a href="ua.html">UA</a></li>
-</ul>
-</li>
-<li><a href="node.html">Node</a></li>
-<li><a href="event.html">Event</a></li>
-<li><a href="io.html">IO（Ajax）</a></li>
-<li><a href="anim.html">Anim</a></li>
-<li><a href="base.html">Base</a></li>
-<li><a href="xtemplate.html">xtemplate</a></li>
-<li><a href="plugin.html">KISSY 中的插件机制</a></li>
-<li><a href="mobile.html">Mobile 开发最佳实践</a></li>
-</ul>
-</li>
-<li><a href="tools.html">项目构建工具</a><ul>
-<li><a href="kmc.html">KISSY 模块依赖抽取工具 KMC（Kissy Module Complier）</a></li>
-<li><a href="http://abc.f2e.taobao.net/">ABC</a></li>
-<li><a href="clam.html">Clam</a></li>
-</ul>
-</li>
-<li><a href="http://gallery.kissyui.com/guide">KISSY 组件开发</a><ul>
-<li><a href="http://gallery.kissyui.com/quickstart">Generator-kissy-gallery 工具</a></li>
-</ul>
-</li>
-<li><a href="https://github.com/kissyteam/kissy/blob/master/CONTRIBUTING.md">如何为 KISSY 贡献代码</a></li>
-</ul>
-<hr>
+<p>首先，我们来运行一些最简单的例子帮你了解 KISSY<span class="badge">Examples</span>：</p>
+<p><strong>种子</strong>：获取最新的 KISSY 1.4.0 <a href="http://g.tbcdn.cn/kissy/k/1.4.0/seed-min.js">种子文件地址</a></p>
+<div class="alert alert-info">
+    <div style="font-size:20px;">http://g.tbcdn.cn/kissy/k/1.4.0/seed-min.js</div>
+</div>
+
+<p><strong>启动</strong>：Hello World!</p>
+<pre><code>KISSY.ready(function(S){
+    alert(&#39;Hello World!&#39;);
+});</code></pre>
+<p><strong>DOM操作</strong>：获取一个className叫<code>continue</code>的<code>button</code>，并将它的内容改为&quot;Hello Kissy&quot;。</p>
+<pre><code>KISSY.use(&#39;node&#39;,function(S){
+    S.one(&#39;button.continue&#39;).html(&#39;Hello Kissy!&#39;);
+});</code></pre>
+<p><strong>事件处理</strong>：点击一个id为<code>click-me</code>的<code>button</code>，显示<code>#banner-msg</code>的内容。</p>
+<pre><code>KISSY.use(&#39;node&#39;,function(S){
+    S.one(&#39;#click-me&#39;).on(&#39;click&#39;,function(e){
+        S.one(&#39;#banner-msg&#39;).show();
+    });
+});</code></pre>
+<p><strong>Ajax</strong>：请求一个<code>api/getWeather</code>的接口，带入参数<code>zipcode</code>，将结果显示在<code>#weather-con</code>中。</p>
+<pre><code>KISSY.use(&#39;io,node&#39;,function(S){
+    S.io({
+        url:&#39;/api/getWeather&#39;,
+        data:{
+            zipcode:10010
+        },
+        success:function(data){
+            S.one(&#39;#weather-con&#39;).html(&#39;&lt;em&gt;&#39; + data + &#39;&lt;/em&gt; 摄氏度&#39;);
+        }
+    });
+});</code></pre>
+<blockquote>
+<p><a href="startup.html">开始进入学习教程</a></p>
+</blockquote>
 
 
       
