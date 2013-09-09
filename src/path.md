@@ -7,7 +7,7 @@ h3 {
 
 > 当前浏览器地址的有关信息
 
-可以直接通过KISSY.Promise调用：
+可以直接通过KISSY.Path调用：
 
 	KISSY.Path.do_sth();
 
