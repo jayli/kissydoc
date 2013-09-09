@@ -4,6 +4,25 @@
 
 	KISSY.Features.isXXX();
 
+这类功能通常在判断硬件环境时使用，比如在KISSY的modules定义的代码：
+
+	KISSY.config('modules',{
+		"dom/basic": {
+			"alias": [
+				'dom/base',
+				Features.isIELessThan(9) ? 'dom/ie' : '',
+				Features.isClassListSupported() ? '' : 'dom/class-list'
+			]
+		},
+		"dom": {
+			"alias": [
+				'dom/basic',
+				!Features.isQuerySelectorSupported() ? 'dom/selector' : ''
+			]
+		}
+	});
+
+
 ### isDeviceMotionSupported()  `<static>`
 
 判断当前宿主环境是否支持手势事件
