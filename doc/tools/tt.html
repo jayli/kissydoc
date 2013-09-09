@@ -16,9 +16,16 @@
 	<script>
 		var S = KISSY;
 
-		S.use('io',function(S,IO){
-			debugger
-			
+		S.config('base','./');
+		S.config('debug',true);
+		S.config('modules',{
+			'a':{
+				alias:['./b']
+			}
+		});
+
+		S.use('a',function(S,A){
+			console.log(A.a);
 		});
 
 

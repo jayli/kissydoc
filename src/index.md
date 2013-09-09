@@ -1,8 +1,8 @@
 
 
-<div class="text-center" id="show-off">
+<!--div class="text-center" id="show-off"-->
 <!--首焦图片-->
-</div>
+<!--/div-->
 
 <p></p>
 
@@ -10,12 +10,12 @@
 
 KISSY 是一款跨终端、模块化、使用简单的 JavaScript 框架。除了完备的工具集合诸如 DOM、Event、Ajax、Anim 等，KISSY 还面向团队协作做了独特设计，提供了经典的面向对象、动态加载、性能优化解决方案。作为一款全终端支持的 JavaScript 框架，KISSY 为移动终端做了大量适配和优化，让你的程序在全终端均能流畅运行。
 
-# Hello Kissy!
+# 学习 KISSY，从这里开始
 
-> 学习 KISSY，从这里开始 
-> 
-> <a class="btn btn-primary btn-lg">Start Up!</a> &nbsp;
-> <a class="btn btn-info btn-lg">API Doc</a>
+<div class="jumbotron row-fluid text-center">
+	<a class="btn btn-primary btn-lg ">KISSY 使用文档</a>
+	<a class="btn btn-info btn-lg ">API 参考手册</a>
+</div>
 
 
 # KISSY 的一些组件

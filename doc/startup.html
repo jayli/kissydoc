@@ -270,6 +270,14 @@ KISSY.use(&#39;node&#39;,function(S,Node){
 			hljs.initHighlighting();
 		});
 	})();
+	(function(){
+		var h3s = document.getElementsByTagName('h3');
+		for(var i = 0;i<h3s.length;i++){
+			var str = S.trim(h3s[i].innerHTML);
+			str = str.match(/\w+/)[0];
+			h3s[i].innerHTML = '<a name="'+str+'"></a>' + h3s[i].innerHTML;
+		}
+	})();
   </script>
 </body>
 </html>

@@ -57,18 +57,72 @@
     <article>
       
 
-	<h1>KISSY 面向业务的 DPL</h1>
-<p>KISSY 是为具体业务具体产品服务的，经过这几年发展，各条业务也渐渐生长起了不少业务逻辑强相关的 DPL 和代码库。这些内容是 KISSY 最具价值的宝藏。其中最具代表性的就是 <a href="http://work.tmall.net/muidoc/build/">MUI</a> 和 <a href="http://www.builive.com/demo/index.php">BUI</a>。我们也期待越来越多的业务库的涌现。</p>
-<style>
-article p img {
-    box-shadow:0 0 8px -3px black;
+	<p><style>
+h3 {
+    color:blue;
 }
-</style>
+</style></p>
+<h1>path</h1>
+<blockquote>
+<p>当前浏览器地址的有关信息</p>
+</blockquote>
+<p>可以直接通过KISSY.Promise调用：</p>
+<pre><code>KISSY.Path.do_sth();</code></pre>
+<p>也可以通过沙箱来调用</p>
+<pre><code>KISSY.use(&#39;path&#39;,function(S,Path){
+    Path.do_sth();// 执行操作
+});</code></pre>
+<h3>basename()  <code>&lt;static&gt;</code></h3>
+<p><code>basename(path,ext) =&gt; String</code></p>
+<p>获取域名中的文件名</p>
+<h4>parameter</h4>
+<ul>
+<li>path：String，路径字符串</li>
+<li>ext：String，需要过滤的扩展名，比如<code>.html</code></li>
+</ul>
+<h4>return</h4>
+<p>返回文件名</p>
+<h4>example</h4>
+<pre><code>Path.basename(&#39;http://www.taobao.com/index.html&#39;,&#39;.html&#39;);//=&gt; index</code></pre>
+<h3>dirname()  <code>&lt;static&gt;</code></h3>
+<p><code>dirname(path) =&gt; String</code></p>
+<p>返回path所指的文件所在的目录路径</p>
+<h4>parameter</h4>
+<p>path（String），Path全称</p>
+<h4>example</h4>
+<pre><code>Path.dirname(&#39;/home/bachi/daily/index.html&#39;);//=&gt;/home/bachi/daily</code></pre>
+<h3>extname()  <code>&lt;static&gt;</code></h3>
+<p><code>extname(path) =&gt; String</code></p>
+<p>获取路径所指文件的扩展名，比如<code>.html</code></p>
+<h4>example</h4>
+<pre><code>Path.extname(&#39;/home/bachi/daily/index.html&#39;);//=&gt; .html</code></pre>
+<h3>join()  <code>&lt;static&gt;</code></h3>
+<p><code>join(p1,p2,...) =&gt; String</code></p>
+<p>以此拼接p1、p2...,遇到<code>../</code>时回退一级目录</p>
+<h4>example</h4>
+<pre><code>// ../../ 表示回退两级目录
+Path.join(&#39;/home/bachi/daily/&#39;,&#39;project&#39;,&#39;../../&#39;,&#39;index.html&#39;);//=&gt; /home/bachi/index.html</code></pre>
+<h3>normalize()  <code>&lt;static&gt;</code></h3>
+<p><code>normalize(path) =&gt; String</code></p>
+<p>将path中的无关内容清理掉，返回直接的路径信息</p>
+<h4>example</h4>
+<pre><code>Path.normalize(&#39;x/y/../z&#39;); // =&gt; x/z/
+Path.normalize(&#39;x/y/z/../&#39;); // =&gt; x/y/</code></pre>
+<h3>relative()  <code>&lt;static&gt;</code></h3>
+<p><code>relative(from,to) =&gt; String</code></p>
+<p>计算相对路径</p>
+<h4>example</h4>
+<pre><code>Path.relative(&#39;x/&#39;,&#39;x/y/z&#39;); // =&gt; &#39;y/z&#39;
+Path.relative(&#39;x/t/z&#39;,&#39;x/&#39;); // =&gt; &#39;../../&#39;</code></pre>
+<h3>resolve()  <code>&lt;static&gt;</code></h3>
+<p><code>resolve([from ...], to) =&gt; String</code></p>
+<p>得到绝对地址，算法逻辑参照NodeJS <a href="http://nodejs.org/api/path.html#path_path_resolve_from_to">Path.resolve</a>。</p>
+<h4>example</h4>
+<pre><code>KISSY.Path.resolve(&#39;wwwroot&#39;, &#39;static_files/png/&#39;, &#39;../gif/image.gif&#39;)
+// =&gt; &#39;wwwroot/static_files/gif/image.gif&#39;
 
-<h2><a href="http://work.tmall.net/muidoc/build/">MUI</a></h2>
-<p><img src="http://gtms03.alicdn.com/tps/i3/T1jmqDFehbXXXzLhjo-600-238.png" alt=""></p>
-<h2><a href="http://www.builive.com/demo/index.php">BUI</a></h2>
-<p><img src="http://gtms02.alicdn.com/tps/i2/T17tuEFXpcXXa0ohHo-600-269.png" alt=""></p>
+KISSY.Path.resolve(&#39;/foo/bar&#39;, &#39;/tmp/file/&#39;)
+// =&gt;    &#39;/tmp/file&#39;</code></pre>
 
 
       
