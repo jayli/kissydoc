@@ -9,7 +9,7 @@
 	- [jQuery KISSY 对比手册](http://cyj.me/jquery-kissy-rosetta/)
 	- [KISSY 模块定义规范](kmd.html)
 - KISSY 进阶指南
-	- [KISSY 核心模块依赖关系图谱](module-map.html)
+	- [KISSY 核心模块列表](module-map.html)
 	- [KISSY 中的面向对象](oo.html)
 	- [Seed & 模块化机制](seed.html) 
 		- [Uri](uri.html)
