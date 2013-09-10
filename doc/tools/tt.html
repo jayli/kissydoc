@@ -11,7 +11,9 @@
 	<script src="http://g.tbcdn.cn/trip/kissy/1.4.0/seed-min.js"></script>
 </head>
 <body>
-	<button class="continue">iii</button>
+	<button class="c1">iii<span>sdf</span></button>
+	<button class="c2">iii<span>sdf</span></button>
+	<button class="contin">iii</button>
 	
 	<script>
 		var S = KISSY;
@@ -38,7 +40,7 @@
 			});
 
 
-		S.use('base,pp',function(S,Base,P){
+		S.use('base,pp,node,event',function(S,Base,P){
 			var Header = Base.extend({
 				_onSetA:function(){
 
@@ -65,6 +67,15 @@
 
 			// a.plug(new P());
 			
+			console.log('asdf');
+			S.Event.on('.c1','click.one',function(){
+				console.log('a');
+			});
+			S.Event.on('.c1','click.two',function(){
+				console.log('b');
+			});
+			S.Event.remove('.c1','.two');
+
 
 		});
 

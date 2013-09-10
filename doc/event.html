@@ -1,0 +1,295 @@
+<!doctype html>
+<html lang="zh">
+<head>
+  <meta charset="utf-8">
+  <title>KISSY - 全终端适配的 JS 类库</title>
+  <meta name="viewport" content="width=device-width">
+  <link href="http://fonts.googleapis.com/css?family=Droid+Sans|Lekton|Ubuntu+Mono:400,700" rel="stylesheet">
+	<link rel="stylesheet" href="templates/assets/bootstrap.css">
+	<link href="templates/assets/normalize.css" rel="stylesheet">
+	<link href="templates/assets/kissy.css" rel="stylesheet">
+	<link href="templates/assets/prettify.css" rel="stylesheet">
+	<link href="templates/assets/forkit.css" rel="stylesheet">
+	<script src="templates/assets/jquery.min.js"></script>
+	<script src="templates/assets/script.js" type="text/javascript"></script>
+	<script src="http://g.tbcdn.cn/trip/kissy/1.4.0/seed-min.js"></script>
+	<script src="api/assets/highlight.pack.js"></script>
+	<link href="api/assets/tomorrow-night-bright.css" rel=stylesheet />
+	<link rel="shortcut icon" href="http://a.tbcdn.cn/s/kissy/favicon.ico">
+</head>
+
+<body class="">
+    <nav id="sidebar">
+    <header><a href="index.html"><img src="http://gtms03.alicdn.com/tps/i3/T15qqHFd8dXXcWtwnj-180-69.png"></a></header>
+    <ul>
+      <li class="nav-divider"><a href="index.html"><img src="templates/assets/img/icon-home.png">首页</a></li>
+      <li class="nav-divider"><a href="why-kissy.html"><img src="templates/assets/img/icon-why.png">Why KISSY?</a></li>
+      <li><a href="get-started.html"><img src="templates/assets/img/icon-getting-started.png">Getting Started (1.4.0)</a></li>
+      <li class="nav-sub"><a href="module-map.html">核心模块列表</a></li>
+      <li class="nav-sub"><a href="kmd.html">KISSY 模块规范 (KMD)</a></li>
+      <li class="nav-sub"><a href="gbs.html">浏览器兼容基准(GBS)</a></li>
+      <li class="nav-sub"><a href="http://cyj.me/jquery-kissy-rosetta/">jQuery KISSY 对比手册</a></li>
+      <li class="nav-sub"><a href="http://gallery.kissyui.com/guide">KISSY 组件开发规范</a></li>
+      <li class="nav-sub nav-divider"><a href="history.html">历史版本</a></li>
+      <li><a href="">API Doc</a></li>
+      <li><a href="http://demo.kissyui.com">Demos</a></li>
+      <li class="nav-divider"><a href="gallery.html">KISSY Gallery</a></li>
+      <li><a href="tools.html">KISSY 项目构建工具</a></li>
+      <li class="nav-sub"><a href="kmc.html">KS Module Compiler</a></li>
+      <li class="nav-sub"><a href="http://abc.f2e.taobao.net">ABC</a></li>
+      <li class="nav-sub nav-divider"><a href="clam.html">Clam</a></li>
+      <li><a href="third-party-lib.html">第三方代码库</a></li>
+      <li class="nav-sub"><a href="">面向第三方安全的 KISSY</a></li>
+      <li class="nav-sub"><a href="http://www.builive.com/demo/index.php">BUI</a></li>
+      <li class="nav-sub nav-divider"><a href="http://work.tmall.net/muidoc/build/">MUI</a></li>
+      <li><a href="">为 KISSY 贡献代码</a></li>
+      <li class="nav-sub"><a href="">HTML 编码规范</a></li>
+      <li class="nav-sub"><a href="">CSS 编码规范</a></li>
+      <li class="nav-sub nav-divider"><a href="">JavaScript 编码规范</a></li>
+	  <li><a href=""><img src="templates/assets/img/icon-documentation.png">1.3.x->1.4.0 升级指南</a></li>
+	  <li><a href=""><img src="templates/assets/img/icon-faqs.png">FAQ</a></li>
+      <li><a href=""><img src="templates/assets/img/icon-github.png">GitHub</a></li>
+	  <li><a href=""><img src="templates/assets/img/icon-google-plus.png">KISSY 核心小组</a></li>
+    </ul>
+  </nav>
+
+  <div id="content">
+    <article>
+      
+
+	<h1>event</h1>
+<p>Event 模块是KISSY最重要的模块之一，他包含自定义事件机制、事件对象封装、DOM事件封装、面向多终端的事件行为统一。下辖多个子模块，被Node、DOM、Base分别依赖。通常DOM事件无需直接引用event，只需use(&#39;node&#39;)即可。使用use(&#39;base&#39;)时也无需手动引入event。如果想单独使用自定义事件，则需要use(&#39;event&#39;)。</p>
+<pre><code>KISSY.use(&#39;event&#39;,function(S,Event){
+    // Your code..    
+});</code></pre>
+<p>Event是一个复杂的概念，是观察者模式在浏览器端的实现。事件本质上是一个抽象的概念。是让程序具有面向切面编程的特性，通过事件注册来在原有逻辑的某个时机触发外部代码的逻辑。这种方式是最常见的JavaScript设计模式。也是模块之间解耦的最佳选择之一。</p>
+<h2>Node 事件</h2>
+<h3>事件绑定</h3>
+<p>浏览器对DOM节点暴露了一些事件，比如常见的click、mouseover等。在KISSY中通过统一的事件绑定写法来处理事件回调：</p>
+<pre><code>Event.on(&#39;#foo&#39;,&#39;click&#39;,function(){
+    alert(&#39;clicked : &#39;+this.id);
+    return false;
+});</code></pre>
+<p>上面的代码作用是：为 id 为 foo 的元素绑定 click 事件.当用户在该元素内部点击时, 则 alert 会弹出来.</p>
+<p>回调函数返回 false 相当于调用了事件对象的 preventDefault() 以及 stopPropagation()</p>
+<h3>事件分组</h3>
+<p>on()函数支持事件分组，比如这段代码：</p>
+<pre><code>Event.on(&#39;#foo&#39;,&#39;click.one&#39;,function(){
+    alert(&#39;clicked : &#39;+this.id);
+});
+
+Event.on(&#39;#foo&#39;,&#39;click.two&#39;,function(){
+    alert(&#39;clicked 2 : &#39;+this.id);
+});
+
+Event.remove(&#39;#foo&#39;,&#39;.two&#39;);</code></pre>
+<p>给<code>#foo</code>绑定了两次事件，但每次事件都有一个标识，这时可以清除其中一个标识。</p>
+<h3>绑定多个事件</h3>
+<pre><code>// 绑定了两个事件
+Event.on(&#39;#foo&#39;,&#39;mouseenter mouseleave&#39;, function(e) {
+    DOM.toggleClass(this,&quot;enter&quot;);
+});</code></pre>
+<p>上述代码的作用是：一开始 foo 节点没有 enter 样式类, 当鼠标进入时给该节点添加 enter 样式类, 当鼠标移出时把 enter 样式类去掉. 这样就达到了 hover 的效果.</p>
+<h3>事件对象</h3>
+<p>DOM 事件回调函数回传参数为e，被称为事件对象，这里的事件对象是浏览器原生的对象。</p>
+<pre><code>Event.on(&#39;#foo&#39;,&#39;mouseup mousedown&#39;, function(event) {
+    console.log(event.type +&quot; occured&quot;);
+});</code></pre>
+<p>这样就可以在绑定多事件时, 明确知道当前哪个事件触发了.</p>
+<blockquote>
+<p>KISSY 也对 mouseenter/mouseleave focusin/focusout 进行了兼容处理, 所有浏览器都可以使用这两个事件了.</p>
+</blockquote>
+<p>处理段落的单击与双击例子。注意坐标是相对于例子的 iframe 窗口的, 这里方便起见采用node。<a href="http://docs.kissyui.com/source/raw/api/core/event/on_1.html">参照Demo</a>。</p>
+<p>通过调用事件对象的halt()方法来阻止事件。 </p>
+<pre><code>Event.on(&#39;a&#39;,&#39;click&#39;,function(e){
+    // 等价于 e.preventDefault(); e.stopPropagation();
+    e.halt();
+});</code></pre>
+<p>如果要抓取事件发生时对应的节点，需要通过<code>e.target</code>获取，注意，这里的targe是原生节点，若有必要，需要转换为Node节点，比如</p>
+<pre><code>Event.on(&#39;a&#39;,&#39;click&#39;,function(e){
+    var node = S.one(e.target);
+    alert(node.html());
+});</code></pre>
+<h3>事件移除</h3>
+<p>从符合匹配的 dom 节点中移去相应事件的事件处理器，用 on 绑定的事件处理器可以用 detach 解除绑定. 最简单的情况 detach(elem) 解除该元素上的所有绑定.</p>
+<pre><code>Event.detach(&#39;#foo&#39;);</code></pre>
+<p>上面的代码解除了 foo 元素上所有事件的事件处理器, 我们也可以解除某一个事件的全部事件处理器:</p>
+<pre><code>Event.detach(&#39;#foo&#39;,&#39;click&#39;);</code></pre>
+<p>当时如果程序对同一事件指定了不同的事件处理器, 这时就需要后面两个参数了</p>
+<pre><code>var handler = function() {
+    alert(&#39;The quick brown fox jumps over the lazy dog.&#39;);
+};
+Event.on(&#39;#foo&#39;,&#39;click&#39;, handler);
+Event.detach(&#39;#foo&#39;,&#39;click&#39;, handler);</code></pre>
+<p>通过指定第三个参数, 我们可以保证该事件的其他事件处理器不受影响, 注意下面的代码则不会生效：</p>
+<pre><code>var handler = function() {
+    alert(&#39;The quick brown fox jumps over the lazy dog.&#39;);
+};
+var obj={x:1};
+Event.on(&#39;#foo&#39;,&#39;click&#39;, handler,obj);
+
+Event.detach(&#39;#foo&#39;,&#39;click&#39;, function() {
+    alert(&#39;The quick brown fox jumps over the lazy dog.&#39;);
+},obj);
+
+Event.detach(&#39;#foo&#39;,&#39;click&#39;, handler,{x:1});</code></pre>
+<p>虽然后面的两个 detach 参数从字面上来看完全一样, 但是由于是不同的对象, 所有仍然不会生效. 如果需要解除特定的事件处理器, 我们需要同一个对象( 函数 )引用, 而不是恰好字面上相同的不同对象.</p>
+<p>detach也可以用别名remove标识。<a href="http://docs.kissyui.com/source/raw/api/core/event/detach_1.html">事件移除的Demo</a>。</p>
+<blockquote>
+<p>如果要解除特定的事件处理器 , detach 的参数必须和对应的 on 参数值相等( == )并且个数一致才能完成解除绑定的目标.</p>
+</blockquote>
+<h3>事件委托</h3>
+<p>为符合匹配的 dom 节点的相应事件添加事件处理器, 并在该节点的子孙节点中匹配 filter 的节点上触发事件时调用.</p>
+<p>该方法是 on 方法的增强. 当 on 方法被调用时, 符合选择器的元素被绑定事件处理器, 但如果新增符合要求的节点，就不会再触发事件, 即他们需要另外一次绑定, 例如</p>
+<pre><code>&lt;body&gt;
+    &lt;div class=&quot;clickme&quot;&gt;
+        Click here
+    &lt;/div&gt;
+&lt;/body&gt;</code></pre>
+<p>绑定一个 click 事件的事件触发器：</p>
+<pre><code>Event.on(&#39;.clickme&#39;,&#39;click&#39;, function() {
+    // Your code..
+});</code></pre>
+<p>当该元素被点击时, 调用对应的事件处理器. 但是如果新加入一个元素：</p>
+<pre><code>Node.one(&#39;body&#39;).append(&#39;&lt;div class=&quot;clickme&quot;&gt;Another target&lt;/div&gt;&#39;);</code></pre>
+<p>新元素匹配选择器 clickme ,但是他如果不再次 on , 则在他上面的点击不会有任何效果.</p>
+<p>delegate 方法提供了解决方法, 如果这样调用：</p>
+<pre><code>Event.delegate(document,&#39;click&#39;,&#39;.clickme&#39;,function(){
+    // Your code..
+});</code></pre>
+<p>这样，只要是在document内新增的节点，都会触发回调。可以使用 undelegate 来移除之前的绑定:</p>
+<pre><code>function d(){
+}
+
+// 绑定
+Event.delegate(document,&#39;click&#39;,&#39;.clickme&#39;,d);
+
+// 解除绑定
+Event.undelegate(document,&#39;click&#39;,&#39;.clickme&#39;,d);</code></pre>
+<blockquote>
+<p>不能在 object , embed , applet 元素上注册事件. 事件处理器回调函数中 this 指向 scope (没指定指向绑定事件的元素), 传入的参数为 event , event.target 指向事件触发源, event.currentTarget 指向当前事件处理器调用所在的匹配 filter 的元素. 可以使用 stopPropagation() 来停止事件的向上冒泡, 这样就不会在同样符合 filter 条件的祖先节点上调用事件处理器.</p>
+<p>因为 delegate 是在事件冒泡到代理元素后才开始处理的，那么通过 on 注册到代理元素的子节点的事件处理器已经被触发， 而无法被 delegate 绑定的事件处理器阻止 ( stopPropagation )，但 delegate 事件处理器可以阻止绑定到同一元素但是匹配元素在当前事件处理器之上的 delegate 事件处理器.</p>
+<p>同样可以对 mouseenter , mouseleave 进行委托.</p>
+</blockquote>
+<ul>
+<li><a href="http://docs.kissyui.com/source/raw/api/core/event/delegate.html">事件委托的Demo</a></li>
+<li><a href="http://docs.kissyui.com/source/raw/api/core/event/delegate_2.html">阻止事件冒泡</a></li>
+<li><a href="http://docs.kissyui.com/source/raw/api/core/event/delegate_mouse.html">委托 mouseenter/mouseleave</a></li>
+</ul>
+<h3>解除事件委托</h3>
+<p>为符合匹配的 dom 节点的相应事件去除事件处理器</p>
+<pre><code>function d(){}
+
+// 解除委托
+Event.undelegate(document,&#39;click&#39;,&#39;.clickme&#39;,d);</code></pre>
+<p>和 Event.detach 一样, 如果移除特定的委托事件处理器必须保证参数和调用 delegate 时保持一致</p>
+<h3>特殊事件支持</h3>
+<p>KISSY 对常见的DOM事件做了封装，包括原生浏览器不支持的事件。</p>
+<ul>
+<li>focusin</li>
+<li>focusout</li>
+<li>hashchange</li>
+<li>valuechange</li>
+<li>mouseenter</li>
+<li>mouseleave</li>
+<li>mousewheel</li>
+</ul>
+<h4>focusin</h4>
+<p>原生只有 ie 支持 focusin 事件，而 kissy 对这一事件进行了 兼容性处理。但一个元素获得焦点或者其子孙元素获得焦点时， focusin 会在该元素上触发（没被子孙元素阻止）。这就是和 focus 事件的区别之处 : 你可以在父元素上监控子元素的 focus 事件，即 focusin 事件支持冒泡.</p>
+<p>这个事件常常和 focusout 一起使用. <a href="http://docs.kissyui.com/source/raw/api/core/event/focusin.html">Demo</a></p>
+<h4>fousout</h4>
+<p>原生只有 ie 支持 focusout 事件，而 kissy 对这一事件进行了 兼容性处理 .但一个元素获得焦点或者其子孙元素获得焦点时， focusout 会在该元素上触发（没被子孙元素阻止）。这就是和 blur 事件的区别之处 : 你可以在父元素上监控子元素的 blur 事件，即 focusout 事件支持冒泡.</p>
+<p><a href="http://docs.kissyui.com/source/raw/api/core/event/focusout.html">focusout事件的demo</a>.</p>
+<h4>hashchange</h4>
+<p>目前除了 ie67 外都原生支持 hashchange 事件，kissy 对 ie67 也模拟兼容了该事件.当浏览器的 hash 值发生变化时会触发此事件，常常被用来实现单页面应用，因为当用户点击后退与前进进行浏览器导航时会引起 hash 变化.</p>
+<p>此事件只能在当前 window 上注册，注册到其他类型元素上无效！ <code>hash</code> 值推荐为 <code>!/xx/</code> 形式, 前面用 <code>!/</code> 后面用 <code>/</code> 包起来，否则 ie67 可能有诡异现象.</p>
+<pre><code>var $=KISSY.all;
+$(window).on(&quot;hashchange&quot;,function(){
+    // location.hash -&gt; 当前 hash 值
+});</code></pre>
+<p><a href="http://docs.kissyui.com/source/raw/api/core/event/hashchange.html">Demo</a>。</p>
+<h3>valuechange</h3>
+<p>监控 input/textarea 的值变化，当值发生变化时在绑定元素上触发该事件。为什么不使用原生的 change keydown keyup</p>
+<ul>
+<li>change 只有在输入框失去焦点时触发.</li>
+<li>keyup/down 对于国际语言的输入法不能全面支持（鼠标从输入法中选词）</li>
+<li>keydown/up 需要过滤不可见字符</li>
+<li>程序设值不可以触发原生事件</li>
+<li>从浏览器自带的 input 自动提示列表中鼠标选择项，不会触发 keydown keyup，但 input 值变化</li>
+<li>右键鼠标黏贴不能支持</li>
+</ul>
+<p>当输入框获得焦点，程序动态设值可触发 valuechange 事件，否则不触发该事件.</p>
+<p>事件对象上会挂两个值</p>
+<ul>
+<li>prevVal，旧值 </li>
+<li>newVal，新值</li>
+</ul>
+<p>此事件只能在 input 以及 textarea 上注册，注册到其他类型元素上无效！</p>
+<pre><code>KISSY.Event.on(input,&quot;valuechange&quot;,function(e){
+    alert(e.prevVal); // =&gt; 旧值
+    alert(e.newVal); // =&gt; 新值
+});</code></pre>
+<p><a href="http://docs.kissyui.com/source/raw/api/core/event/valuechange.html">Demo</a></p>
+<h4>mousewheel</h4>
+<p>对鼠标滚轮事件做了浏览器兼容性处理，<a href="http://docs.kissyui.com/source/raw/api/core/event/mousewheel.html">Demo</a></p>
+
+
+      
+  <style>
+	.github-btn {
+		border: 0 none;
+		overflow: hidden;
+		margin-top:4px;
+	}
+	footer {
+		border-top:1px solid #e2e2e2;
+		padding-top:20px;
+		clear:both;
+	}
+	/* iPhone 及以下 */
+	@media only screen and (max-width: 767px) {
+		.github-link {
+			display:none;
+		}
+	}
+  </style>
+  <footer>
+	<div class="text-center">
+		©2013 - 2033 KISSY UI LIBRARY
+		<br /> <iframe class="github-btn" src="http://ghbtns.com/github-btn.html?user=kissyteam&amp;repo=kissy&amp;type=watch&amp;count=true" width="100" height="20" title="Star on GitHub"></iframe> 
+	<iframe class="github-btn" src="http://ghbtns.com/github-btn.html?user=kissyteam&amp;repo=kissy&amp;type=fork&amp;count=true" width="102" height="20" title="Fork on GitHub"></iframe>
+	</div>
+  </footer>
+    </article>
+  </div>
+  <a target="_blank" href="https://github.com/kissyteam/kissy" class="github-link"><img alt="Fork me on GitHub" src="http://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" style="position: absolute; top: 0; right: 0; border: 0; z-index: 50"></a>
+  <script>
+	var S = KISSY;
+	(function(){
+		S.use('node',function(S){
+			S.all('code').each(function(node){
+				var className = node.attr('class');
+				if(/^lang-/.test(className)){
+					var tc = className.replace(/^lang-/,'');
+					node.replaceClass(className,tc);
+				}
+			});
+			hljs.tabReplace = '    ';
+			hljs.initHighlighting();
+		});
+	})();
+	(function(){
+		var h3s = document.getElementsByTagName('h3');
+		for(var i = 0;i<h3s.length;i++){
+			var str = S.trim(h3s[i].innerHTML);
+			try{
+				str = str.match(/\w+/)[0];
+			}catch(e){
+				continue;
+			}
+			h3s[i].innerHTML = '<a name="'+str+'"></a>' + h3s[i].innerHTML;
+		}
+	})();
+  </script>
+</body>
+</html>
