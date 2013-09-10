@@ -23,9 +23,8 @@
 	- [Event](event.html)
 	- [IO（Ajax）](io.html)
 	- [Anim](anim.html)
-	- [Base](base.html)
+	- [Base](base.html)，包括Attr、自定义事件、插件机制
 	- [xtemplate](xtemplate.html)
-	- [KISSY 中的插件机制](plugin.html)
 	- [Mobile 开发最佳实践](mobile.html)
 - [项目构建工具](tools.html)
 	- [KISSY 模块依赖抽取工具 KMC（Kissy Module Complier）](kmc.html)

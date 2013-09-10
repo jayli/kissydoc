@@ -26,6 +26,11 @@ h3 {
 - 如果不是当前引擎或浏览器，返回 0 或者 undefined
 - 如果当前浏览器版本号无法准确判定，均返回 0.1
 
+
+	KISSY.use('ua',function(S,UA){
+		alert(UA); // UA可以使用了
+	});
+
 -------------------------------------
 
 
@@ -100,3 +105,74 @@ h3 {
 ### android  `<static>`
 
 {Number} - android 版本号。例如 5.0
+
+----------------------------------------------------
+
+## examples
+
+### 判断浏览器类型
+
+	KISSY.use('ua',function(S,UA){
+		if(UA.chrome > 0){
+			alert('Your browser is chrome');
+		}else if(UA.safari > 0){
+			alert('Your browser is safari');
+		}else if(UA.opera > 0){
+			alert('Your browser is opera');
+		}else if(UA.firefox > 0){
+			alert('Your browser is firefox');
+		}else if(UA.ie > 0){
+			alert('Your browser is ie');
+		}else{
+			alert('Your browser is unknown');
+		}
+	});
+
+## 判断操作系统类型
+
+	KISSY.use('ua',function(S,UA){
+        if(UA.os == 'windows'){
+            alert('Your os is Windows');
+        }else if(UA.os == 'Linux'){
+            alert('Your os is Linux');
+        }else if(UA.os == 'ios'){
+            alert('Your os is ios and version is' + UA.ios);
+            if(UA.ipad > 0){
+                alert('Your device is iPad');
+            }else if(UA.iphone > 0){
+                alert('Your device is iPhone');
+            }else if(UA.ipod > 0){
+                alert('Your device is iPod')
+            }
+        }else if(UA.os == 'android'){
+            alert('Your os is Android');
+        }
+    });
+
+### 判断mobile类型
+
+	KISSY.use('ua',function(S,UA){
+        if(UA.mobile == 'apple'){
+            alert('Your device is Apple');
+        }else if(UA.mobile == 'nokia'){
+            alert('Your device is Nokia');
+        }else if(UA.mobile == 'android'){
+            alert('Your device is Android');
+        }else if(UA.mobile == 'opera mini' || UA.mobile == 'opera mobi'){
+            alert('Your browser is opera mobile');
+        }
+    }); 
+
+### 判断浏览器外壳
+
+	KISSY.use('ua',function(S,UA){
+        if(UA.shell == 'chrome'){
+            alert('Your browser is chrome and the version is' + UA[UA.shell]);
+        }else if(UA.shell == 'se360'){
+            alert('Your browser is 360浏览器');
+        }else if(UA.shell == 'tt'){
+            alert('Your browser is 腾讯TT浏览器');
+        }else if(UA.shell == 'maxthon'){
+            alert('Your browser is 遨游浏览器');
+        }
+    });

@@ -85,6 +85,9 @@ h3 {
 <li>如果不是当前引擎或浏览器，返回 0 或者 undefined</li>
 <li>如果当前浏览器版本号无法准确判定，均返回 0.1</li>
 </ul>
+<pre><code>KISSY.use(&#39;ua&#39;,function(S,UA){
+    alert(UA); // UA可以使用了
+});</code></pre>
 <hr>
 <h3>trident  <code>&lt;static&gt;</code></h3>
 <p>{Number} - trident 的版本号。IE 浏览器 8 系列以下都无法准确探测 Trident 内核的版本号。</p>
@@ -122,6 +125,67 @@ h3 {
 <p>{Number} - ios 版本号。例如 5.0</p>
 <h3>android  <code>&lt;static&gt;</code></h3>
 <p>{Number} - android 版本号。例如 5.0</p>
+<hr>
+<h2>examples</h2>
+<h3>判断浏览器类型</h3>
+<pre><code>KISSY.use(&#39;ua&#39;,function(S,UA){
+    if(UA.chrome &gt; 0){
+        alert(&#39;Your browser is chrome&#39;);
+    }else if(UA.safari &gt; 0){
+        alert(&#39;Your browser is safari&#39;);
+    }else if(UA.opera &gt; 0){
+        alert(&#39;Your browser is opera&#39;);
+    }else if(UA.firefox &gt; 0){
+        alert(&#39;Your browser is firefox&#39;);
+    }else if(UA.ie &gt; 0){
+        alert(&#39;Your browser is ie&#39;);
+    }else{
+        alert(&#39;Your browser is unknown&#39;);
+    }
+});</code></pre>
+<h2>判断操作系统类型</h2>
+<pre><code>KISSY.use(&#39;ua&#39;,function(S,UA){
+    if(UA.os == &#39;windows&#39;){
+        alert(&#39;Your os is Windows&#39;);
+    }else if(UA.os == &#39;Linux&#39;){
+        alert(&#39;Your os is Linux&#39;);
+    }else if(UA.os == &#39;ios&#39;){
+        alert(&#39;Your os is ios and version is&#39; + UA.ios);
+        if(UA.ipad &gt; 0){
+            alert(&#39;Your device is iPad&#39;);
+        }else if(UA.iphone &gt; 0){
+            alert(&#39;Your device is iPhone&#39;);
+        }else if(UA.ipod &gt; 0){
+            alert(&#39;Your device is iPod&#39;)
+        }
+    }else if(UA.os == &#39;android&#39;){
+        alert(&#39;Your os is Android&#39;);
+    }
+});</code></pre>
+<h3>判断mobile类型</h3>
+<pre><code>KISSY.use(&#39;ua&#39;,function(S,UA){
+    if(UA.mobile == &#39;apple&#39;){
+        alert(&#39;Your device is Apple&#39;);
+    }else if(UA.mobile == &#39;nokia&#39;){
+        alert(&#39;Your device is Nokia&#39;);
+    }else if(UA.mobile == &#39;android&#39;){
+        alert(&#39;Your device is Android&#39;);
+    }else if(UA.mobile == &#39;opera mini&#39; || UA.mobile == &#39;opera mobi&#39;){
+        alert(&#39;Your browser is opera mobile&#39;);
+    }
+}); </code></pre>
+<h3>判断浏览器外壳</h3>
+<pre><code>KISSY.use(&#39;ua&#39;,function(S,UA){
+    if(UA.shell == &#39;chrome&#39;){
+        alert(&#39;Your browser is chrome and the version is&#39; + UA[UA.shell]);
+    }else if(UA.shell == &#39;se360&#39;){
+        alert(&#39;Your browser is 360浏览器&#39;);
+    }else if(UA.shell == &#39;tt&#39;){
+        alert(&#39;Your browser is 腾讯TT浏览器&#39;);
+    }else if(UA.shell == &#39;maxthon&#39;){
+        alert(&#39;Your browser is 遨游浏览器&#39;);
+    }
+});</code></pre>
 
 
       

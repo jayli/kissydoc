@@ -16,16 +16,56 @@
 	<script>
 		var S = KISSY;
 
-		S.config('base','./');
 		S.config('debug',true);
-		S.config('modules',{
-			'a':{
-				alias:['./b']
-			}
-		});
 
-		S.use('a',function(S,A){
-			console.log(A.a);
+		 KISSY.add('pp', function (S) {
+				// 自定义插件
+				function Plugin(cfg) {
+					this.config = cfg || {};
+					this.pluginId = 'aaa';
+				}
+
+				Plugin.prototype.pluginInitializer = function () {
+					var cfg = this.config;
+					console.log('插件运行');
+				};
+				Plugin.prototype.pluginDestructor = function(){
+					console.log('卸载插件');
+				};
+
+				return Plugin;
+
+			});
+
+
+		S.use('base,pp',function(S,Base,P){
+			var Header = Base.extend({
+				_onSetA:function(){
+
+				},
+				initializer:function(){
+					var self = this;
+				}
+			},{
+				ATTRS: {
+					A:{
+						value:'abc'
+					}
+				}
+			});
+				
+
+			var p = new P();
+			var a = new Header({
+				A:1,
+				plugins:[p]
+				
+			});
+			a.unplug('aaa');
+
+			// a.plug(new P());
+			
+
 		});
 
 
