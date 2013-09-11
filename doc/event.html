@@ -67,11 +67,34 @@
 <h3>事件绑定</h3>
 <p>浏览器对DOM节点暴露了一些事件，比如常见的click、mouseover等。在KISSY中通过统一的事件绑定写法来处理事件回调：</p>
 <pre><code>Event.on(&#39;#foo&#39;,&#39;click&#39;,function(){
+    // 其中this是原生节点
     alert(&#39;clicked : &#39;+this.id);
     return false;
 });</code></pre>
 <p>上面的代码作用是：为 id 为 foo 的元素绑定 click 事件.当用户在该元素内部点击时, 则 alert 会弹出来.</p>
 <p>回调函数返回 false 相当于调用了事件对象的 preventDefault() 以及 stopPropagation()</p>
+<p>Node 模块的 on 方法中的 this 关键字指向当前绑定事件的单个原生节点, 事件对象的 target 和 relatedTarget 也指向对应的原生节点,</p>
+<pre><code>&lt;div id=&#39;d1&#39; class=&#39;d&#39;&gt;&lt;/div&gt;
+&lt;div id=&#39;d2&#39; class=&#39;d&#39;&gt;&lt;/div&gt;
+
+&lt;script&gt;
+    KISSY.all(&quot;.d&quot;).on(&quot;mouseenter&quot;,function(ev){
+        this.id // =&gt; d1 或者 d2
+        ev.target.id // =&gt; d1 或者 d2
+        ev.relatedTarget // =&gt; d1 或者 d2 或者 document.body
+                        // 或者 document.documentElement
+    });
+&lt;/script&gt;</code></pre>
+<p>为了保持应用兼容，推荐的做法是，在回调函数开始包装 this （需要的话同样包装 event.target）</p>
+<pre><code>&lt;div id=&#39;d1&#39; class=&#39;d&#39;&gt;&lt;/div&gt;
+&lt;div id=&#39;d2&#39; class=&#39;d&#39;&gt;&lt;/div&gt;
+
+&lt;script&gt;
+    KISSY.all(&quot;.d&quot;).on(&quot;mouseenter&quot;,function(ev){
+        var self=KISSY.one(this);
+        self.attr(&quot;id&quot;) // =&gt; d1 或者 d2
+    });
+&lt;/script&gt;</code></pre>
 <h3>事件分组</h3>
 <p>on()函数支持事件分组，比如这段代码：</p>
 <pre><code>Event.on(&#39;#foo&#39;,&#39;click.one&#39;,function(){

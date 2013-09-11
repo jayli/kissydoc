@@ -15,6 +15,7 @@ Event是一个复杂的概念，是观察者模式在浏览器端的实现。事
 浏览器对DOM节点暴露了一些事件，比如常见的click、mouseover等。在KISSY中通过统一的事件绑定写法来处理事件回调：
 
 	Event.on('#foo','click',function(){
+		// 其中this是原生节点
 		alert('clicked : '+this.id);
 		return false;
 	});
@@ -22,6 +23,32 @@ Event是一个复杂的概念，是观察者模式在浏览器端的实现。事
 上面的代码作用是：为 id 为 foo 的元素绑定 click 事件.当用户在该元素内部点击时, 则 alert 会弹出来.
 
 回调函数返回 false 相当于调用了事件对象的 preventDefault() 以及 stopPropagation()
+
+Node 模块的 on 方法中的 this 关键字指向当前绑定事件的单个原生节点, 事件对象的 target 和 relatedTarget 也指向对应的原生节点,
+
+	<div id='d1' class='d'></div>
+	<div id='d2' class='d'></div>
+
+	<script>
+		KISSY.all(".d").on("mouseenter",function(ev){
+			this.id // => d1 或者 d2
+			ev.target.id // => d1 或者 d2
+			ev.relatedTarget // => d1 或者 d2 或者 document.body
+							// 或者 document.documentElement
+		});
+	</script>
+
+为了保持应用兼容，推荐的做法是，在回调函数开始包装 this （需要的话同样包装 event.target）
+
+	<div id='d1' class='d'></div>
+	<div id='d2' class='d'></div>
+
+	<script>
+		KISSY.all(".d").on("mouseenter",function(ev){
+			var self=KISSY.one(this);
+			self.attr("id") // => d1 或者 d2
+		});
+	</script>
 
 ### 事件分组
 

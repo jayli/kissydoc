@@ -68,6 +68,7 @@
 			// a.plug(new P());
 			
 			S.Event.on('.c1','click.one',function(){
+				debugger;
 				console.log('a');
 			});
 			S.Event.on('.c1','click.two',function(){
@@ -75,6 +76,8 @@
 			});
 			S.Event.remove('.c1','.two');
 
+			S.one('button').attr('data-x','asd');
+			console.log(S.one('button').data('data-x'));
 
 		});
 

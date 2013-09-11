@@ -493,3 +493,316 @@ DOM 结构变为：
 
 [克隆后保留原有事件逻辑Demo](http://docs.kissyui.com/source/raw/api/core/dom/clone.html)
 
+### empty()
+
+清除节点的所有子孙节点以及子孙节点上的事件.
+
+### replaceWith()
+
+将 node 节点（数组）替换为新的节点（数组） newNode
+
+### hasClass()
+
+判断当前节点是否包含某个className
+
+### addClass()
+
+给当前节点增加一个className
+
+### removeClass()
+
+从当前节点删除一个className
+
+### replaceClass()
+
+className的替换
+
+	// 将.container的className类名更改为other-class
+	S.one('.container').replaceClass('container','other-class');
+
+### toggleClass()
+
+如果存在某个classname，则移除，否则就添加上
+
+### removeAttr()
+
+移除节点的属性
+
+### attr()
+
+读写dom节点的属性
+
+	// 批量设置属性
+	node.attr({
+		{ src: 'kissy.png', width: 400, height: 400 }
+	});
+	node.attr('id','myId');// 设置单个属性
+	node.attr('id');//=>得到id的值
+
+### hasAttr()
+
+判断节点是否包含某个属性
+
+### prop()
+
+读写dom节点的属性值，和attr的不同在于，prop()读写的是dom节点自身具有的属性，而attr()的范围更大，但相比于prop()在某些场景下不够精确。比如，我可以通过attr来设置一个自定义属性，prop则不行：
+
+	node.attr('data-my-key','my-value');// 有效
+	node.prop('data-my-key','my-value');// 无效
+
+例如设置 input 或 button 的 disabled property 或者 checkbox 的 checked property。最常见的情况即是用 prop 来设置 disabled 以及 checked 而不要用 attr() 方法 . 而 val() 方法用来设置和读取 value property.
+
+	var c = S.Node("<input type='checkbox' checked='checked'/>");
+	console.log(c.attr('checked'));//=>'checked'
+	console.log(c.prop('checked'));//=>true
+	console.log(c.attr('nodeName'));//=> undefined
+	console.log(c.prop('nodeName').toLowerCase());// => input
+
+	c.prop("disabled", false); // ok
+	c.prop("checked", true); // ok
+	c.val("someValue"); // ok
+
+[Demo:selectionStart/End 兼容](http://docs.kissyui.com/source/raw/demo/dom/selection-start.html)
+
+### hasProp()
+
+判断节点是否原生具有某个属性
+
+当你使用该方法时, 请先考虑下是否是自定义 property , 如果是自定义 property 推荐采用 data() 系列方法. 如果是 DOM property , 一般直接判断 prop() 返回值即可
+
+### val()
+
+读写元素的value值
+
+	node.val(); // 读
+	node.val('test');// 写
+
+### text()
+
+读写元素的文本值
+
+### css()
+
+读写dom节点的样式
+
+	// 写单个样式
+	node.css('position','absolute');
+	// 批量写样式
+    node.css({position: 'absolute', top: '10px', left: '10px'});
+	// 读样式
+	node.css('position');
+
+### offset()
+
+读写元素的位置
+	
+	// 读位置
+	var a = node.offset();
+	/* a 是一个坐标对象
+		{
+			top:100,
+			left:20
+		}
+	*/
+
+	// 写位置
+	node.offset({
+		'top':100,
+		'left':20
+	});
+
+### scrollIntoView()
+
+将节点显示在视口范围内
+
+	node.scrollIntoView();// 将node显示在视口范围内
+	node.scrollIntoView(true);// 强制上端和左端与窗口上端和左端对齐
+	//第二个参数：是否允许容器左右滚动以保证元素显示在其可视区域.
+	node.scrollIntoView(true,true);
+
+### parent()
+
+查找祖先节点
+
+	node.parent();//返回父元素
+	node.parent('.container');//返回满足选择器格式的父级元素，会一直向上找，直到document
+	node.parent(['.a','.b']);//同时查找多个
+	// 可以通过自定义函数来查找父级节点
+	node.parent(function(p){
+		// 注意：这里p是原生节点
+		return p.className == 'myclass';
+	});
+	
+### index()
+
+查找当前节点在众兄弟节点的索引位置
+
+	node.index();// => 返回本节点在兄弟节点中的索引位置
+	node.index('selector');// => 返回node在匹配选择器节点中的位置
+
+### next()
+
+找到下一个同级节点，如果没有下一个同级节点，则返回null
+
+	node.next();//下一个兄弟节点，若无，返回null
+	node.next('.class');//返回下一个符合选择器的兄弟节点
+
+### prev()
+
+返回上一个同级兄弟节点，如果没有，返回null，用法参照next()
+
+### first()
+
+返回node的第一个子节点
+
+	node.first();//返回node第一个子节点
+	nodelist.first();//返回nodelist里第一个node的第一个子节点
+
+### last()
+
+返回node最后一个子节点，用法同first()
+
+### siblings()
+
+获得node节点的兄弟节点
+
+	node.siblings();//返回node所有兄弟节点
+	node.siblings('.filter');//获得符合‘.filter’的兄弟节点
+
+### children()
+
+返回node的所有子节点
+
+	node.children();//返回所有子节点
+	node.children('.filter');返回符合选择器的所有子节点
+
+注意这里的子节点不包含文本节点
+
+### contains()
+
+判断node节点是否包含另外一个节点，参数可以是textNode。
+
+	node.contains('.selector');// 是否包含选择器匹配的（第一个）节点
+	node.contains(otherNode);//传入node参数
+	node.contains([node1,node2]);//传入数组
+	node.contains(domNode);//传入裸的节点亦可
+	node.contains(nodeList);//这时会判断nodeList的第一个元素是否和node具有包含关系
+
+### html()
+
+读写元素的innerHTML属性
+
+	node.html();//返回innerHTML
+	node.html('abc');//设置node的innerHTML
+	node.html('abc<script>alert(22);</script>',true);// 执行innerHTML中的脚本
+
+### remove()
+
+从DOM树中删除当前节点
+
+### data()
+
+读写DOM元素的扩展属性(expando)，embed, object, applet 这三个标签不能设置 expando。该函数并不能读取 data-xx 伪属性。
+
+	node.data('data-size','100');// data-size 的 expando , 值为 100;
+	node.data('data-size');//100
+
+要注意伪属性、DOM自有属性、和扩展属性expando之间的差别
+
+	// 给dom元素写了一个伪属性
+	S.one('button').attr('data-x','asd');
+	// 通过data 是读不出来的
+	console.log(S.one('button').data('data-x'));
+
+但这样可以：
+
+	// 给dom元素写了一个扩展属性expando
+	S.one('button').attr('data-x','asd');
+	// 通过data 是可以读出来的，但无法通过浏览器工具查看到button上有这个属性data-x
+	console.log(S.one('button').data('data-x'));
+
+### removeData()
+
+删除某个扩展属性
+
+### hasData()
+
+判断是否具有某个属性，hasData() 可以判断一个元素是否经过 data() 设置过扩展属性，而如果直接调用 data( selector ) 那么当元素没有设置过扩展属性时，会在元素上关联一个空存储对象，并返回它.
+
+### unselectable()
+
+让node节点变为不可选择的节点。在 ie 下会引发该元素鼠标点击获取不到焦点, 在 firefox 下要得到同样的效果则需要阻止 mousedown 事件.
+
+### innerWidth()
+
+获取node的innerWidth，包含padding
+
+	<div style="width: 100px;">
+		<div id="test" style="width: 80%; height: 20px; padding: 10px;"></div>
+	</div>
+	<script>
+		var S = KISSY, DOM = S.DOM,
+		elem = S.get('#test');
+
+		DOM.innerWidth(elem); // 返回 100
+		DOM.innerHeight(elem); // 返回 40
+	</script>
+
+### innerHeight()
+
+获取node的innerHeight，用法同innerWidth
+
+### outerWidth()
+
+返回node的outerWidth，注意: 该值除了包含元素本身宽度和 padding 外, 还包含 border或margin .
+
+	<div style="width: 100px;">
+		<div id="test" style="width: 80%; 
+					height: 20px; 
+					padding: 10px;
+					border: 2px solid gray;
+					margin: 6px;"></div>
+	</div>
+	<script>
+		var S = KISSY, DOM = S.DOM,
+		elem = S.get('#test');
+
+		DOM.outerWidth(elem); // 返回 104
+		DOM.outerHeight(elem); // 返回 44
+		DOM.outerWidth(elem, true); // 返回 116
+		DOM.outerHeight(elem, true); // 返回 56
+	</script>
+
+### outerHeight()
+
+返回node的outerHeight，用法同上
+
+### on()
+
+on 方法是给文档添加行为的主要方式. 所有的事件类型, 例如 focus , mouseover , resize 都是有效的事件类型。window 的 beforeunload 和 error 事件使用了不标准的方式, 该方法不支持, 请直接在 window 对象上注册事件处理器.
+
+当一个节点的某个事件出发时, 绑定该事件的所有处理器都会被调用.如果有多个事件处理器, 则他们的执行顺序和绑定的顺序保持一致, 当所有的事件处理器执行完毕后, 事件才继续向上传播.
+
+	S.one('#foo').on('click',function(){
+		// 其中this是原生节点
+		alert('clicked : '+this.id);
+	});
+
+上面的代码作用是：为 id 为 foo 的元素绑定 click 事件.当用户在该元素内部点击时, 则 alert 会弹出来.
+
+### detach()
+
+接触绑定事件，用法参照[Event](event.html)
+
+### fire()
+
+模拟事件发生。用 Event.on 绑定的事件处理器可以被用户触发的原生事件调用. 但是这些事件处理器也可以使用 fire 手动调用. 调用 fire() 和用户触发导致的处理器调用调用是一样的顺序.[参照这个demo](http://docs.kissyui.com/source/raw/api/core/event/fire.html)
+
+	node.on('click',function(){
+		// 其中this是原生节点
+		alert(this.text());
+	});
+
+	node.fire('click');
+
+
