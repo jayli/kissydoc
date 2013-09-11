@@ -20,7 +20,7 @@
 
 <body class="">
     <nav id="sidebar">
-    <header><a href="index.html"><img src="http://gtms04.alicdn.com/tps/i4/T1thWGFcNeXXcS2FYh-200-77.png"></a></header>
+    <header><a href="index.html"><img src="http://gtms04.alicdn.com/tps/i4/T1ceiPFbpcXXcljp_h-200-89.png"></a></header>
     <ul>
       <li class="nav-divider"><a href="index.html"><img src="templates/assets/img/icon-home.png">首页</a></li>
       <li class="nav-divider"><a href="why-kissy.html"><img src="templates/assets/img/icon-why.png">Why KISSY?</a></li>
@@ -96,7 +96,7 @@ var bigSrc = imgNode.attr(&#39;src&#39;);//得到imgNode的src属性
 
 imgNode.attr(&#39;src&#39;, &#39;new.png&#39;);// 设置src属性为一个新的值
 imgNode.next().html(&#39;hello world&#39;);// 设置imgNode下一个兄弟节点的innerHTML</code></pre>
-<p>Node 实例通过<code>attr</code>方法来读写常见的属性。一些className和innerHTML相关的常用操作，被封装为addClass、replaceClass或者html方法。</p>
+<p>Node 实例通过<code>attr</code>方法来读写常见的属性。一些className和innerHTML相关的常用操作，被封装为addClass、replaceClass或者html方法。更多用法请参照下文API部分。</p>
 <h2>Node 事件操作</h2>
 <pre><code>S.one(&#39;#demo&#39;).on(&#39;click&#39;, function(e) {
     e.halt();
@@ -105,7 +105,7 @@ imgNode.next().html(&#39;hello world&#39;);// 设置imgNode下一个兄弟节点
 <p>回调传回一个门面对象<code>e</code>，e是原生事件对象，是非封装后的，这时<code>e.target</code>是裸的节点。除了preventDefault()和stopPropagation()之外，e还包含halt()方法，停止事件加阻止默认行为。</p>
 <h2>Node 方法</h2>
 <p>Node 实例实现了一些快捷方法，用来方便用户更快捷的操作DOM节点。比如append、next、appendTo、addClass等等。</p>
-<h2>Node 集合</h2>
+<h2>NodeList  集合</h2>
 <pre><code>var doneTasks = S.all(&#39;#tasklist .completed&#39;);
 
 // 针对所有的节点进行操作
@@ -134,6 +134,263 @@ var node = S.one(&#39;#toolbar&#39;).attr(&#39;role&#39;, &#39;toolbar&#39;);
 node.attr({
     role: &#39;menu&#39;, &#39;aria-hidden&#39;: true 
 });</code></pre>
+<hr>
+<h1>Node或NodeList 的实例方法</h1>
+<h3>all()，one()</h3>
+<pre><code>S.one(&#39;.filter&#39;); // 从document根节点开始查找一个节点
+S.all(&#39;.filter&#39;); // 从document根节点开始查找一批节点
+node.one(&#39;.child&#39;); // 得到当前节点下的匹配选择器的一个节点
+node.all(&#39;.children&#39;); // 得到当前节点下的匹配选择器的节点列表</code></pre>
+<h3>getDOMNode()，getDOMNodes()</h3>
+<pre><code>node.getDOMNode();// 得到一个原生节点
+node.getDOMNodes();// 得到一个原生节点组成的数组</code></pre>
+<h3>end()</h3>
+<p>得到上一次 one() 和 all() 操作前的 NodeList 或者 Node 对象。引入该方法是为了更好的支持链式操作( chaining )，可以在一个语句内对不同层次得节点集合进行不同的操作.<a href="http://docs.kissyui.com/source/raw/api/core/node/end.html">demo</a>。</p>
+<pre><code>S.one(&quot;body&quot;).all(&quot;.d1&quot;).css(&quot;color&quot;, &quot;red&quot;);// =&gt; 返回节点.d1
+S.one(&quot;body&quot;).all(&quot;.d1&quot;).css(&quot;color&quot;, &quot;red&quot;).end();// =&gt; 返回节点 body
+S.one(&quot;body&quot;).all(&quot;.d1&quot;).css(&quot;color&quot;, &quot;red&quot;)
+    .end()
+    .all(&#39;.d2&#39;);// =&gt; 返回节点 .d2 </code></pre>
+<h3>equals()</h3>
+<p>判断节点是否相等</p>
+<pre><code>&lt;div class=&#39;a b&#39; id=&#39;a&#39;&gt;&lt;/div&gt;
+&lt;div class=&#39;a b&#39; id=&#39;b&#39;&gt;&lt;/div&gt;
+&lt;script&gt;
+    KISSY.all(&quot;.a&quot;).equals(KISSY.all(&quot;.b&quot;)) // =&gt; true
+&lt;/script&gt;</code></pre>
+<h3>add()</h3>
+<p>将多个Nodelist/Node对象合并为一个集合返回，原有对象不会变化，参数和all保持一致</p>
+<pre><code>&lt;p&gt;1&lt;/p&gt;&lt;div&gt;2&lt;/div&gt;
+&lt;script&gt;
+    var pdiv = S.all(&quot;p&quot;);
+    var all= pdiv.add(&quot;div&quot;);  //  pdiv 不会变化
+    all.css(&quot;color&quot;,&quot;red&quot;); // =&gt; 1,2 都为红字
+&lt;/script&gt;</code></pre>
+<h3>item()</h3>
+<p>返回NodeList的某个下标表示的节点，得到的是封装后的Node节点，而非原生节点，得到原生节点直接用数组下标获取<code>S.all(&#39;.a&#39;)[0]</code></p>
+<pre><code>&lt;div class=&#39;a&#39; id=&#39;a&#39;&gt;&lt;/div&gt;
+&lt;div class=&#39;a&#39; id=&#39;b&#39;&gt;&lt;/div&gt;
+&lt;script&gt;
+    // 取第0个节点
+    S.all(&quot;.a&quot;).item(0).attr(&quot;id&quot;)  // =&gt; a
+    // 取第一个节点
+    S.all(&quot;.a&quot;).item(1).attr(&quot;id&quot;)  // =&gt; b
+    // 取第二个节点
+    S.all(&quot;.a&quot;).item(2)  // =&gt; null
+&lt;/script&gt;</code></pre>
+<h3>slice()</h3>
+<p>获取包含当前节点列表选定范围内原生节点的新 NodeList 对象</p>
+<pre><code>var as = S.all(&quot;.a&quot;);
+var subs = as.slice(1,3); // =&gt; subs != as
+subs.length // =&gt; 2，subs 为被截取之后的节点 </code></pre>
+<h3>scrollTop()</h3>
+<p>返回节点滚动条的垂直位置.<a href="http://docs.kissyui.com/source/raw/api/core/node/scrollTop-get.html">demo</a></p>
+<pre><code>var p = S.all(&quot;p:first&quot;).scrollTop();
+alert(p);// 返回第一个p元素的滚动条高度</code></pre>
+<p>设置当前节点的滚动条的高度</p>
+<pre><code>S.one(&#39;.filter&#39;).scrollTop(100);// 设置元素.filter的滚动条高度为100</code></pre>
+<p>一般这样获取页面的滚动条高度</p>
+<pre><code>KISSY.one(document).scrollTop();
+KISSY.DOM.scrollTop();// 这两者完全一致</code></pre>
+<h3>scrollLeft()，用法同scrollTop()</h3>
+<h3>height() 和 width()</h3>
+<p>获得节点的计算高度或宽度，css(&#39;height&#39;) 和 height() 的区别在于 height() 返回不带单位的纯数值, 而 css(&#39;height&#39;) 则返回带单位的原始值(例如 40% ).</p>
+<p><img src="http://docs.kissyui.com/source/raw/api/core/node/height.png" alt=""></p>
+<p>该方法也可以用来得到 windw 和 document 的高度</p>
+<pre><code>S.all(window).height(); // 得到浏览器可以区域的高度, 相当于 DOM.viewportHeight()
+S.all(document).height(); //得到 html 文档的高度, 相当于 DOM.docHeight()</code></pre>
+<blockquote>
+<p>在现代浏览器中, css height 属性不包括 padding , border 或者 margin.</p>
+</blockquote>
+<p>设置元素的高度或宽度</p>
+<pre><code>S.all(&#39;.filter&#39;).height(100);// 设置一组元素的高度为100px
+S.all(&#39;.filter&#39;).height(&#39;100px&#39;);// 设置一组元素的高度为100px
+S.all(&#39;.filter&#39;).height(&#39;20em&#39;);// 设置一组元素的高度为20em</code></pre>
+<ul>
+<li><a href="http://docs.kissyui.com/source/raw/api/core/node/height-get.html">得到各种各样高度的demo</a></li>
+<li><a href="http://docs.kissyui.com/source/raw/api/core/node/height-set.html">设置元素高度的demo</a></li>
+</ul>
+<h3>addStyleSheet()</h3>
+<p>添加样式表</p>
+<pre><code>node.addStyleSheet(&#39;xx {_width:xx;}&#39;);// 可以写css hack</code></pre>
+<p>另外一种加样式的方法：</p>
+<pre><code>var styleEl = S.all(&quot;&lt;style&gt;p {color:red}&lt;/style&gt;&quot;).appendTo(&quot;head&quot;);</code></pre>
+<h3>append()</h3>
+<p>将参数内容插入到当前节点列表中的每个元素的末尾.</p>
+<pre><code>&lt;h2&gt;Greetings&lt;/h2&gt;
+&lt;div class=&quot;container&quot;&gt;
+  &lt;div class=&quot;inner&quot;&gt;Hello&lt;/div&gt;
+  &lt;div class=&quot;inner&quot;&gt;Goodbye&lt;/div&gt;
+&lt;/div&gt;
+&lt;script&gt;
+KISSY.use(&quot;node&quot;,function(S,Node){
+    Node.all(&#39;.inner&#39;).append(&#39;&lt;p&gt;Test&lt;/p&gt;&#39;);
+});
+&lt;/script&gt;</code></pre>
+<p>操作之后的结果为：</p>
+<pre><code>&lt;h2&gt;Greetings&lt;/h2&gt;
+&lt;div class=&quot;container&quot;&gt;
+  &lt;div class=&quot;inner&quot;&gt;
+    Hello
+    &lt;p&gt;Test&lt;/p&gt;
+  &lt;/div&gt;
+  &lt;div class=&quot;inner&quot;&gt;
+    Goodbye
+    &lt;p&gt;Test&lt;/p&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+<p>把页面上已有的元素 prepend 到另外一个:</p>
+<pre><code>S.all(&#39;.container&#39;).append(S.all(&#39;h2&#39;));</code></pre>
+<p>如果当前节点列表只包括一个节点, 那么他将会被移到目标容器中(而不是克隆):</p>
+<ul>
+<li><a href="http://docs.kissyui.com/source/raw/api/core/node/append-1.html">在所有段落中添加一些 html 字符串demo</a></li>
+<li><a href="http://docs.kissyui.com/source/raw/api/core/node/append-2.html">给所有段落添加一个文本节点</a></li>
+<li><a href="http://docs.kissyui.com/source/raw/api/core/node/append-3.html">给所有段落添加一个 <code>NodeList</code> 对象</a></li>
+</ul>
+<h3>appendTo()</h3>
+<p>将当前节点列表中的每个元素插入到容器列表的每个元素的最后一个子节点后面.</p>
+<p>我们可以创建元素后立即插入到多个已有元素:</p>
+<pre><code>S.all(&#39;&lt;p&gt;Test&lt;/p&gt;&#39;).appendTo(&#39;.inner&#39;);</code></pre>
+<p>也可以把一个已有元素插入到另一个</p>
+<pre><code>S.all(&#39;h2&#39;).appendTo(S.all(&#39;.container&#39;));</code></pre>
+<p>如果容器列表只有一个节点, 那么当前节点列表会被移动到容器内(不是克隆):</p>
+<ul>
+<li><a href="http://docs.kissyui.com/source/raw/api/core/node/appendTo.html">把多个 span 插入到已有元素</a></li>
+</ul>
+<h3>prepend()</h3>
+<p>用法同append()，prepend()表示插入到最前</p>
+<h3>prependTo()</h3>
+<p>用法同prependTo()，prependTo()表示插入到最前</p>
+<h3>insertBefore()</h3>
+<p>在某个节点之前插入节点</p>
+<pre><code>S.all(&#39;&lt;p&gt;Test&lt;/p&gt;&#39;).insertBefore(&#39;.inner&#39;);</code></pre>
+<p>也可以操作现有元素</p>
+<pre><code>S.all(&#39;h2&#39;).insertBefore(S.all(&#39;.container&#39;));</code></pre>
+<p>如果目标节点只有一个, 那么当前节点就会移动到目标节点之前。</p>
+<ul>
+<li><a href="http://docs.kissyui.com/source/raw/api/core/node/insertBefore.html">把段落插入到 div 节点之前Demo</a></li>
+</ul>
+<h3>before()</h3>
+<p>和insertBefore()方法的功能一样, 只不过参数意义不同, insertBefore 表示当前节点列表被插入到参数目标节点之前, 而该方法则表示参数节点被插入到当前节点之前.</p>
+<ul>
+<li><a href="http://docs.kissyui.com/source/raw/api/core/node/before.html">Demo</a></li>
+</ul>
+<h3>insertAfter()</h3>
+<p>用法类似于insertBefore()</p>
+<h3>after()</h3>
+<p>用法类似于before()</p>
+<h3>animate()</h3>
+<p>对当前节点(列表)上做动画，返回一个NodeList实例。</p>
+<pre><code>var node=KISSY.all(&quot;.foo&quot;);
+node.animate({
+    width:100,
+    height:300
+}, {
+    duration: 2000,
+    easing:&#39;easeBoth&#39; ,
+    complete: function () {
+    }
+});</code></pre>
+<p>等价于</p>
+<pre><code>KISSY.all(&quot;.foo&quot;).each(function(n){
+    new KISSY.Anim(n,...).run();
+});</code></pre>
+<p>参数请参照<a href="anim.html">Anim</a>。</p>
+<h3>stop()</h3>
+<p>停止当前动画，同<code>Anim.stop()</code>。</p>
+<h3>pause()</h3>
+<p>停止当前节点列表的动画，同<code>Anim.pause()</code></p>
+<h3>resume()</h3>
+<p>继续当前节点的动画，含义同<code>Anim.resume()</code></p>
+<h3>isRunning()</h3>
+<p>判断当前节点是否在做动画的过程中</p>
+<h3>isPaused()</h3>
+<p>判断当前节点是否已经暂停动画</p>
+<h3>show()</h3>
+<p>显示当前节点</p>
+<pre><code>node.show();// 直接显示
+node.show(0.5,function(){
+    // 0.5 秒后执行这里的回调    
+});</code></pre>
+<h3>hide()</h3>
+<p>隐藏节点</p>
+<pre><code>node.hide();// 直接隐藏
+node.hide(0.5,function(){
+    // 0.5 秒后执行这里的回调    
+});</code></pre>
+<h3>toggle()</h3>
+<p>更改节点的隐藏和显示状态</p>
+<pre><code>node.toggle();// 直接切换显示状态
+node.toggle(0.5,function(){
+    // 0.5 秒后执行这里的回调    
+});</code></pre>
+<h3>fadeIn()</h3>
+<p>当前节点以渐隐效果显示</p>
+<pre><code>node.fadeIn(1,function(){
+    // 1 秒后执行回调    
+},easeIng);
+// easyIng 取值请参照Anim</code></pre>
+<h3>fadeOut()</h3>
+<p>当前节点渐隐效果消逝，用法同fadeIn()</p>
+<h3>fadeToggle()</h3>
+<p>当前节点渐隐效果切换显示状态</p>
+<h3>slideDown()</h3>
+<p>当前节点从上到下滑动显示，参数同fadeIn()</p>
+<h3>slideUp()</h3>
+<p>当前节点从下到上活动显示，参数同fadeIn()</p>
+<h3>slideToggle()</h3>
+<p>当前节点上下滑动切换显示状态，参数同fadeIn()</p>
+<h3>filter()</h3>
+<p>对于NOdeList过滤出符合条件的节点，返回NodeList</p>
+<pre><code>KISSY.use(&#39;node&#39;,function(S,Node)){
+    var els = S.all(&#39;a&#39;).filter(&#39;.container&#39;);
+    // 过滤出className为container的a标签
+});</code></pre>
+<h3>test()</h3>
+<p>根据选择器获取的所有元素是否都符合过滤条件</p>
+<pre><code>var els = S.all(&#39;a&#39;);
+console.log(els.test(&#39;.container&#39;));//a标签是否都包含class名container</code></pre>
+<h3>clone()</h3>
+<p>节点的深度克隆，用法：<code>node.clone(deep,withDataAndEvent,deepWithDataAndEvent)</code></p>
+<p>参数默认值：</p>
+<ul>
+<li>deep:false</li>
+<li>withDataAndEvent:false</li>
+<li>deepWithDataAndEvent:false</li>
+</ul>
+<p>比如这段代码</p>
+<pre><code>&lt;div class=&quot;container&quot;&gt;
+    &lt;div class=&quot;hello&quot;&gt;Hello&lt;/div&gt;
+    &lt;div class=&quot;goodbye&quot;&gt;Goodbye&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+<p>如果将页面中已经存在的节点插入到其他位置，它会从原来的位置移除，类似：</p>
+<pre><code>KISSY.one(&#39;.hello&#39;).appendTo(&#39;.goodbye&#39;);</code></pre>
+<p>DOM 结构变为：</p>
+<pre><code>&lt;div class=&quot;container&quot;&gt;
+    &lt;div class=&quot;goodbye&quot;&gt;
+        Goodbye
+        &lt;div class=&quot;hello&quot;&gt;Hello&lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+<p>为了阻止原来的元素移动，而插入一个元素的复制版本，那么你可以这样写</p>
+<pre><code>KISSY.one(&#39;.hello&#39;).clone(true).appendTo(&#39;.goodbye&#39;);</code></pre>
+<p>这样DOM结果为：</p>
+<pre><code>&lt;div class=&quot;container&quot;&gt;
+    &lt;div class=&quot;hello&quot;&gt;Hello&lt;/div&gt;
+        &lt;div class=&quot;goodbye&quot;&gt;
+        Goodbye
+        &lt;div class=&quot;hello&quot;&gt;Hello&lt;/div&gt;
+        &lt;div class=&quot;hello&quot;&gt;Hello&lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+<p>默认情况下 clone 后的元素不会具备源元素的 data 属性以及事件绑定，但是如果你设置了 <code>withDataAndEvent=true</code> , 那么 clone 后的元素也会具备源元素的 data 属性以及事件绑定。</p>
+<pre><code>node.clone(true,true);</code></pre>
+<p>更进一步的你可以设置 deepWithDataAndEvent 来使得 clone 后元素的子孙元素也具备源元素对应子孙元素的 data 属性和事件绑定.注意这时 deep 参数也要设置为 true.</p>
+<pre><code>node.clone(true,true,true);</code></pre>
+<p>源元素的对象以及数组类型的 data 属性只是引用被复制到 clone 后的元素，他们的值则会在源元素以及克隆元素间共享，如果想进行 deep copy，请手动进行</p>
+<pre><code>var elem=KISSY.one(&quot;.hello&quot;).attr(&quot;custom&quot;,{x:1});
+elem.clone().attr(&quot;custom&quot;,{x:2});</code></pre>
+<p><a href="http://docs.kissyui.com/source/raw/api/core/dom/clone.html">克隆后保留原有事件逻辑Demo</a></p>
 
 
       
