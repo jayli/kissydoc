@@ -8,6 +8,72 @@
 
 方便起见，你仍可以用`S.Ajax`，`S.Ajax === S.IO`。
 
+<link rel="stylesheet" href="http://g.tbcdn.cn/trip/kissy/1.4.0/css/dpl/base-min.css" />
+<style>
+#photo-list img  {
+border: 1px solid grey;
+padding: 4px;
+margin: 8px;
+}
+.loading {
+background: transparent url(http://docs.kissyui.com/source/_static/loading.gif) no-repeat;
+width: 100px;
+height: 100px;
+margin: 20px;
+}
+div.demo {
+background: none repeat scroll 0 0 #F8F8F6;
+border: 1px solid #D1D1D1;
+border-radius: 2px 2px 2px 2px;
+margin: 8px 0;
+padding: 10px;
+}
+</style>
+<button id="fetch-btn" autocomplete="off">Fetch Photo</button>
+<div id="photo-list"></div>
+<script>
+	 KISSY.use('node,io',function (S,Node,IO) {
+		 var API = 'http://api.flickr.com/services/rest/',
+			 params = {
+				 'method': 'flickr.favorites.getPublicList',
+				 'api_key': '5d93c2e473e39e9307e86d4a01381266',
+				 'user_id': '26211501@N07',
+				 'per_page': 10,
+				 'format': 'json'
+			 },
+			 photoList = Node.one('#photo-list');
+		 Node.one('#fetch-btn').on('click', function() {
+			 Node.one(this).attr('disabled', true);
+			 photoList.addClass('loading');
+			 Node.one('#fetch-btn')[0].disabled=true;
+
+			 new IO({
+				 url: API,
+				 data: params,
+				 dataType:'jsonp',
+				 'jsonp':'jsoncallback',
+				 success:function(data){
+					 var html = 'Fetch photo failed, pls try again!';
+					 if (data.stat === 'ok') {
+						 html = '';
+						 S.each(data.photos.photo, function(item, i){
+							 html += '<img src="http://farm' + item.farm + '.static.flickr.com/'
+									 + item.server + '/' + item.id + '_' + item.secret + '_t.jpg" />';
+						 });
+					 }
+					 photoList.removeClass('loading').html(html);
+				 },
+				 complete:function(){
+					 Node.one('#fetch-btn')[0].disabled=false;
+				 }
+			 });
+		 });
+	 });
+</script>
+
+</script>
+
+
 ### IO `<class>`
 
  `IO(cfg) => Promise`
