@@ -24,7 +24,7 @@
     <ul>
       <li class="nav-divider"><a href="index.html"><img src="templates/assets/img/icon-home.png">首页</a></li>
       <li class="nav-divider"><a href="why-kissy.html"><img src="templates/assets/img/icon-why.png">Why KISSY?</a></li>
-      <li><a href="get-started.html"><img src="templates/assets/img/icon-getting-started.png">Getting Started (1.4.0)</a></li>
+      <li><a href="get-started.html"><img src="templates/assets/img/icon-getting-started.png">KISSY 1.4.0 教程大纲</a></li>
       <li class="nav-sub"><a href="module-map.html">核心模块列表</a></li>
       <li class="nav-sub"><a href="kmd.html">KISSY 模块规范 (KMD)</a></li>
       <li class="nav-sub"><a href="gbs.html">浏览器兼容基准(GBS)</a></li>
@@ -73,6 +73,14 @@
 });</code></pre>
 <p>上面的代码作用是：为 id 为 foo 的元素绑定 click 事件.当用户在该元素内部点击时, 则 alert 会弹出来.</p>
 <p>回调函数返回 false 相当于调用了事件对象的 preventDefault() 以及 stopPropagation()</p>
+<p>Node模块依赖了Event模块的DOM部分，因此和浏览器和DOM相关的事件可以通过引入Node来使用，不必再引入Event模块，即如果你只用到了DOM事件，你只需这样：</p>
+<pre><code>// 这里不用再引入event模块
+KISSY.use(&#39;node&#39;,function(S,Node){
+    Node.all(&#39;.a&#39;).on(&#39;click&#39;,function(e){
+        // Your code...    
+    });
+});</code></pre>
+<p>因此，Node节点中的on()方法和Event.on()功能一样，只是传参不一样。</p>
 <p>Node 模块的 on 方法中的 this 关键字指向当前绑定事件的单个原生节点, 事件对象的 target 和 relatedTarget 也指向对应的原生节点,</p>
 <pre><code>&lt;div id=&#39;d1&#39; class=&#39;d&#39;&gt;&lt;/div&gt;
 &lt;div id=&#39;d2&#39; class=&#39;d&#39;&gt;&lt;/div&gt;
@@ -209,13 +217,13 @@ Event.undelegate(document,&#39;click&#39;,&#39;.clickme&#39;,d);</code></pre>
 <h3>特殊事件支持</h3>
 <p>KISSY 对常见的DOM事件做了封装，包括原生浏览器不支持的事件。</p>
 <ul>
-<li>focusin</li>
-<li>focusout</li>
-<li>hashchange</li>
-<li>valuechange</li>
-<li>mouseenter</li>
-<li>mouseleave</li>
-<li>mousewheel</li>
+<li>focusin，元素内部获得焦点</li>
+<li>focusout，元素内部失去焦点</li>
+<li>hashchange，浏览器的hash改变</li>
+<li>valuechange，input的值改变</li>
+<li>mouseenter，鼠标进入</li>
+<li>mouseleave，鼠标移出</li>
+<li>mousewheel，滚轮事件</li>
 </ul>
 <h4>focusin</h4>
 <p>原生只有 ie 支持 focusin 事件，而 kissy 对这一事件进行了 兼容性处理。但一个元素获得焦点或者其子孙元素获得焦点时， focusin 会在该元素上触发（没被子孙元素阻止）。这就是和 focus 事件的区别之处 : 你可以在父元素上监控子元素的 focus 事件，即 focusin 事件支持冒泡.</p>
@@ -255,6 +263,167 @@ $(window).on(&quot;hashchange&quot;,function(){
 <p><a href="http://docs.kissyui.com/source/raw/api/core/event/valuechange.html">Demo</a></p>
 <h4>mousewheel</h4>
 <p>对鼠标滚轮事件做了浏览器兼容性处理，<a href="http://docs.kissyui.com/source/raw/api/core/event/mousewheel.html">Demo</a></p>
+<h4>mouseenter &amp; mouseleave</h4>
+<p>鼠标进入容器和移除容器的操作</p>
+<h3>移动设备事件支持</h3>
+<p>KISSY 对于移动设备做了统一的事件封装，这些事件包括：</p>
+<ul>
+<li>doubleTap</li>
+<li>singleTap</li>
+<li>tap</li>
+<li>tapHold</li>
+<li>swipe</li>
+<li>rotateStart</li>
+<li>rotate</li>
+<li>rotateEnd</li>
+<li>pinchStart</li>
+<li>pinch</li>
+<li>pinchEnd</li>
+<li>shake</li>
+</ul>
+<h4>doubleTap</h4>
+<p>触屏双击事件，快速点击某个dom节点两次后触发，用法和普通DOM事件无异</p>
+<pre><code>Event.on(&#39;#t&#39;, &quot;singleTap doubleTap&quot;, function (e) {
+    alert(e.type + &#39; : fired&#39;);
+});</code></pre>
+<ul>
+<li><a href="http://docs.kissyui.com/source/raw/api/core/event/double-tap.html">双击事件的Demo，在手机中打开此demo</a></li>
+</ul>
+<h4>singleTap</h4>
+<p>触屏单击事件，和双击互斥，当快速点击某个 dom 节点一次（短时间没有再次点击）后触发，<a href="http://docs.kissyui.com/source/raw/api/core/event/double-tap.html">demo</a></p>
+<h4>tap</h4>
+<p>触屏单击，当点击某个 dom 节点后触发， 和 singleTap 的不同支持载入： 触发 doubleTap 就不会触发 singleTap， 而触发 doubleTap 前会触发 tap，<a href="http://docs.kissyui.com/source/raw/api/core/event/tap.html">demo</a>。</p>
+<h4>tapHold</h4>
+<p>触屏长按，当常按某个 dom 节点超过 1s 后触发，<a href="http://docs.kissyui.com/source/raw/api/core/event/tap-hold.html">Demo</a></p>
+<h4>swipe</h4>
+<p>触屏上当快速划过某个元素时触发，事件对象会挂载这几个属性：</p>
+<ul>
+<li>distance：Number，划过的距离</li>
+<li>direction：String，滑动方向，可取值为left/right/up/down</li>
+<li>duration：Number，滑动持续事件，单位秒</li>
+</ul>
+<pre><code>Event.on(&#39;#t&#39;, &quot;swiping&quot;, function (e) {
+    if(e.direction==&#39;left&#39;){
+        e.preventDefault();
+    }
+});</code></pre>
+<p><a href="http://docs.kissyui.com/source/raw/api/core/event/swipe.html">在触屏设备中打开这个Demo</a></p>
+<h4>rotateStart</h4>
+<p>触屏上开始用双指旋转某个 dom 元素时出现，事件对象上会挂载这两个属性</p>
+<ul>
+<li>angle：Number，开始时双指的角度</li>
+<li>rotation：Number，固定为0</li>
+</ul>
+<p><a href="http://docs.kissyui.com/source/raw/api/core/event/rotate.html">在触屏设备中打开demo</a></p>
+<h4>rotate</h4>
+<p>触屏上用双指旋转某个 dom 元素时出现，事件对象挂载这两个属性</p>
+<ul>
+<li>angle：Number，开始时双指的角度</li>
+<li>rotation：Number，双指和开始相比改变的角度值</li>
+</ul>
+<p>demo参照上一个例子。</p>
+<h4>rotateEnd</h4>
+<p>触屏上用双指旋转某个 dom 元素结束时触发</p>
+<h4>pinchStart</h4>
+<p>触屏上开始用双指调整某个 dom 元素大小时出现，事件对象挂载这些属性</p>
+<ul>
+<li>distance：Number，开始时双指的绝对距离</li>
+<li>scale：Number，固定为1</li>
+</ul>
+<p><a href="http://docs.kissyui.com/source/raw/api/core/event/pinch.html">在触屏设备中打开Demo</a></p>
+<h4>pinch</h4>
+<p>触屏上用双指调整某个 dom 元素大小时出现，事件对象包含：</p>
+<ul>
+<li>distance：Number，开始时双指的绝对距离</li>
+<li>scale：Number，双指相对于开始调整时具体的倍数</li>
+</ul>
+<h4>pinchEnd</h4>
+<p>触屏上用双指调整某个 dom 元素大小后触发</p>
+<h4>chake</h4>
+<p>摇一摇事件，当用户摇动设备后触发，前后左右在一定连续时间内以一定幅度摇动设备，<a href="http://docs.kissyui.com/source/raw/api/core/event/shake.html">Demo</a></p>
+<h3>移动终端事件和PC端的统一</h3>
+<p>为了兼容移动与pc， kissy Event 提供手势事件的枚举：</p>
+<ul>
+<li>start：手势开始事件 Event.Gesture.start ，pc 上为 &#39;mousedown&#39; , 触屏为 &#39;touchstart&#39;</li>
+<li>move：手势进行事件 Event.Gesture.move ，pc 上为 &#39;mousemove&#39; , 触屏为 &#39;touchmove&#39;</li>
+<li>end：手势结束事件 Event.Gesture.end ，pc 上为 &#39;mouseup&#39; , 触屏为 &#39;touchend&#39;</li>
+<li>tap：手势结束事件 Event.Gesture.tap ，pc 上为 &#39;click&#39; , 触屏为 &#39;tap&#39;</li>
+<li>doubleTap：手势结束事件 Event.Gesture.doubleTap ，pc 上为 &#39;dblclick&#39; , 触屏为 &#39;doubleTap&#39;</li>
+</ul>
+<hr>
+<h2>自定义事件</h2>
+<p>事件本身是一个抽象概念，和平台无关、和设备无关、更和浏览器无关，浏览器只是使用“事件”的方法来触发特定的行为，进而触发某段网页逻辑。而常见的DOM事件诸如click,dbclick是浏览器帮我们实现的“特定行为”。而这里的“特定行为”就是触发事件的时机，是可以被重新定义的，原理上，事件都是需要精确的定义的，比如下面这个例子，我们定义了一个新事件：“初始化1秒后”</p>
+<p>这里我们使用Base内嵌的事件对象来描述</p>
+<pre><code>// 为了便于理解，这里用 add() 将代码隔离开
+
+// 实现Klass内部的自定义事件
+KISSY.add(&#39;klass&#39;,function(S,Base){
+    // Klass 是一个类，它在被实例化后1秒会触发一个事件&quot;afterOneSecond&quot;
+    var Klass = Base.extend({
+        initializer:function(){
+            var self = this;
+
+            // Your Code
+            setTimeout(function(){
+                self.fire(&#39;afterOneSecond&#39;,{
+                    a:1,b:2 //挂两个回调属性
+                });
+            },1000);
+        }
+    },{/*ATTRS*/});
+
+    return Klass;
+},{
+    requires:[&#39;base&#39;]    
+});
+
+// 绑定自定义事件
+KISSY.use(&#39;klass&#39;,function(S,Klass){
+    // 初始化这个类
+    var k = new Klass();
+
+    // 绑定事件监听
+    k.on(&#39;afterOneSecond&#39;,function(e){
+        alert(&#39;1秒后触发这里的逻辑&#39;);
+        // e.a === 1
+        // e.b === 1
+    });
+});</code></pre>
+<p>这是一个很纯粹的自定义事件（Base组件内置自定义事件机制），它有事件名称“afterOneSecond”，有事件的触发条件<code>self.fire(&#39;afterOneSecond&#39;)</code>，有事件的绑定，<code>k.on(&#39;afterOneSecond&#39;)</code>。这样这个事件就能顺利的发生，并被成功监听。在代码组织层面，一般<code>Klass</code>类中实现了事件命名、定义和实现，属于内聚的功能实现。而绑定事件时可以是Klass这段代码的用户，他不会去关心事件的具体实现，只要关心Klass&quot;暴露了什么事件可以让我绑定&quot;就可以了，这就是KISSY中使用自定义事件的用法。你可以通过Base来创建自定义事件。</p>
+<p><strong>如何开发DOM自定义事件</strong></p>
+<p>我们来实现一个DOM节点的<a href="http://www.taobao.com/go/act/kissy/trippleclick.php">鼠标三击事件</a>。首先，先来看下扩展Node事件的基本代码框架：</p>
+<pre><code>// 模块名称为自定义
+KISSY.add(&#39;my-custom-event&#39;,function(S,DomEvent,undefined){
+
+    var Special = DomEvent.Special;// 这个对象用来被扩展，存放自定义Dom事件
+    // 自定义事件名称
+    Special[&#39;trippleClick&#39;] = {
+        setup:function(){
+            // 得到当前节点原生节点
+            var node = this.ownerDocument || this;
+
+            // 绑定事件时执行这里的代码
+        },
+        tearDown:function(){
+            var node = this.ownerDocument || this;
+
+            // 解除绑定时执行这里的代码
+        }
+    };
+
+},{
+    // 引用event/dom/base
+    requires:[&#39;event/dom/base&#39;]        
+});</code></pre>
+<p>这样扩展了事件，如何使用？</p>
+<pre><code>// 要引用上面样例中的自定义模块
+KISSY.use(&#39;node,my-custom-event&#39;,function(S,Node){
+    // 这样绑定事件就可以了
+    S.one(&#39;button&#39;).on(&#39;trippleClick&#39;,function(e){
+        // 事件回调
+    });    
+});</code></pre>
+<p>要注意，<code>event/dom/base/</code>是dom事件相关，其中的<code>ownerDocument</code>都是裸节点，在使用的时候需要额外手动引入<code>node</code>模块，如果不引入node模块，可以用原生DOM节点绑定事件一样来使用自定义事件。</p>
 
 
       

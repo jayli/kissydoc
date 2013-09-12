@@ -24,7 +24,7 @@
     <ul>
       <li class="nav-divider"><a href="index.html"><img src="templates/assets/img/icon-home.png">首页</a></li>
       <li class="nav-divider"><a href="why-kissy.html"><img src="templates/assets/img/icon-why.png">Why KISSY?</a></li>
-      <li><a href="get-started.html"><img src="templates/assets/img/icon-getting-started.png">Getting Started (1.4.0)</a></li>
+      <li><a href="get-started.html"><img src="templates/assets/img/icon-getting-started.png">KISSY 1.4.0 教程大纲</a></li>
       <li class="nav-sub"><a href="module-map.html">核心模块列表</a></li>
       <li class="nav-sub"><a href="kmd.html">KISSY 模块规范 (KMD)</a></li>
       <li class="nav-sub"><a href="gbs.html">浏览器兼容基准(GBS)</a></li>
@@ -117,7 +117,7 @@ font-size:14px !important;</code></pre>
 <script>
 
 var des = {
-    'i18n':'多语言插件，内置于Loader中，通过S.Config.lang查看当前库的语言，默认为zh-cn'    ,
+    'i18n':'多语言插件，内置于Loader中，通过S.config('lang')查看当前库的语言，默认为zh-cn'    ,
     'core':'最常用的核心模块的别名，在1.3.x及以下版本中为组成kissy.js的模块，是这些模块的别名：dom,event,io,anim,base,node,json,ua,cookie',
     'anim':'DOM 的动画模块，高级浏览器优先使用CSS3动画',
     'anim/base':'动画 API 的实现，包含动画工具函数，自定义事件和动画队列',
@@ -145,7 +145,7 @@ var des = {
     'dom':'DOM 节点操作，是dom/basic的别名',
     'dom/class-list':'类名选列表择器的实现',
     'dom/ie':'降级到ie中时的一些降级处理方案',
-    'dom/selector':'根据二八原则实现的常见的选择器写法，涵盖80%的场景',
+    'dom/selector':'CSS 3 选择器引擎，在高级浏览器中自动选择加载',
     'editor':'富文本编辑器组件',
     'event':'Event 组件',
     'event/custom':'自定义事件，用来被类扩充，被扩充的类具有自定义事件的机制',

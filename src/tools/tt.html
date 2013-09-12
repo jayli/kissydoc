@@ -39,47 +39,95 @@
 
 			});
 
+			KISSY.add('klass',function(S,Base){
+				// Klass 是一个类，它在被实例化后1秒会触发一个事件"afterOneSecond"
+				var Klass = Base.extend({
+					initializer:function(){
+						var self = this;
 
-		S.use('base,pp,node,event',function(S,Base,P){
-			var Header = Base.extend({
-				_onSetA:function(){
-
-				},
-				initializer:function(){
-					var self = this;
-				}
-			},{
-				ATTRS: {
-					A:{
-						value:'abc'
+						// Your Code
+						setTimeout(function(){
+							self.fire('afterOneSecond',{
+								a:1,b:2 //挂两个回调属性
+							});
+						},1000);
 					}
-				}
+				},{/*ATTRS*/});
+
+				return Klass;
+			},{
+				requires:['base']	
 			});
+
+			KISSY.use('klass',function(S,Klass){
+				// 初始化这个类
+				var k = new Klass();
+
+				// 绑定事件监听
+				k.on('afterOneSecond',function(e){
+					// alert('1秒后触发这里的逻辑');
+					// e.a === 1
+					// e.b === 1
+				});
+			});
+
+
+			KISSY.add('myevent',function(S,DomEvent,undefined){
+
+				var Special = DomEvent.Special;
+				Special['trippleClick'] = {
+					setup:function(){
+						
+						// 得到当前节点原生节点
+						var node = this.ownerDocument || this;
+						node.addEventListener('click',tripleClickEvent,true);
+
+					},
+					tearDown:function(){
+						var node = this.ownerDocument || this;
+						node.removeEventListener('click',tripleClickEvent,true);
+					}
+				};
+
+				var trp = [];
+
+				//事件
+				var tripleClickEvent = function(e){
+					var el = e.target;
+					trp.push((new Date()).getTime());
+					if(trp.length > 3){
+						var a = [];
+						for(var i = 1;i<= 3;i++){
+							a[i-1] = trp[ i ];
+						}
+						trp = [];
+						trp = a;
+					}
+					var s1 = trp[2] - trp[1];
+					var s2 = trp[1] - trp[0];
+
+					if(Number(s1)<=400 && 
+							Number(s2) <= 400){
+								DomEvent.fireHandler(el,'trippleClick',{
+									sp1:s1,//三次点击的中间两个间隔事件
+									sp2:s2
+								});
+						trp = [];
+					}
+				};
+
 				
-
-			var p = new P();
-			var a = new Header({
-				A:1,
-				plugins:[p]
-				
+			},{
+				requires:['event/dom/base']		
 			});
-			a.unplug('aaa');
 
-			// a.plug(new P());
-			
-			S.Event.on('.c1','click.one',function(){
-				debugger;
-				console.log('a');
+
+			KISSY.use('node,myevent',function(S,Node){
+				S.one('button').on('trippleClick',function(e){
+					debugger;	
+				});	
 			});
-			S.Event.on('.c1','click.two',function(){
-				console.log('b');
-			});
-			S.Event.remove('.c1','.two');
 
-			S.one('button').attr('data-x','asd');
-			console.log(S.one('button').data('data-x'));
-
-		});
 
 
 

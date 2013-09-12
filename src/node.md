@@ -217,6 +217,11 @@ KISSY 支持标准的[ARIA](http://www.w3.org/TR/wai-aria/)。即 KISSY 可以�
 - [得到各种各样高度的demo](http://docs.kissyui.com/source/raw/api/core/node/height-get.html)
 - [设置元素高度的demo](http://docs.kissyui.com/source/raw/api/core/node/height-set.html)
 
+附图：下图为浏览器常用尺寸的获取办法，这里是通过原生节点方式获取
+
+![](http://gtms01.alicdn.com/tps/i1/T1mB1SFhlXXXcmL1nK-609-602.gif)
+
+
 ### addStyleSheet()
 
 添加样式表
