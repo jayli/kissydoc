@@ -57,67 +57,86 @@
     <article>
       
 
-	<h1>KISSY 教程大纲</h1>
-<hr>
-<ul>
-<li>快速上手<ul>
-<li><a href="why-kissy.html">Why KISSY?</a></li>
-<li><a href="simple-useage.html">Hello World!</a></li>
-<li><a href="startup.html">快速使用手册</a></li>
-<li><a href="http://cyj.me/jquery-kissy-rosetta/">jQuery KISSY 对比手册</a></li>
-<li><a href="kmd.html">KISSY 模块定义规范</a></li>
-</ul>
-</li>
-<li>KISSY 进阶指南<ul>
-<li><a href="module-map.html">KISSY 核心模块列表</a></li>
-<li><a href="oo.html">KISSY 中的面向对象</a></li>
-<li><a href="seed.html">Seed &amp; 模块化机制</a> <ul>
-<li><a href="uri.html">Uri</a></li>
-<li><a href="features.html">Features</a></li>
-<li><a href="promise.html">Promise</a></li>
-<li><a href="path.html">Path</a></li>
-<li><a href="lang.html">Lang</a></li>
-<li><a href="loader.html">Loader</a></li>
-<li><a href="ua.html">UA</a></li>
-</ul>
-</li>
-<li><a href="node.html">Node</a></li>
-<li><a href="event.html">Event</a></li>
-<li><a href="io.html">IO（Ajax）</a></li>
-<li><a href="anim.html">Anim</a></li>
-<li><a href="base.html">Base</a>，包括Attr、自定义事件、插件机制</li>
-<li><a href="xtemplate.html">xtemplate</a></li>
-<li><a href="mobile.html">Mobile 开发最佳实践</a></li>
-<li><a href="nodejs-kissy.html">在 Node 环境中运行 kissy</a></li>
-</ul>
-</li>
-<li><a href="tools.html">项目构建工具</a><ul>
-<li><a href="kmc.html">KISSY 模块依赖抽取工具 KMC（Kissy Module Complier）</a></li>
-<li><a href="http://abc.f2e.taobao.net/">ABC</a></li>
-<li><a href="clam.html">Clam</a></li>
-</ul>
-</li>
-<li><a href="http://gallery.kissyui.com/guide">KISSY 组件开发</a><ul>
-<li><a href="http://gallery.kissyui.com/quickstart">Generator-kissy-gallery 工具</a></li>
-</ul>
-</li>
-<li><a href="third-party-lib.html">第三方代码库</a></li>
-<li>面向第三方安全的 KISSY</li>
-<li><a href="gbs.html">KISSY 浏览器兼容基准（GBS）</a></li>
-<li><a href="when-not-to-use-kissy.html">什么时候不要用 KISSY！？</a></li>
-<li><a href="history.html">历史版本</a></li>
-<li>KISSY 核心代码规范<ul>
-<li><a href="xx">HTML 编码规范</a></li>
-<li><a href="xx">CSS 编码规范</a></li>
-<li><a href="xx">JavaScript 编码规范</a></li>
-</ul>
-</li>
-<li><a href="https://github.com/kissyteam/kissy/blob/master/CONTRIBUTING.md">如何为 KISSY 贡献代码</a></li>
-<li><a href="xx">1.3.x -&gt; 1.4.0 升级指南</a></li>
-<li>FAQ</li>
-<li>KISSY 核心小组</li>
-</ul>
-<hr>
+	<h1>在Node环境中运行kissy</h1>
+<p>KISSY 可以运行在 Node 环境中，由于KISSY下辖多数模块都依赖于DOM，只有seed、oo、base、xtemplate等组件可以完整运行于 Node，因此要获得Dom支持需要载入node模块<code>jsdom</code>，jsdom 可以在服务器端生成一套完整的浏览器宿主环境。</p>
+<h2>在 node 环境中安装 kissy</h2>
+<p>这里使用了<a href="https://github.com/tmpvar/jsdom">JSDom</a> 来生成服务端的浏览器宿主环境，KISSY 可以和任何合法的 DOM 树结构一起工作。</p>
+<pre><code>npm install kissy jsdom</code></pre>
+<h2>创建页面 DOM 骨架</h2>
+<p>JSDom 有非常多有用的特性，并且是高可配置的。下面的代码用JSDom创建了一个简单的浏览器页面环境，最重要的，创建了document 和window。</p>
+<pre><code>var jsdom = require(&#39;jsdom&#39;);
+
+// 将没用的特性都关掉
+jsdom.defaultDocumentFeatures = {
+    // 不需要载入外部资源
+    FetchExternalResources   : false,
+    // 不需要处理外部资源
+    ProcessExternalResources : false,
+    // 关掉随机的事件响应（处于性能考虑）
+    MutationEvents           : false,
+    // 不需要浏览器自带的Css选择器
+    QuerySelector            : false
+};
+
+var dom = jsdom.defaultLevel;
+
+// 创建一个document和window
+var document = 
+    jsdom.jsdom(&quot;&lt;html&gt;&lt;head&gt;&lt;/head&gt;&lt;body&gt;&lt;h1&gt;Hello kissy!&lt;/h1&gt;&lt;/body&gt;&lt;/html&gt;&quot;),
+window = document.createWindow();</code></pre>
+<h2>将 KISSY 运行起来</h2>
+<pre><code>var S = require(&#39;kissy&#39;);
+
+S.use(&#39;node&#39;,function(S){
+    S.log(S.one(&#39;body&#39;).html());
+});</code></pre>
+<p>结果输出：</p>
+<pre><code>&lt;h1&gt;Hello kissy!&lt;/h1&gt;</code></pre>
+<h2>执行 Dom 操作</h2>
+<p>我们增加一点代码，初始化一个Button组件：</p>
+<pre><code>// 引用node和button
+S.use(&#39;node,button&#39;,function(S,N,Button){
+
+    // 常见的 DOM 操作
+    S.Node(&#39;&lt;div id=&quot;J&quot;&gt;&lt;/div&gt;&#39;)
+        .appendTo(&#39;body&#39;);
+
+    // 生成一个Button
+    var b = new Button({
+        content:&#39;hello jayli&#39;,
+        render:&#39;#J&#39;
+    }).render();
+
+    S.log(S.one(&#39;body&#39;).html());
+});</code></pre>
+<p>输出结果为：</p>
+<pre><code>&lt;h1&gt;Hello kissy!&lt;/h1&gt;
+&lt;div id=&quot;J&quot;&gt;
+    &lt;div class=&quot;ks-button ks-button-shown&quot; 
+            role=&quot;button&quot; 
+            style=&quot;display: ;&quot; 
+            tabindex=&quot;0&quot; 
+            hidefocus=&quot;true&quot;&gt;
+        hello jayli
+    &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+<p>这就是我们想要的结果，KISSY 已经成功的渲染了一个button组件</p>
+<h2>使用add()和use()进行代码管理</h2>
+<p>NodeJS 遵循 <a href="http://www.commonjs.org">CommonJS</a> 规范，文件本身就是一个封闭的上下文。而 KISSY 遵循 <a href="kmd.html">KMD</a> 规范。通过固定的模块书写格式来约定模块上下文，除了包装格式不同外，对于模块的定义是完全一致的。因此，在Node环境中也可以使用use()和add()来管理代码。使用方式请参照<a href="kmd.html">KMD规范</a>。</p>
+<pre><code>var S = require(&#39;kissy&#39;);
+
+// 注册模块a
+S.add(&#39;a&#39;,function(S){
+    return {
+        // A的模块返回
+    };
+});
+
+// 使用模块a
+S.use(&#39;a&#39;,function(S,A){
+    // Your code...    
+});</code></pre>
+<p>在服务器端模块的载入都是阻塞式的，因此无需预定义Modules列表，即不用预先<code>S.config(&#39;modules&#39;,{})</code>来定义模块依赖。</p>
 
 
       

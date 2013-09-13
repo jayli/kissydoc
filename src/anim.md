@@ -24,6 +24,53 @@ KISSY 动画，这样来载入anim模块：
 		complete: function () {}
 	});
 
+此外，node节点还挂载一些常用的做动画的函数，比如fadeIn、fadeOut、slideUp、slideDown等（[具体请参照Node](node.html)）。来看这个例子，每张图片获取之后, 先不显示出来, 等图片加载完成之后, 调用 fadeIn() 渐进显示：
+<div class="demo"><button id="fetch-btn-anim" autocomplete="off" type="button" class="btn btn-default">Fetch Photo</button><div id="photo-list"></div></div>
+<script>
+KISSY.use('node',function (S,Node) {
+	 var $=Node.all;
+	 var API = 'http://api.flickr.com/services/rest/?',
+		 params = {
+			 'method': 'flickr.favorites.getPublicList',
+			 'api_key': '5d93c2e473e39e9307e86d4a01381266',
+			 'user_id': '26211501@N07',
+			 'per_page': 10,
+			 'format': 'json',
+			 'jsoncallback': 'getFavorites'
+		 },
+		 photoList = $('#photo-list');
+
+	 $('#fetch-btn-anim').on('click', function() {
+		 $(this).attr('disabled', true);
+		 photoList.addClass('loading');
+		 S.getScript(API + S.param(params));
+	 });
+
+	 window.getFavorites = function(data) {
+		 var html = 'Fetch photo failed, pls try again!',
+			 loading = true;
+
+		 if (data.stat === 'ok') {
+			 html = '';
+			 S.each(data.photos.photo, function(item, i){
+				 html += '<img style="display:none" src="http://farm' + item.farm + '.static.flickr.com/'
+						 + item.server + '/' + item.id + '_' + item.secret + '_t.jpg" />';
+			 });
+		 }
+
+		 photoList.html(html).all('img').each(function(img) {
+			 img.on('load', function() {
+				 if(loading) {
+					 photoList.removeClass('loading');
+					 loading = false;
+				 }
+				 img.fadeIn(3);
+			 });
+		 });
+	 }
+ });
+</script>
+
 ## 实例化动画的传参
 
 刨除直接通过node.animate()创建的动画之外，通过Anim可以生成一个`动画实例`。动画实例是用来描述动画的一些基本属性，比如，从`什么状态`动画到`什么状态`，动画时间，缓动效果，暂停和继续动画等。通过`Anim`这样实例化一个动画实例（[参照Demo](http://docs.kissyui.com/source/raw/demo/anim/demo1.html)）：
@@ -176,3 +223,24 @@ Anim动画实例上可调用这些方法
 - [节点上的 stop 示例](http://docs.kissyui.com/docs/html/demo/core/anim/demo5.html)
 - [动画队列支持](http://docs.kissyui.com/docs/html/demo/core/anim/demo6.html)
 - [easy可视化](http://docs.kissyui.com/docs/html/demo/core/anim/easing.html)
+
+<style>
+#photo-list img  {
+border: 1px solid grey;
+padding: 4px;
+margin: 8px;
+}
+.loading {
+background: transparent url(http://docs.kissyui.com/source/_static/loading.gif) no-repeat;
+width: 100px;
+height: 100px;
+margin: 20px;
+}
+div.demo {
+background: none repeat scroll 0 0 #F8F8F6;
+border: 1px solid #D1D1D1;
+border-radius: 2px 2px 2px 2px;
+margin: 8px 0;
+padding: 10px;
+}
+</style>

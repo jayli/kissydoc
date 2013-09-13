@@ -10,13 +10,15 @@
 2. 自定义事件机制：CustomEvent
 3. 代码插拔机制：Plugin
 
+![](http://gtms04.alicdn.com/tps/i4/T1a55UFbtaXXbsDJoj-389-190.png)
+
 这三类功能被封装在`base`模块中，这样来载入base；
 
 	KISSY.use('base',function(S,Base){
 		// Your Code...
 	});
 
-> 在KISSY 1.3.x 中有一个别名RichBase，1.4.0 及以后版本将统一为Base
+> 在KISSY 1.3.x 中有一个别名RichBase，1.4.0 及以后版本将统一为Base，在实现上，Base 使用了自定义事件掺元对象`CustomEvent.Target`和内置的掺元对象`Attribute`。
 
 我们来分别看下Base的这几个特性
 

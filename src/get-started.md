@@ -26,6 +26,7 @@
 	- [Base](base.html)，包括Attr、自定义事件、插件机制
 	- [xtemplate](xtemplate.html)
 	- [Mobile 开发最佳实践](mobile.html)
+	- [在 Node 环境中运行 kissy](nodejs-kissy.html)
 - [项目构建工具](tools.html)
 	- [KISSY 模块依赖抽取工具 KMC（Kissy Module Complier）](kmc.html)
 	- [ABC](http://abc.f2e.taobao.net/)
@@ -35,6 +36,7 @@
 - [第三方代码库](third-party-lib.html)
 - 面向第三方安全的 KISSY
 - [KISSY 浏览器兼容基准（GBS）](gbs.html)
+- [什么时候不要用 KISSY！？](when-not-to-use-kissy.html)
 - [历史版本](history.html)
 - KISSY 核心代码规范
 	- [HTML 编码规范](xx)

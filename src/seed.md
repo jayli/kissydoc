@@ -31,6 +31,8 @@ KISSY 要求所有满足 KMD 规范的模块，首先具备`属性2`，其次具
 ### 场景1：运行已经注册的模块
 	
 	// index.html
+	// 同一个文件中执行add和use
+
 	KISSY.add('a',function(S){
 		return {};	
 	});
@@ -151,6 +153,63 @@ KISSY.use() 的目的是运行模块并执行回调，载入外部文件只是�
 		// Your code...	
 	});
 
-### 使用Seed中模块的另外一种偷懒的做法
+### 使用Seed中模块的另外一种快捷调用方式
 
 seed.js 中注册的模块都会给全局KISSY对象挂载快捷调用的通道，比如`Lang.clone()`可以通过`KISSY.clone()`来调用。但这种做法仅限于KISSY核心模块，自定义模块建议严格按照KMD规范来传递参数。
+
+## 模块的一次性加载
+
+由于KISSY设计是模块化的，模块之间的依赖关系通过use()和add()来处理，但模块依赖关系是记录在各自模块当中的，尽管程序运行逻辑上不会出错，但会造成串行加载。比如a模块依赖b，b依赖c，页面在加载完成b模块之前并不知道b依赖了别的什么模块，加载瀑布过程形如：
+
+![](http://jayli.github.io/sandbox/assets/loading.png)
+
+为了避免速度很慢的串行加载，我们预先将模块依赖置于全局，页面在载入a模块时就知道a总共依赖了b和c，且b依赖c。这时KISSY会处理好a、b、c的执行顺序并一并合并载入。这样HTTP请求数就降低为1个。通常在开发阶段我们不需要载入全局的依赖表，在发布上线时，通过[kmc](kmc.html)工具解析生成模块依赖关系表，至于全局即可。定义模块依赖关系的写法如下：
+
+	KISSY.config('modules',{
+		"a":{
+			// "a" 模块的依赖信息
+			requires:["b","d"]
+		},
+		"b":{
+			// "b" 模块的依赖信息
+			requires:['c','e']
+		}
+	});
+
+这时需要CDN支持动态脚本的合并输出，比如淘宝CDN同时输出`a.js`,`b.js`,`c.js`：
+
+	http://cdn/??a.js,b.js,c.js
+
+Yahoo CDN则这样写：
+
+	http://cdn/combo?a.js&b.js&c.js
+
+拼装合并脚本的模式默认采用淘宝CDN支持的形式，如果需要其他配置，请参照[loader](loader.html)
+
+## 模块的去重
+
+如果已经载入过了某个模块，再次`use()`的时候会不会重新加载一次？不会！此外，如果在开始加载时遇到重复依赖的问题，KISSY Loader也会将重复去掉，只加载最小的集合。比如这样的依赖关系：
+
+![](http://gtms03.alicdn.com/tps/i3/T1r5aRFkJXXXbNU1_F-580-280.png)
+
+其中，init.js和calculate.js两个文件都依赖了stdout.js，这时只会加载stdout.js一次。
+
+## Debug模式
+
+如果启用了debug模式，则默认载入对应模块的源文件，否则载入`-min`的文件
+
+	KISSY.config('debug',true);
+	
+	// 会请求http://basepath/a.js
+	KISSY.use('a',function(){
+		// Your code...
+	});
+
+如果关闭debug模式，则会请求'-min'文件
+
+	KISSY.config('debug',false);
+	
+	// 会请求http://basepath/a-min.js
+	KISSY.use('a',function(){
+		// Your code...
+	});

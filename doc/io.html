@@ -64,30 +64,8 @@
 <pre><code>KISSY.use(&#39;io&#39;,function(S,IO){
     // use IO
 });</code></pre>
-<p>方便起见，你仍可以用<code>S.Ajax</code>，<code>S.Ajax === S.IO</code>。</p>
-<p><link rel="stylesheet" href="http://g.tbcdn.cn/trip/kissy/1.4.0/css/dpl/base-min.css" /></p>
-<p><style></p>
-<h1>photo-list img  {</h1>
-<p>border: 1px solid grey;
-padding: 4px;
-margin: 8px;
-}
-.loading {
-background: transparent url(http://docs.kissyui.com/source/_static/loading.gif) no-repeat;
-width: 100px;
-height: 100px;
-margin: 20px;
-}
-div.demo {
-background: none repeat scroll 0 0 #F8F8F6;
-border: 1px solid #D1D1D1;
-border-radius: 2px 2px 2px 2px;
-margin: 8px 0;
-padding: 10px;
-}
-</style></p>
-<p><button id="fetch-btn" autocomplete="off">Fetch Photo</button></p>
-<p><div id="photo-list"></div></p>
+<p>方便起见，你仍可以用<code>S.Ajax</code>，<code>S.Ajax === S.IO</code>。下面介绍个如何通过 io 模块去请求 flickr 上提供的图片数据。看示例：</p>
+<p><div class="demo"><button id="fetch-btn" autocomplete="off" type="button" class="btn btn-default">Fetch Photo</button><div id="photo-list"></div></div></p>
 <script>
      KISSY.use('node,io',function (S,Node,IO) {
          var API = 'http://api.flickr.com/services/rest/',
@@ -128,7 +106,6 @@ padding: 10px;
      });
 </script>
 
-<p></script></p>
 <h3>IO <code>&lt;class&gt;</code></h3>
 <p> <code>IO(cfg) =&gt; Promise</code></p>
 <p>IO 全局方法，构建 io 请求并发送，传入一个JSON对象，返回一个<a href="promise.html">Promise</a>实例。</p>
@@ -638,6 +615,26 @@ KISSY.all(&#39;#myFileUploadButton&#39;).on(&#39;click&#39;,function(){
 <p>服务器返回失败后触发.事件对象同 start 事件.</p>
 <h3>complete <code>&lt;event&gt;</code></h3>
 <p>服务器返回（无论成功或失败）后触发.事件对象同 start 事件.</p>
+<style>
+#photo-list img  {
+border: 1px solid grey;
+padding: 4px;
+margin: 8px;
+}
+.loading {
+background: transparent url(http://docs.kissyui.com/source/_static/loading.gif) no-repeat;
+width: 100px;
+height: 100px;
+margin: 20px;
+}
+div.demo {
+background: none repeat scroll 0 0 #F8F8F6;
+border: 1px solid #D1D1D1;
+border-radius: 2px 2px 2px 2px;
+margin: 8px 0;
+padding: 10px;
+}
+</style>
 
 
       
