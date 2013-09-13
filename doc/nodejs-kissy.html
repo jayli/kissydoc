@@ -85,9 +85,9 @@ var document =
     jsdom.jsdom(&quot;&lt;html&gt;&lt;head&gt;&lt;/head&gt;&lt;body&gt;&lt;h1&gt;Hello kissy!&lt;/h1&gt;&lt;/body&gt;&lt;/html&gt;&quot;),
 window = document.createWindow();</code></pre>
 <h2>将 KISSY 运行起来</h2>
-<pre><code>var S = require(&#39;kissy&#39;);
+<pre><code>var KISSY = require(&#39;kissy&#39;);
 
-S.use(&#39;node&#39;,function(S){
+KISSY.use(&#39;node&#39;,function(S){
     S.log(S.one(&#39;body&#39;).html());
 });</code></pre>
 <p>结果输出：</p>
@@ -95,7 +95,7 @@ S.use(&#39;node&#39;,function(S){
 <h2>执行 Dom 操作</h2>
 <p>我们增加一点代码，初始化一个Button组件：</p>
 <pre><code>// 引用node和button
-S.use(&#39;node,button&#39;,function(S,N,Button){
+KISSY.use(&#39;node,button&#39;,function(S,N,Button){
 
     // 常见的 DOM 操作
     S.Node(&#39;&lt;div id=&quot;J&quot;&gt;&lt;/div&gt;&#39;)
@@ -123,20 +123,20 @@ S.use(&#39;node,button&#39;,function(S,N,Button){
 <p>这就是我们想要的结果，KISSY 已经成功的渲染了一个button组件</p>
 <h2>使用add()和use()进行代码管理</h2>
 <p>NodeJS 遵循 <a href="http://www.commonjs.org">CommonJS</a> 规范，文件本身就是一个封闭的上下文。而 KISSY 遵循 <a href="kmd.html">KMD</a> 规范。通过固定的模块书写格式来约定模块上下文，除了包装格式不同外，对于模块的定义是完全一致的。因此，在Node环境中也可以使用use()和add()来管理代码。使用方式请参照<a href="kmd.html">KMD规范</a>。</p>
-<pre><code>var S = require(&#39;kissy&#39;);
+<pre><code>var KISSY = require(&#39;kissy&#39;);
 
 // 注册模块a
-S.add(&#39;a&#39;,function(S){
+KISSY.add(&#39;a&#39;,function(S){
     return {
         // A的模块返回
     };
 });
 
 // 使用模块a
-S.use(&#39;a&#39;,function(S,A){
+KISSY.use(&#39;a&#39;,function(S,A){
     // Your code...    
 });</code></pre>
-<p>在服务器端模块的载入都是阻塞式的，因此无需预定义Modules列表，即不用预先<code>S.config(&#39;modules&#39;,{})</code>来定义模块依赖。</p>
+<p>在服务器端模块的载入都是阻塞式的，因此无需预定义Modules列表，即不用预先<code>KISSY.config(&#39;modules&#39;,{})</code>来定义模块依赖。</p>
 
 
       

@@ -11,124 +11,42 @@
 	<script src="http://g.tbcdn.cn/trip/kissy/1.4.0/seed-min.js"></script>
 </head>
 <body>
+	<div id="log"></div>
 	<button class="c1">iii<span>sdf</span></button>
 	<button class="c2">iii<span>sdf</span></button>
 	<button class="contin">iii</button>
+
+	<script type='kissy/xtemplate' id='tpl'>
+		{{#each data}}{{this}}-{{xindex}}/{{xcount}}|{{/each}}
+	</script>
+	<script>
+		var o = {
+			data:[
+				'jayli',
+				'yiminghe'
+			]
+		};
+	</script>
 	
 	<script>
+		function log(str){
+			var log = document.getElementById('log');
+			log.innerHTML = log.innerHTML + '<p>'+ str.replace(/</ig,'&lt;').replace(/>/ig,'&gt;') +'</p>';
+		}
 		var S = KISSY;
 
 		S.config('debug',true);
 
-		 KISSY.add('pp', function (S) {
-				// 自定义插件
-				function Plugin(cfg) {
-					this.config = cfg || {};
-					this.pluginId = 'aaa';
-				}
 
-				Plugin.prototype.pluginInitializer = function () {
-					var cfg = this.config;
-					console.log('插件运行');
-				};
-				Plugin.prototype.pluginDestructor = function(){
-					console.log('卸载插件');
-				};
+		KISSY.use('xtemplate,node', function (S, XTemplate) {
 
-				return Plugin;
+			var tpl = S.all('#tpl').html();
 
-			});
-
-			KISSY.add('klass',function(S,Base){
-				// Klass 是一个类，它在被实例化后1秒会触发一个事件"afterOneSecond"
-				var Klass = Base.extend({
-					initializer:function(){
-						var self = this;
-
-						// Your Code
-						setTimeout(function(){
-							self.fire('afterOneSecond',{
-								a:1,b:2 //挂两个回调属性
-							});
-						},1000);
-					}
-				},{/*ATTRS*/});
-
-				return Klass;
-			},{
-				requires:['base']	
-			});
-
-			KISSY.use('klass',function(S,Klass){
-				// 初始化这个类
-				var k = new Klass();
-
-				// 绑定事件监听
-				k.on('afterOneSecond',function(e){
-					// alert('1秒后触发这里的逻辑');
-					// e.a === 1
-					// e.b === 1
-				});
-			});
+			var a = new XTemplate(tpl).render(o) // => <div>m</div>
+			log(a);
 
 
-			KISSY.add('myevent',function(S,DomEvent,undefined){
-
-				var Special = DomEvent.Special;
-				Special['trippleClick'] = {
-					setup:function(){
-						
-						// 得到当前节点原生节点
-						var node = this.ownerDocument || this;
-						node.addEventListener('click',tripleClickEvent,true);
-
-					},
-					tearDown:function(){
-						var node = this.ownerDocument || this;
-						node.removeEventListener('click',tripleClickEvent,true);
-					}
-				};
-
-				var trp = [];
-
-				//事件
-				var tripleClickEvent = function(e){
-					var el = e.target;
-					trp.push((new Date()).getTime());
-					if(trp.length > 3){
-						var a = [];
-						for(var i = 1;i<= 3;i++){
-							a[i-1] = trp[ i ];
-						}
-						trp = [];
-						trp = a;
-					}
-					var s1 = trp[2] - trp[1];
-					var s2 = trp[1] - trp[0];
-
-					if(Number(s1)<=400 && 
-							Number(s2) <= 400){
-								DomEvent.fireHandler(el,'trippleClick',{
-									sp1:s1,//三次点击的中间两个间隔事件
-									sp2:s2
-								});
-						trp = [];
-					}
-				};
-
-				
-			},{
-				requires:['event/dom/base']		
-			});
-
-
-			KISSY.use('node,myevent',function(S,Node){
-				S.one('button').on('trippleClick',function(e){
-				});	
-			});
-
-
-
+		});
 
 
 	</script>

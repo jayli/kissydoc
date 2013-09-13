@@ -35,9 +35,9 @@ JSDom 有非常多有用的特性，并且是高可配置的。下面的代码�
 
 ## 将 KISSY 运行起来
 
-	var S = require('kissy');
+	var KISSY = require('kissy');
 
-	S.use('node',function(S){
+	KISSY.use('node',function(S){
 		S.log(S.one('body').html());
 	});
 
@@ -50,7 +50,7 @@ JSDom 有非常多有用的特性，并且是高可配置的。下面的代码�
 我们增加一点代码，初始化一个Button组件：
 
 	// 引用node和button
-	S.use('node,button',function(S,N,Button){
+	KISSY.use('node,button',function(S,N,Button){
 		
 		// 常见的 DOM 操作
 		S.Node('<div id="J"></div>')
@@ -84,18 +84,18 @@ JSDom 有非常多有用的特性，并且是高可配置的。下面的代码�
 
 NodeJS 遵循 [CommonJS](http://www.commonjs.org) 规范，文件本身就是一个封闭的上下文。而 KISSY 遵循 [KMD](kmd.html) 规范。通过固定的模块书写格式来约定模块上下文，除了包装格式不同外，对于模块的定义是完全一致的。因此，在Node环境中也可以使用use()和add()来管理代码。使用方式请参照[KMD规范](kmd.html)。
 
-	var S = require('kissy');
+	var KISSY = require('kissy');
 
 	// 注册模块a
-	S.add('a',function(S){
+	KISSY.add('a',function(S){
 		return {
 			// A的模块返回
 		};
 	});
 
 	// 使用模块a
-	S.use('a',function(S,A){
+	KISSY.use('a',function(S,A){
 		// Your code...	
 	});
 
-在服务器端模块的载入都是阻塞式的，因此无需预定义Modules列表，即不用预先`S.config('modules',{})`来定义模块依赖。
+在服务器端模块的载入都是阻塞式的，因此无需预定义Modules列表，即不用预先`KISSY.config('modules',{})`来定义模块依赖。
