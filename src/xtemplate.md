@@ -1,6 +1,6 @@
 # xtemplate
 
-富逻辑的 KISSY 模板引擎，和[Mustache](http://mustache.github.io/)以及[juicer](http://juicer.name/)类似，Xtemplate 面向更复杂的业务逻辑场景，同时保持高性能和丰富的配置方法，是易学易懂的模板语言。
+XTemplate 是富逻辑的 KISSY 模板引擎，和[Mustache](http://mustache.github.io/)以及[juicer](http://juicer.name/)类似，Xtemplate 面向更复杂的业务逻辑场景，同时保持高性能和丰富的配置方法，是易学易懂的模板语言。
 
 一个典型的XTemplate模板实例：
 
