@@ -192,11 +192,245 @@ XTemplate 可以放置于HTML、配置文件、程序代码中，核心机制就
 	1-3
 	2-3
 
-其中，`{{../total}}`表示从循环体内跳出到`data`属性所在的层级，去查找`data`属性的兄弟属性`total`的值。
+其中，`{{../total}}`表示从循环体内跳出到`data`属性所在的层级，去查找`data`属性的兄弟属性`total`的值。同样，`{{#each}}`可以被`{{@each}}`代替。
 
+### `{{#with}}`语句
+
+类似 JavaScript 中的`with`语法，with 语句是为逐级的对象访问提供命名空间式的速写方式。我们在 XTemplate 中增加了类似的功能。比如`{{#with data}}...{{/with}}`,中间可以直接调用对象`data`里的属性，输出对应的值。
+
+比如这段 XTemplate
+
+	{{#with data}}
+		{{name}}-{{age}}
+	{{/with}}
+
+要填充的JSON为：
+
+	{
+		data:{
+			name:'jayli',
+			age:'2'
+		}
+	}
+
+填充结果为：
+
+	jayli-2
+
+其中`{{#with}}`可以用`{{@with}}`代替
+
+#### 支持 with 中数据层次间的相对位置访问
+
+同`{{#each}}`一样，with 语句中也可以用相对路径写法来访问对象其他层级的属性，比如这段模板：
+
+	{{#with data}}
+		{{#with p}}
+			{{name}}-{{age}}-{{../l2}}-{{../../l1}}
+		{{/with}}
+	{{/with}}
+
+要填充的JSON为：
+
+	{
+		l1: 1,
+		data: {
+			l2: 2,
+			p: {
+				name: 'h',
+				age: 2
+			}
+		}
+	}
+
+填充结果为：
+
+	h-2-2-1
+
+### `{{!comment}}` 注释
+
+XTemplate的注释写法为`{{!comment}}`，其中comment为注释内容，注释将会被忽略。
+
+### `\\{{prop}}` 标签的转义
+
+如果想直接输出`{{prop}}`的内容，而不想被解析为标签，则用转义写法`\\{{prop}}`，比如模板：
+
+	output \\{{name}} as {{name}}
+
+要填充的JSON为：
+
+	{name:'jay'}
+
+输出结果为：
+
+	output {{name}} as jay
+
+### `{{{prop}}}` html 标签转义
+
+如果输出的内容中包含字符`<`和`>`，在普通标签`{{prpp}}`中会被转义为`&lt;`和`&gt;`，如果不想被转义，需使用`{{{prop}}}`，比如这段模板：
+
+	my {{title}} is {{{title}}}
+
+要填充的JSON为：
+
+	{
+		title:'<a>'
+	}
+
+输出结果为：
+
+	my &lt;a&gt; is <a>
+
+### 用表达式作为变量
+
+目前支持的表达式为`+`，`-`，`*`，`/`，`%`。比如这段模板：
+
+	{{n+3*4/2}}
+
+填充JSON为
+
+	{n:1}
+
+输出结果为：
+
+	7
+
+### 关系表达式
+
+目前支持目前支持 `===` `!==` `>` `>=` `<` `<=`，比如这段模板：
+
+	{{#if n > n2+4/2}}
+		{{n+1}}
+	{{else}}
+		{{n2+1}}
+	{{/if}}
+
+要填充的JSON：
+
+	{
+		n:5,
+		n2:2
+	}
+
+输出结果为：
+
+	6
+
+### each 循环中的关系表达式
+
+直接看例子，看这段模板：
+
+	{{#each data}}
+		{{#if this > ../limit+1}}
+			{{this+1}}-{{xindex+1}}-{{xcount}}
+		{{/if}}
+	{{/each}}
+	
+要填充的JSON
+
+	{
+		data: [11, 5, 12, 6, 19, 0],
+		limit: 10
+	}
+
+填充结果：
+
+	13-3-6
+	20-5-6
+
+### with 中的关系表达式
+
+直接看例子，看这段模板：
+
+	{{#with data}}
+		{{#if n > ../limit/5}}
+			{{n+1}}
+		{{/if}}
+	{{/with}}
+
+填充JSON为：
+
+	{
+		data: {
+			n: 5
+		},
+		limit: 10
+	}
+
+输出结果为：
+
+	6
+
+### `{{set}}`设置变量
+
+通过`{{set expression}}`来设置变量的值，可以设置多个，赋值表达式之间用空格分隔，比如这段模板：
+
+	{{#each data}}
+		{{set n2=this*2 n3=this*3}}
+		{{n2}}-{{n3}}
+	{{/each}}
+
+填充JSON：
+
+	{
+		data: [1, 2]
+	}
+
+结果为：
+
+	2-3
+	4-6
+
+### 对 mustache 对象的兼容
+
+XTemplate 支持对 [mustache](http://mustache.github.io/) 形式的对象的兼容，比如这段模板：
+
+	{{#data}}{{name}}-{{age}}{{/data}}
+
+填充JSON为：
+
+	{
+		data: {
+			name: 'h',
+			age: 2
+		}
+	}
+
+输出结果为
+
+	h-2
+
+### 对 mustache 数组的兼容
+
+XTemplate 支持对 [mustache](http://mustache.github.io/) 形式的数组的兼容，比如这段模板：
+
+	{{#data}}
+		{{name}}-{{xindex}}/{{xcount}}
+	{{/data}}
+
+填充JSON：
+
+	{
+		data: [
+			{name: 1},
+			{name: 2}
+		]
+	}
+
+输出结果为：
+
+	1-0/2
+	2-1/2
+
+
+
+
+
+	
 -------------------------------------------------------
 
-## KISSY XTemplate 附加功能，只在 JavaScript 的实现中可用
+## KISSY XTemplate 附加功能
+
+以上语法可以在不同语言中实现，在 JavaScript 环境中得益于 JS 语言的动态性，KISSY 为 XTemplate 提供了更多的浏览器端的渲染策略和工具。这些功能只在 JavaScript 的实现中可用，如果你的模板可同时被JavaScript渲染也会被其他语言渲染（比如在后台被Java渲染），请尽可能避免这种用法。
 
 ### 函数模板
 
@@ -230,4 +464,85 @@ XTemplate 可以放置于HTML、配置文件、程序代码中，核心机制就
 
 	alert(render);// => this is kissy!
 
+### 全局行内单个标签扩展
 
+如果我想扩展 XTemplate 中的标签个数，需要自定义扩展标签，使用`XTemplate.addCommand()`实现全局行内命令扩展，比如这样一段扩展（自定义一个单个标签，无配对出现）：
+
+	XTemplate.addCommand('global', function (scopes, option) {
+		return 'global-' + option.params[0];
+	});
+
+这样这段模板就可以渲染出来：
+
+	my {{global title}}
+
+如果JSON为`{title:'1'}`，那么渲染结果为：
+
+	my global-1
+
+### 全局块状标签扩展
+
+除了扩展单个标签，还可以扩展块状标签，例子：
+
+	 XTemplate.addCommand('global', function (scopes, option) {
+		return 'global-' + option.fn(scopes);
+	});
+	
+对于这段模板就可以被识别：
+
+	{{#global}}
+		{{title}}
+	{{/global}}
+
+如果JSON对象为`{title:1}`，渲染结果为：
+
+	global-1
+
+### 局部行内标签扩展
+
+如果要把标签扩展不做成全局，可以临时定义针对一段模板的标签扩展，做法是在`XTemplage()`函数中传入第二个配置参数：
+
+	var render = new XTemplate(tpl, {
+		commands: {
+			'global': function (scopes, option) {
+				return 'global-' + option.params[0];
+			}
+		}
+	}).render(data);
+
+### 局部块状标签扩展
+
+类似行内标签扩展，块状标签扩展需要用`option.fn(scopes)`来激活，参照上文，做法是：
+
+	var render = new XTemplate(tpl, {
+		commands: {
+			'global': function (scopes, option) {
+				return 'global-' + option.fn(scopes);
+			}
+		}
+	}).render(data);
+
+### 局部后缀名判断标签扩展
+
+参照标签的扩展规则，再来看一个更复杂的例子，我们可以自定义条件判断的规则：
+
+	var render = new XTemplate(tpl, {
+		commands: {
+			'endsWith': function (scopes, option) {
+				return S.endsWith(option.params[0], 
+							option.params[1]) ? option.fn(scopes) : '';
+			}
+		}
+	}).render(data);
+
+这里扩展了自定义标签`endsWith`，对于这段模板：
+
+	{{d}} ends with {{#endsWith d "jpg"}}jpg{{/endsWith}}
+	{{#endsWith d "gif"}}gif{{/endsWith}}
+
+JSON对象为`{d:'x.jpg'}`，输出结果为：
+
+	x.jpg ends with jpg
+
+
+### 字符串作为全局子模板

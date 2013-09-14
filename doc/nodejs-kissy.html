@@ -137,6 +137,9 @@ KISSY.use(&#39;a&#39;,function(S,A){
     // Your code...    
 });</code></pre>
 <p>在服务器端模块的载入都是阻塞式的，因此无需预定义Modules列表，即不用预先<code>KISSY.config(&#39;modules&#39;,{})</code>来定义模块依赖。</p>
+<h2>FAQ</h2>
+<p>1，执行<code>eval()</code>时如果带有对KISSY的引用，会报错<code>KISSY is not defined</code>。比如在引用XTemplate的时候，要这样来获得KISSY全局对象</p>
+<pre><code>global.KISSY=require(&#39;kissy&#39;);</code></pre>
 
 
       

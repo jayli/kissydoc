@@ -99,3 +99,9 @@ NodeJS 遵循 [CommonJS](http://www.commonjs.org) 规范，文件本身就是一
 	});
 
 在服务器端模块的载入都是阻塞式的，因此无需预定义Modules列表，即不用预先`KISSY.config('modules',{})`来定义模块依赖。
+
+## FAQ
+
+1，执行`eval()`时如果带有对KISSY的引用，会报错`KISSY is not defined`。比如在引用XTemplate的时候，要这样来获得KISSY全局对象
+
+	global.KISSY=require('kissy');

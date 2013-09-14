@@ -17,21 +17,21 @@
 	<button class="contin">iii</button>
 
 	<script type='kissy/xtemplate' id='tpl'>
-		{{#each data}}{{this}}-{{xindex}}/{{xcount}}|{{/each}}
+		{{!asfasdf}}{{@with data}}{{name}}-{{age}}{{/with}}
 	</script>
 	<script>
 		var o = {
-			data:[
-				'jayli',
-				'yiminghe'
-			]
+			data:{
+				name:'jayli',
+				age:'2'
+			}
 		};
 	</script>
 	
 	<script>
 		function log(str){
 			var log = document.getElementById('log');
-			log.innerHTML = log.innerHTML + '<p>'+ str.replace(/</ig,'&lt;').replace(/>/ig,'&gt;') +'</p>';
+			log.innerHTML = log.innerHTML + '<p>'+ str.replace(/</ig,'&lt;').replace(/>/ig,'&gt;').replace(/\n/ig,'<br>') +'</p>';
 		}
 		var S = KISSY;
 
