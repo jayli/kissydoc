@@ -498,6 +498,10 @@ XTemplate 支持对 [mustache](http://mustache.github.io/) 形式的数组的兼
 
 	global-1
 
+### 删除全局标签的定义
+
+用`removeCommand()`方法来删除自定义的全局标签，调用格式为：`XTemplate.removeCommand(commandName,fn)`。
+
 ### 局部行内标签扩展
 
 如果要把标签扩展不做成全局，可以临时定义针对一段模板的标签扩展，做法是在`XTemplage()`函数中传入第二个配置参数：
@@ -545,4 +549,3 @@ JSON对象为`{d:'x.jpg'}`，输出结果为：
 	x.jpg ends with jpg
 
 
-### 字符串作为全局子模板

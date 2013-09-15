@@ -17,14 +17,11 @@
 	<button class="contin">iii</button>
 
 	<script type='kissy/xtemplate' id='tpl'>
-		{{!asfasdf}}{{@with data}}{{name}}-{{age}}{{/with}}
+		{{include "sub-tpl-3"}}
 	</script>
 	<script>
 		var o = {
-			data:{
-				name:'jayli',
-				age:'2'
-			}
+			title:1
 		};
 	</script>
 	
@@ -39,10 +36,14 @@
 
 
 		KISSY.use('xtemplate,node', function (S, XTemplate) {
+			debugger;
 
 			var tpl = S.all('#tpl').html();
-
-			var a = new XTemplate(tpl).render(o) // => <div>m</div>
+			var a = new XTemplate(tpl,{
+				subTpls: {
+					'sub-tpl-3': '{{title}}'
+				}
+			}).render(o) // => <div>m</div>
 			log(a);
 
 
