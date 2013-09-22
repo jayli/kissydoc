@@ -47,14 +47,13 @@
       <li class="nav-sub"><a href="">面向第三方安全的 KISSY</a></li>
       <li class="nav-sub"><a href="http://www.builive.com/demo/index.php">BUI</a></li>
       <li class="nav-sub nav-divider"><a href="http://work.tmall.net/muidoc/build/">MUI</a></li>
-      <li><a href="">为 KISSY 贡献代码</a></li>
-      <li class="nav-sub"><a href="">HTML 编码规范</a></li>
-      <li class="nav-sub"><a href="">CSS 编码规范</a></li>
-      <li class="nav-sub nav-divider"><a href="">JavaScript 编码规范</a></li>
+      <li><a href="https://github.com/kissyteam/kissy/blob/master/CONTRIBUTING.md">为 KISSY Core 贡献代码</a></li>
+      <li class="nav-sub"><a href="http://google-styleguide.googlecode.com/svn/trunk/htmlcssguide.xml">HTML/CSS编码规范</a></li>
+      <li class="nav-sub nav-divider"><a href="http://docs.kissyui.com/source/tutorials/style-guide/google/javascriptguide.xml">JavaScript 编码规范</a></li>
 	  <li><a href=""><img src="templates/assets/img/icon-documentation.png">1.3.x->1.4.0 升级指南</a></li>
-	  <li><a href=""><img src="templates/assets/img/icon-faqs.png">FAQ</a></li>
-      <li><a href=""><img src="templates/assets/img/icon-github.png">GitHub</a></li>
-	  <li><a href=""><img src="templates/assets/img/icon-google-plus.png">KISSY 核心小组</a></li>
+	  <li><a href="faq.html"><img src="templates/assets/img/icon-faqs.png">FAQ</a></li>
+      <li><a href="https://github.com/kissyteam/kissy"><img src="templates/assets/img/icon-github.png">GitHub</a></li>
+	  <li><a href="core-team.html"><img src="templates/assets/img/icon-google-plus.png">KISSY 核心小组</a></li>
     </ul>
   </nav>
 
@@ -273,18 +272,18 @@ $(window).on(&quot;hashchange&quot;,function(){
 <h3>移动设备事件支持</h3>
 <p>KISSY 对于移动设备做了统一的事件封装，这些事件包括：</p>
 <ul>
-<li>doubleTap</li>
-<li>singleTap</li>
-<li>tap</li>
-<li>tapHold</li>
-<li>swipe</li>
-<li>rotateStart</li>
-<li>rotate</li>
-<li>rotateEnd</li>
-<li>pinchStart</li>
-<li>pinch</li>
-<li>pinchEnd</li>
-<li>shake</li>
+<li>doubleTap，双触</li>
+<li>singleTap，单触</li>
+<li>tap，触屏</li>
+<li>tapHold，长按</li>
+<li>swipe，快速滑动</li>
+<li>rotateStart，开始旋转</li>
+<li>rotate，旋转</li>
+<li>rotateEnd，旋转结束</li>
+<li>pinchStart，开始缩放</li>
+<li>pinch，缩放</li>
+<li>pinchEnd，缩放结束</li>
+<li>shake，摇一摇</li>
 </ul>
 <h4>doubleTap</h4>
 <p>触屏双击事件，快速点击某个dom节点两次后触发，用法和普通DOM事件无异</p>
@@ -307,7 +306,7 @@ $(window).on(&quot;hashchange&quot;,function(){
 <li>direction：String，滑动方向，可取值为left/right/up/down</li>
 <li>duration：Number，滑动持续事件，单位秒</li>
 </ul>
-<pre><code>Event.on(&#39;#t&#39;, &quot;swiping&quot;, function (e) {
+<pre><code>Event.on(&#39;#t&#39;, &quot;swipe&quot;, function (e) {
     if(e.direction==&#39;left&#39;){
         e.preventDefault();
     }

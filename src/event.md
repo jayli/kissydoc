@@ -291,18 +291,18 @@ KISSY 对常见的DOM事件做了封装，包括原生浏览器不支持的事�
 
 KISSY 对于移动设备做了统一的事件封装，这些事件包括：
 
-- doubleTap
-- singleTap
-- tap
-- tapHold
-- swipe
-- rotateStart
-- rotate
-- rotateEnd
-- pinchStart
-- pinch
-- pinchEnd
-- shake
+- doubleTap，双触
+- singleTap，单触
+- tap，触屏
+- tapHold，长按
+- swipe，快速滑动
+- rotateStart，开始旋转
+- rotate，旋转
+- rotateEnd，旋转结束
+- pinchStart，开始缩放
+- pinch，缩放
+- pinchEnd，缩放结束
+- shake，摇一摇
 
 #### doubleTap
 
@@ -335,7 +335,7 @@ KISSY 对于移动设备做了统一的事件封装，这些事件包括：
 - duration：Number，滑动持续事件，单位秒
 
 
-	Event.on('#t', "swiping", function (e) {
+	Event.on('#t', "swipe", function (e) {
 		if(e.direction=='left'){
 			e.preventDefault();
 		}

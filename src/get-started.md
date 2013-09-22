@@ -34,18 +34,16 @@
 - [KISSY 组件开发](http://gallery.kissyui.com/guide)
 	- [Generator-kissy-gallery 工具](http://gallery.kissyui.com/quickstart)
 - [第三方代码库](third-party-lib.html)
-- 面向第三方安全的 KISSY
+- [面向第三方安全的 KISSY](https://github.com/lorrylockie/tpap/wiki)，组件开发者必读
 - [KISSY 浏览器兼容基准（GBS）](gbs.html)
-- [什么时候不要用 KISSY！？](when-not-to-use-kissy.html)
 - [历史版本](history.html)
 - KISSY 核心代码规范
-	- [HTML 编码规范](xx)
-	- [CSS 编码规范](xx)
-	- [JavaScript 编码规范](xx)
-- [如何为 KISSY 贡献代码](https://github.com/kissyteam/kissy/blob/master/CONTRIBUTING.md)
+	- [HTML/CSS 编码规范](http://google-styleguide.googlecode.com/svn/trunk/htmlcssguide.xml)
+	- [JavaScript 编码规范](http://docs.kissyui.com/source/tutorials/style-guide/google/javascriptguide.xml)
+- [如何为 KISSY Core 贡献代码](https://github.com/kissyteam/kissy/blob/master/CONTRIBUTING.md)
 - [1.3.x -> 1.4.0 升级指南](xx)
-- FAQ
-- KISSY 核心小组
+- [FAQ](faq.html)
+- [KISSY 核心小组](core-team.html)
 
 
 -----------------------------------------------

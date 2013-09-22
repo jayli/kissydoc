@@ -32,19 +32,10 @@
 		}
 		var S = KISSY;
 
-		S.config('debug',true);
 
-
-		KISSY.use('xtemplate,node', function (S, XTemplate) {
-			debugger;
-
-			var tpl = S.all('#tpl').html();
-			var a = new XTemplate(tpl,{
-				subTpls: {
-					'sub-tpl-3': '{{title}}'
-				}
-			}).render(o) // => <div>m</div>
-			log(a);
+		var Dom;
+		KISSY.use('node', function (S, Node) {
+			Dom = S.require('dom');
 
 
 		});

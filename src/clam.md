@@ -1,3 +1,8 @@
+正在跳转...
+<script>
+window.location.href="https://npmjs.org/package/generator-clam";
+</script>
+
 # KISSY 项目构建工具，Generator-clam
 
 <p></p>
