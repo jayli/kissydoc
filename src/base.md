@@ -2,7 +2,7 @@
 
 阅读之前先通读[KISSY 中的面向对象](oo.html)。
 
-有了 S.augment，我们可以很方便得扩展类的原型；有了 S.extend，我们可以很方便地继承；那么 KISSY 对属性 getter、setter 的实现，是基于Base完成的。
+有了 augment，我们可以很方便得扩展类的原型；有了 extend，我们可以很方便地继承；那么 KISSY 对属性 getter、setter 的实现，是基于Base完成的。
 
 顾名思义，Base 是个基础类；他包含除了getter和setter之外，还包含自定义事件和插件机制。因此Base包括：
 
@@ -119,7 +119,7 @@ Base提供了对属性值初始化的同步以及变化的事件监听。上面�
 如何让一个已有的类获得Attr特性？
 
 	// Dog 是一个已有的类
-	S.extend(Dog, Base, {
+	Base.extend(Dog, Base, {
 		bark: function() {
 			this.fire('bark', {
 				message: 'Woof! I just barked!'
@@ -137,7 +137,7 @@ Base提供了对属性值初始化的同步以及变化的事件监听。上面�
 如果Dog没有被定义过，我想直接定义一个类，这样做（是上一段代码的另一种写法）：
 
 	// 直接定义一个类 Dog 
-	var Dog = S.Base.extend({
+	var Dog = Base.extend({
 		initializer:function(){
 			var self = this;
 		},
