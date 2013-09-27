@@ -27,6 +27,69 @@ Zepto 由于充分利用了浏览器原生`querySelector`和`querySelectorAll`�
 
 > 最佳实践：在对选择器查找性能要求苛刻的场景中，使用 KISSY DOM 代替 Zepto。
 
+如果你对选择器有更极致的性能邀请，参考这些最佳实践：
+
+### 简单选择器
+
+你的选择器只是简单选择器，建议你这样写
+
+	// 速度很快
+	S.one( "#container" ).one( "div.robotarm" );
+
+	// 速度更快
+	S.one( "#container div.robotarm" );
+
+
+第二行代码执行速度更快，因为选择器被解析为两个Token，对于每个Token，KISSY都会调用最快的方法，而对于简单选择器，尽可能用一个方法包括，由KISSY自身按需调用最快的方法去查找每个Token。[测试代码](http://jsperf.com/kissy-vs-zepto-id/8)。
+
+简单选择器只包含ID，ClassName，Tag和他们的组合。
+
+
+### 循环的优化
+
+如果循环中有多级选择器，建议这样写：
+
+	// 速度一般
+	for(var i = 0 ; i < length; i++){
+		S.one('#a').one('.b');
+	}
+
+	// 速度更快
+	var el = S.one('#a');
+	for(var i = 0 ; i < length; i++){
+		el.one('.b');
+	}
+
+
+### 尽可能避免 `tag.cls` ，直接使用`.cls`
+
+由于`.cls`查询在高级浏览器中会直接调用`getElementsByClassName`，此方法性能仅次于`getElementById`，而`tag.cls`会调用`querySelector`，性能更差。
+
+	// 不要这样做
+	S.one( "div.data .gonzalez" );
+
+	// 这样性能更优
+	S.one( ".data td.gonzalez" );
+
+### 删除累赘选择器
+
+	S.one( ".data table.attendees td.gonzalez" );
+
+	// 性能更好: 把中间的选择器去掉，保持选择器的直达和简单
+	S.one( ".data td.gonzalez" );
+
+选择器多，意味着查询次数多，应当尽可能的避免。
+
+### 避免全局选择器
+
+尽可能的避免使用模糊查询和全遍历，使用更精确的选择器查询：
+
+	S.one( ".buttons > *" ); // 非常耗性能
+	S.one( ".buttons" ).children(); // 性能好一些
+	S.one( ".category :radio" ); // 避免这样用
+	S.one( ".category *:radio" ); // 同上，也要避免
+	S.one( ".category input:radio" ); // 这种写法更好
+
 ## 触屏事件
 
 [KISSY Event](event.html) 包含对触屏事件的封装，这样载入`event`模块：
