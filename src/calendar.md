@@ -1,6 +1,6 @@
 # calendar
 
-KISSY 内置日历组件，如无必要，推荐使用`gallery/calendar/1.1/`日历组件。Gallery [日历组件](http://docs.kissyui.com/docs/html/demo/index.html)。
+KISSY 内置日历组件，如无必要，推荐使用`gallery/calendar/1.1/`日历组件。Gallery [日历组件](http://gallery.kissyui.com/calendar/1.2/guide/index.html)。
 
 该组件是由拔赤设计实现，交互清爽、功能实用。支持基本的日期选择、时间选择、嵌入/弹出、范围选择、日期格式化输出等常用功能, 能够满足多数的应用场景, 非常方便用户调用。基本用法：
 
@@ -8,7 +8,7 @@ KISSY 内置日历组件，如无必要，推荐使用`gallery/calendar/1.1/`日
 		// use Calendar
 	});	
 
-[查看日历Demo](http://docs.kissyui.com/source/raw/demo/calendar/demo1.html)。
+[查看日历Demo](http://docs.kissyui.com/1.3/source/raw/demo/calendar/demo1.html)。
 
 ### 初始化参数说明：
 
