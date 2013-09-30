@@ -33,7 +33,7 @@ KISSY 核心功能的设计遵循二八原则，保持最常用 API 的精简子
 - 优质的代码，阅读她的代码，我敢保证你能学到更多
 - 自动化脚本测试，保证代码的稳定性
 
-此外，KISSY 还具备一定的社区：通过旺旺群（群号：29676575），[google group](http://groups.google.com/group/kissy-ui)，[微博](http://weibo.com/kissyteam)，[官方网站](http://docs.kissyui.com)等用户随时可以和开发人员快速交流。
+此外，KISSY 还具备一定的社区：通过旺旺群（群号：29676575），[KISSY Blog](http://blog.kissyui.com)，[google group](http://groups.google.com/group/kissy-ui)，[微博](http://weibo.com/kissyteam)，[官方网站](http://docs.kissyui.com)等用户随时可以和开发人员快速交流。
 
 ## KISSY 的设备普适性
 
